@@ -39,6 +39,12 @@ export const styles = css`
     cursor: pointer;
   }
 
+  button {
+    border: 0;
+    padding: 0;
+    color: var(--border-color);
+  }
+
   button[disabled] {
     cursor: not-allowed;
     color: #ccc;
@@ -164,9 +170,22 @@ export const styles = css`
   .top-controls .left-controls {
     display: flex;
   }
-  .top-controls .left-controls select {
+  .month-label {
+    display: inline-flex;
+    align-items: stretch;
     margin-right: 0.25rem;
+    position: relative;
   }
+  .month-label select {
+    min-width: 6.25rem;
+  }
+  .month-icon {
+    pointer-events: none;
+    right: 0.25rem;
+    top: 0.5rem;
+    position: absolute;
+  }
+
   .top-controls .right-controls > button {
     margin-right: 0.125rem;
   }
@@ -174,7 +193,7 @@ export const styles = css`
   .top-controls .arrow {
     display: inline-flex;
     align-items: center;
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     color: var(--border-color);
   }
   .top-controls .arrow:hover {

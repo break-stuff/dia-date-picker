@@ -25,9 +25,15 @@ import { styles } from "./datepicker.styles";
  * @attr {string} locale - manual configuration for setting locale
  * @attr {string} min-date - the minimum selectable date
  * @attr {string} max-date - the maximum selectable date
- * @attr {string} day-label - the maximum selectable date
+ * @attr {string} day-label - label used for day input
+ * @attr {string} month-label - label used for month input
+ * @attr {string} year-label - label used for year input
+ * @attr {string} clear-label - text for clear button
+ * @attr {string} today-label - text for today button
  *
- * @slot default - content displayed in the search button
+ * @slot calendar-icon - icon in button toggle for date selector
+ * @slot prev-month-icon - icon in previous month button
+ * @slot next-month-icon - icon in next month button
  *
  * @cssprop [--font-size=1rem] - Controls the font size for all elements in the component
  * @cssprop [--padding=0.25rem] - Controls the padding for the `input` and `button` elements
@@ -411,20 +417,26 @@ export class KsDatepicker extends LitElement {
     return html`
       <div class="top-controls">
         <span class="left-controls">
-          <label for="month_selector" class="sr-only">${this.monthLabel}</label>
-          <select
-            id="month_selector"
-            class="month-selector"
-            @change="${this._monthChangeHandler}"
-          >
-            ${getMonths(this._getLocale()).map(
-              (month, i) => html`
-                <option value="${i}" ?selected="${i === this._curMonth}">
-                  ${month}
-                </option>
-              `
-            )}
-          </select>
+          <label class="month-label">
+            <span class="sr-only">${this.monthLabel}</span>
+            <select
+              id="month_selector"
+              class="month-selector"
+              @change="${this._monthChangeHandler}"
+            >
+              ${getMonths(this._getLocale()).map(
+                (month, i) => html`
+                  <option value="${i}" ?selected="${i === this._curMonth}">
+                    ${month}
+                  </option>
+                `
+              )}
+            </select>
+            <span class="month-icon">
+              <!--&#8964;-->
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="chevron_down"><g><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></g></svg>
+            </span>
+          </label>
           <label for="year_selector" class="sr-only">${this.yearLabel}</label>
           <input
             id="year_selector"
@@ -440,15 +452,14 @@ export class KsDatepicker extends LitElement {
             @click="${this._prevMonthClickHandler}"
             aria-label="${this._getPrevMonthLabel()}"
           >
-            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="arrow_up"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M17.415 11.915 12 6.5l-5.416 5.415" stroke-linejoin="round"></path><path d="M12 7.338V17.5"></path></g></svg>          
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="m16 9-4-4-4 4" stroke-linejoin="round"></path><path d="M12 5.277V20"></path></g></svg>       
           </button>
           <button
             class="arrow"
             @click="${this._nextMonthClickHandler}"
             aria-label="${this._getNextMonthLabel()}"
           >
-            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="arrow_down"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M6.585 12.085 12 17.5l5.416-5.415" stroke-linejoin="round"></path><path d="M12 16.662V6.5"></path></g></svg>
-          </button>
+          <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="m8 15 4 4 4-4" stroke-linejoin="round"></path><path d="M12 18.723V4"></path></g></svg>          </button>
         </span>
       </div
     `;

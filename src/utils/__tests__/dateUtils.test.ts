@@ -3,7 +3,8 @@ import {
   getMonths,
   getDaysOfTheWeek,
   addDaysToDate,
-  getWeeks
+  getWeeks,
+  getDaysInMonth
 } from "../dateUtils";
 
 describe("isOutOfRange function", () => {
@@ -94,7 +95,7 @@ describe("addDaysToDate function", () => {
     expect(result.toLocaleDateString("en-US")).toBe("2/25/2022");
   });
 
-  test("should subtract 5 days to date", () => {
+  test("should subtract 5 days from date", () => {
     // Arrange
     const startDate = new Date('2022-2-22');
 
@@ -114,9 +115,40 @@ describe("getWeeks function", () => {
     const result = getWeeks(1, 2022);
 
     //Assert
-    console.log(result[4].length);
-    
     expect(result[0][0].toLocaleDateString('en-US')).toBe("1/30/2022");
     expect(result[4][6].toLocaleDateString('en-US')).toBe("3/5/2022");
+  });
+
+  test("should get weeks for March 2023", () => {
+    // Arrange
+
+    // Act
+    const result = getWeeks(2, 2023);
+
+    //Assert
+    expect(result[0][0].toLocaleDateString('en-US')).toBe("2/26/2023");
+    expect(result[4][6].toLocaleDateString('en-US')).toBe("4/1/2023");
+  });
+});
+
+describe("getDaysInMonth function", () => {
+  test("should get 31 for January 2022", () => {
+    // Arrange
+
+    // Act
+    const result = getDaysInMonth(1, 2022);
+
+    //Assert
+    expect(result).toBe(31);
+  });
+
+  test("should get 29 day in February for a leap year", () => {
+    // Arrange
+
+    // Act
+    const result = getDaysInMonth(2, 2020);
+
+    //Assert
+    expect(result).toBe(29);
   });
 });

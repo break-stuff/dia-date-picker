@@ -70,8 +70,16 @@
           ],
           "slots": [
             {
-              "description": "content displayed in the search button",
-              "name": "default"
+              "description": "icon in button toggle for date selector",
+              "name": "calendar-icon"
+            },
+            {
+              "description": "icon in previous month button",
+              "name": "prev-month-icon"
+            },
+            {
+              "description": "icon in next month button",
+              "name": "next-month-icon"
             }
           ],
           "attributes": [
@@ -119,40 +127,44 @@
               "type": {
                 "text": "string"
               },
-              "description": "the maximum selectable date",
+              "description": "label used for day input",
               "name": "day-label",
               "default": "\"Day\"",
               "fieldName": "dayLabel"
             },
             {
-              "name": "month-label",
               "type": {
                 "text": "string"
               },
+              "description": "label used for month input",
+              "name": "month-label",
               "default": "\"Month\"",
               "fieldName": "monthLabel"
             },
             {
-              "name": "year-label",
               "type": {
                 "text": "string"
               },
+              "description": "label used for year input",
+              "name": "year-label",
               "default": "\"Year\"",
               "fieldName": "yearLabel"
             },
             {
-              "name": "clear-label",
               "type": {
                 "text": "string"
               },
+              "description": "text for clear button",
+              "name": "clear-label",
               "default": "\"Clear\"",
               "fieldName": "clearLabel"
             },
             {
-              "name": "today-label",
               "type": {
                 "text": "string"
               },
+              "description": "text for today button",
+              "name": "today-label",
               "default": "\"Today\"",
               "fieldName": "todayLabel"
             }
