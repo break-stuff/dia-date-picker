@@ -9,7 +9,6 @@ import {
   addDaysToDate,
   getDaysOfTheWeek,
   getMonths,
-  getSelectableDateInScope,
   getWeeks,
   isOutOfRange,
 } from "../utils/dateUtils";

@@ -18,5 +18,10 @@
     "downlevelIteration": true
   },
   "include": ["src/**/*.ts"],
+  "exclude": [
+    "**/*.test.*",
+    "**/__mocks__/*",
+    "**/__tests__/*"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
