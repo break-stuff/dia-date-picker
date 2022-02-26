@@ -70,7 +70,7 @@ export function getDaysInMonth(month: number, year: number) {
 }
 
 /**
- * 
+ * Gets a list of weeks for a given month and year (includes padding for prev and next months)
  * @param month the month you are building the calendar for
  * @param year the year you are building the calendar for
  * @returns An array (weeks) of dates (days)
