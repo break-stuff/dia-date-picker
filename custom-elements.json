@@ -1,0 +1,256 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./datepicker"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./my-element"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./datepicker"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./my-element"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/datepicker/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "KsDatepicker",
+          "cssProperties": [
+            {
+              "description": "Controls the font size for all elements in the component",
+              "name": "--font-size",
+              "default": "1rem"
+            },
+            {
+              "description": "Controls the padding for the `input` and `button` elements",
+              "name": "--padding",
+              "default": "0.25rem"
+            }
+          ],
+          "slots": [
+            {
+              "description": "content displayed in the search button",
+              "name": "default"
+            }
+          ],
+          "attributes": [
+            {
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "the date entered in the main input",
+              "name": "value",
+              "fieldName": "value"
+            },
+            {
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "label for main date input",
+              "name": "label",
+              "fieldName": "label"
+            },
+            {
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "manual configuration for setting locale",
+              "name": "locale",
+              "fieldName": "locale"
+            },
+            {
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "the minimum selectable date",
+              "name": "min-date",
+              "fieldName": "minDate"
+            },
+            {
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "the maximum selectable date",
+              "name": "max-date",
+              "fieldName": "maxDate"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "the maximum selectable date",
+              "name": "day-label",
+              "default": "\"Day\"",
+              "fieldName": "dayLabel"
+            },
+            {
+              "name": "month-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"Month\"",
+              "fieldName": "monthLabel"
+            },
+            {
+              "name": "year-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"Year\"",
+              "fieldName": "yearLabel"
+            },
+            {
+              "name": "clear-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"Clear\"",
+              "fieldName": "clearLabel"
+            },
+            {
+              "name": "today-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"Today\"",
+              "fieldName": "todayLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "ks-datepicker",
+          "summary": "Custom date picker",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "KsDatepicker",
+          "declaration": {
+            "name": "KsDatepicker",
+            "module": "src/datepicker/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "ks-datepicker",
+          "declaration": {
+            "name": "KsDatepicker",
+            "module": "src/datepicker/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/my-element/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "An example element.",
+          "name": "MyElement",
+          "cssParts": [
+            {
+              "description": "The button",
+              "name": "button"
+            }
+          ],
+          "slots": [
+            {
+              "description": "This element has a slot",
+              "name": ""
+            }
+          ],
+          "attributes": [
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'World'",
+              "description": "The name to say \"Hello\" to.",
+              "fieldName": "name"
+            },
+            {
+              "name": "count",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "The number of times the button has been clicked.",
+              "fieldName": "count"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "my-element",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MyElement",
+          "declaration": {
+            "name": "MyElement",
+            "module": "src/my-element/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "my-element",
+          "declaration": {
+            "name": "MyElement",
+            "module": "src/my-element/index.ts"
+          }
+        }
+      ]
+    }
+  ]
+}
