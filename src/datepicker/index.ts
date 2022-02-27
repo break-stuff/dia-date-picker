@@ -451,13 +451,22 @@ export class KsDatepicker extends LitElement {
       : this._selectedDate;
 
     return html`
-      <table class="calendar" role="grid" aria-multiselectable="false">
-        <thead>
-          <tr class="week-days">
+      <table
+        class="calendar"
+        role="grid"
+        aria-multiselectable="false"
+        aria-labelledby="calendar_header"
+      >
+        <caption id="calendar_header" class="sr-only">
+          ${getMonthLabel(this._curMonth, this._curYear, this._getLocale())}
+        </caption>
+        <thead role="rowgroup">
+          <tr class="week-days" role="row">
             ${getDaysOfTheWeek(this._getLocale()).map(
               (day) =>
                 html`<th
                   scope="col"
+                  role="columnheader"
                   title="${day.fullDay}"
                   aria-label="${day.fullDay}"
                 >
@@ -466,7 +475,7 @@ export class KsDatepicker extends LitElement {
             )}
           </tr>
         </thead>
-        <tbody>
+        <tbody role="rowgroup">
           ${getWeeks(this._curMonth, this._curYear).map((week) =>
             this._weekTemplate(week, focusDate)
           )}
@@ -477,7 +486,7 @@ export class KsDatepicker extends LitElement {
 
   private _weekTemplate(week: Date[], focusDate: Date | null | undefined) {
     return html`
-      <tr class="week">
+      <tr class="week" role="row">
         ${week.map((day) => this._dayTemplate(day, focusDate))}
       </tr>
     `;
