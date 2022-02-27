@@ -8,9 +8,12 @@ import { getFocusableElements } from "../utils/domUtils";
 import {
   addDaysToDate,
   getDaysOfTheWeek,
+  getShortIsoDate,
   getMonths,
   getWeeks,
   isOutOfRange,
+  getFullDate,
+  getMonthLabel,
 } from "../utils/dateUtils";
 
 import { styles } from "./datepicker.styles";
@@ -156,7 +159,7 @@ export class KsDatepicker extends LitElement {
   private _updateDateButton(date: Date) {
     setTimeout(() => {
       const $control = this.$calendar?.querySelector(
-        `[id="${this._getShortDate(date)}"]`
+        `[id="${getShortIsoDate(date)}"]`
       ) as HTMLButtonElement;
       this.$focusableEls.splice(4, 1, $control);
 
@@ -172,10 +175,6 @@ export class KsDatepicker extends LitElement {
       x.setAttribute("tabindex", "-1");
       x.setAttribute("aria-selected", "false");
     });
-  }
-
-  private _getShortDate(date: Date) {
-    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
   }
 
   private _dayKeyUpHandler(day: Date, e: KeyboardEvent) {
@@ -235,15 +234,6 @@ export class KsDatepicker extends LitElement {
       : navigator.language || (navigator.languages || ["en"])[0];
   }
 
-  private _getMonthLabel(month: number): string {
-    const locale = this._getLocale();
-    const { format } = new Intl.DateTimeFormat(locale, {
-      month: "long",
-      year: "numeric",
-    });
-    return format(new Date(Date.UTC(this._curYear, month)));
-  }
-
   private _monthChangeHandler(e: Event): void {
     this._curMonth = +(e.target as HTMLSelectElement).value;
     this._focusIndex = 0;
@@ -272,12 +262,6 @@ export class KsDatepicker extends LitElement {
       this._curMonth += 1;
     }
     this._focusIndex = 3;
-  }
-
-  private _formatDate(date: Date): string {
-    const locale = this._getLocale();
-    const formatter = new Intl.DateTimeFormat(locale, { dateStyle: "full" });
-    return formatter.format(date);
   }
 
   private _setDateForToday(): void {
@@ -350,7 +334,7 @@ export class KsDatepicker extends LitElement {
         id="calendar-dropdown"
         class="${classMap({ "calendar-dropdown": true, open: this._expanded })}"
         role="dialog"
-        aria-label="${this._getMonthLabel(this._curMonth)}"
+        aria-label="${getMonthLabel(this._curMonth, this._curYear, this._getLocale())}"
         @keydown="${this._keyDownHandler}"
       >
         ${this._topControlsTemplate()} ${this._calendarTemplate()}
@@ -442,14 +426,14 @@ export class KsDatepicker extends LitElement {
           <button
             class="arrow"
             @click="${this._prevMonthClickHandler}"
-            aria-label="${this._getMonthLabel(this._curMonth - 1)}"
+            aria-label="${getMonthLabel(this._curMonth - 1, this._curYear, this._getLocale())}"
           >
             <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="m16 9-4-4-4 4" stroke-linejoin="round"></path><path d="M12 5.277V20"></path></g></svg>       
           </button>
           <button
             class="arrow"
             @click="${this._nextMonthClickHandler}"
-            aria-label="${this._getMonthLabel(this._curMonth + 1)}"
+            aria-label="${getMonthLabel(this._curMonth + 1, this._curYear, this._getLocale())}"
           >
           <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="m8 15 4 4 4-4" stroke-linejoin="round"></path><path d="M12 18.723V4"></path></g></svg>          </button>
         </span>
@@ -508,9 +492,9 @@ export class KsDatepicker extends LitElement {
     return html`
       <td class="day" role="gridcell" aria-selected="${isSelected}">
         <button
-          id="${this._getShortDate(day)}"
+          id="${getShortIsoDate(day)}"
           class="${day.getMonth() !== this._curMonth ? "other-month" : ""}"
-          aria-label="${this._formatDate(day)}"
+          aria-label="${getFullDate(day, this._getLocale())}"
           aria-current="${isToday ? "date" : false}"
           tabindex="${isSelected ? 0 : -1}"
           ?disabled="${isOutOfRange(day, this._minDate, this._maxDate)}"

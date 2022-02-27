@@ -4,6 +4,26 @@ interface IWeekDay {
 }
 
 /**
+ * Converts date to full format based on locale
+ * @param date 
+ * @param locale 
+ * @returns returns date in full format based on locale
+ */
+export function getFullDate(date: Date, locale: string): string {
+  const formatter = new Intl.DateTimeFormat(locale, { dateStyle: "full" });
+  return formatter.format(date);
+}
+
+/**
+ * Converts date to short ISO format - YYYY-MM-DD
+ * @param date 
+ * @returns returns short date in ISO format - 2022-02-22
+ */
+export function getShortIsoDate(date: Date) {
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+}
+
+/**
  * Determines if a date falls outside of min/max date parameters
  * @param selectedDate date being compared
  * @param minDate minimum viable date
@@ -51,6 +71,18 @@ export function getMonths(locale: string): string[] {
   );
 }
 
+export function getMonthLabel(
+  month: number,
+  year: number,
+  locale: string
+): string {
+  const { format } = new Intl.DateTimeFormat(locale, {
+    month: "long",
+    year: "numeric",
+  });
+  return format(new Date(Date.UTC(year, month)));
+}
+
 /**
  * Gets a list of week day abbreviations based on locale
  * @param locale country language locale
@@ -61,6 +93,7 @@ export function getDaysOfTheWeek(locale: string): IWeekDay[] {
     .format;
   const fullFormat = new Intl.DateTimeFormat(locale, { weekday: "long" })
     .format;
+
   return [...Array(7).keys()].map((day) => {
     return {
       abbr: abbrFormat(new Date(Date.UTC(2021, 5, day))),
