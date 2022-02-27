@@ -67,8 +67,8 @@ describe("getDaysOfTheWeek function", () => {
     const result = getDaysOfTheWeek("en-US");
 
     //Assert
-    expect(result[0]).toBe("S");
-    expect(result[3]).toBe("W");
+    expect(result[0].abbr).toBe("S");
+    expect(result[3].abbr).toBe("W");
   });
 
   test("should return an array of Chinese days", () => {
@@ -78,8 +78,8 @@ describe("getDaysOfTheWeek function", () => {
     const result = getDaysOfTheWeek("zh-CN");
 
     //Assert
-    expect(result[0]).toBe("日");
-    expect(result[4]).toBe("四");
+    expect(result[0].abbr).toBe("日");
+    expect(result[4].abbr).toBe("四");
   });
 });
 

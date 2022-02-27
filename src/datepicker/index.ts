@@ -235,22 +235,13 @@ export class KsDatepicker extends LitElement {
       : navigator.language || (navigator.languages || ["en"])[0];
   }
 
-  private _getPrevMonthLabel(): string {
+  private _getMonthLabel(month: number): string {
     const locale = this._getLocale();
     const { format } = new Intl.DateTimeFormat(locale, {
       month: "long",
       year: "numeric",
     });
-    return format(new Date(Date.UTC(this._curYear, this._curMonth)));
-  }
-
-  private _getNextMonthLabel(): string {
-    const locale = this._getLocale();
-    const { format } = new Intl.DateTimeFormat(locale, {
-      month: "long",
-      year: "numeric",
-    });
-    return format(new Date(Date.UTC(this._curYear, this._curMonth + 1)));
+    return format(new Date(Date.UTC(this._curYear, month)));
   }
 
   private _monthChangeHandler(e: Event): void {
@@ -359,6 +350,7 @@ export class KsDatepicker extends LitElement {
         id="calendar-dropdown"
         class="${classMap({ "calendar-dropdown": true, open: this._expanded })}"
         role="dialog"
+        aria-label="${this._getMonthLabel(this._curMonth)}"
         @keydown="${this._keyDownHandler}"
       >
         ${this._topControlsTemplate()} ${this._calendarTemplate()}
@@ -387,7 +379,7 @@ export class KsDatepicker extends LitElement {
           class="calendar-toggle"
           aria-haspopup="true"
           aria-expanded=${this._expanded}
-          aria-controls="calendar"
+          aria-controls="calendar-dropdown"
           @click="${this._inputControlClickHandler}"
         >
           <svg
@@ -450,14 +442,14 @@ export class KsDatepicker extends LitElement {
           <button
             class="arrow"
             @click="${this._prevMonthClickHandler}"
-            aria-label="${this._getPrevMonthLabel()}"
+            aria-label="${this._getMonthLabel(this._curMonth - 1)}"
           >
             <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="m16 9-4-4-4 4" stroke-linejoin="round"></path><path d="M12 5.277V20"></path></g></svg>       
           </button>
           <button
             class="arrow"
             @click="${this._nextMonthClickHandler}"
-            aria-label="${this._getNextMonthLabel()}"
+            aria-label="${this._getMonthLabel(this._curMonth + 1)}"
           >
           <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="m8 15 4 4 4-4" stroke-linejoin="round"></path><path d="M12 18.723V4"></path></g></svg>          </button>
         </span>
@@ -475,11 +467,18 @@ export class KsDatepicker extends LitElement {
       : this._selectedDate;
 
     return html`
-      <table class="calendar">
+      <table class="calendar" role="grid" aria-multiselectable="false">
         <thead>
           <tr class="week-days">
             ${getDaysOfTheWeek(this._getLocale()).map(
-              (day) => html`<td>${day}</td>`
+              (day) =>
+                html`<th
+                  scope="col"
+                  title="${day.fullDay}"
+                  aria-label="${day.fullDay}"
+                >
+                  ${day.abbr}
+                </th>`
             )}
           </tr>
         </thead>
@@ -507,12 +506,11 @@ export class KsDatepicker extends LitElement {
       this._curDate.toLocaleDateString() === day.toLocaleDateString();
 
     return html`
-      <td class="day">
+      <td class="day" role="gridcell" aria-selected="${isSelected}">
         <button
           id="${this._getShortDate(day)}"
           class="${day.getMonth() !== this._curMonth ? "other-month" : ""}"
           aria-label="${this._formatDate(day)}"
-          aria-selected="${isSelected}"
           aria-current="${isToday ? "date" : false}"
           tabindex="${isSelected ? 0 : -1}"
           ?disabled="${isOutOfRange(day, this._minDate, this._maxDate)}"

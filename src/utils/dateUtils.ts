@@ -1,3 +1,8 @@
+interface IWeekDay {
+  abbr: string;
+  fullDay: string;
+}
+
 /**
  * Determines if a date falls outside of min/max date parameters
  * @param selectedDate date being compared
@@ -5,9 +10,15 @@
  * @param maxDate maximum viable date
  * @returns boolean
  */
-export function isOutOfRange(selectedDate: Date, minDate: Date | null, maxDate: Date | null): boolean {
-    return (minDate !== null && selectedDate < (minDate as Date)) as boolean 
-        || (maxDate !== null && selectedDate > (maxDate as Date)) as boolean;
+export function isOutOfRange(
+  selectedDate: Date,
+  minDate: Date | null,
+  maxDate: Date | null
+): boolean {
+  return (
+    ((minDate !== null && selectedDate < (minDate as Date)) as boolean) ||
+    ((maxDate !== null && selectedDate > (maxDate as Date)) as boolean)
+  );
 }
 
 /**
@@ -17,10 +28,15 @@ export function isOutOfRange(selectedDate: Date, minDate: Date | null, maxDate: 
  * @param currentYear current selected year
  * @returns Date - first available date in a selected month
  */
-export function getSelectableDateInScope(selectedDate: Date | undefined, currentMonth: number, currentYear: number): Date {
-    return selectedDate?.getMonth() === currentMonth && selectedDate?.getFullYear() === currentYear 
-        ? selectedDate 
-        : new Date(currentYear, currentMonth, 1);
+export function getSelectableDateInScope(
+  selectedDate: Date | undefined,
+  currentMonth: number,
+  currentYear: number
+): Date {
+  return selectedDate?.getMonth() === currentMonth &&
+    selectedDate?.getFullYear() === currentYear
+    ? selectedDate
+    : new Date(currentYear, currentMonth, 1);
 }
 
 /**
@@ -29,22 +45,28 @@ export function getSelectableDateInScope(selectedDate: Date | undefined, current
  * @returns string[] - list of months
  */
 export function getMonths(locale: string): string[] {
-    const { format } = new Intl.DateTimeFormat(locale, { month: "long" });
-    return [...Array(12).keys()].map((m) =>
-        format(new Date(Date.UTC(2021, m + 1)))
-    );
+  const { format } = new Intl.DateTimeFormat(locale, { month: "long" });
+  return [...Array(12).keys()].map((m) =>
+    format(new Date(Date.UTC(2021, m + 1)))
+  );
 }
 
 /**
  * Gets a list of week day abbreviations based on locale
  * @param locale country language locale
- * @returns string[] - list of week day abbreviations
+ * @returns IWeekDay[] - list of week day abbreviations and full names
  */
-export function getDaysOfTheWeek(locale: string): string[] {
-    const { format } = new Intl.DateTimeFormat(locale, { weekday: "narrow" });
-    return [...Array(7).keys()].map((day) =>
-        format(new Date(Date.UTC(2021, 5, day)))
-    );
+export function getDaysOfTheWeek(locale: string): IWeekDay[] {
+  const abbrFormat = new Intl.DateTimeFormat(locale, { weekday: "narrow" })
+    .format;
+  const fullFormat = new Intl.DateTimeFormat(locale, { weekday: "long" })
+    .format;
+  return [...Array(7).keys()].map((day) => {
+    return {
+      abbr: abbrFormat(new Date(Date.UTC(2021, 5, day))),
+      fullDay: fullFormat(new Date(Date.UTC(2021, 5, day))),
+    };
+  });
 }
 
 /**
@@ -54,9 +76,9 @@ export function getDaysOfTheWeek(locale: string): string[] {
  * @returns Date - new date with changes applied
  */
 export function addDaysToDate(date: Date, days: number) {
-    const result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
 }
 
 /**
@@ -76,13 +98,13 @@ export function getDaysInMonth(month: number, year: number) {
  * @returns An array (weeks) of dates (days)
  */
 export function getWeeks(month: number, year: number): Date[][] {
-    return getDays(month, year).reduce((p: Date[][], c, i) => {
-        if (i % 7 === 0) {
-            p[p.length] = [];
-        }
-        p[p.length - 1].push(c);
-        return p;
-    }, []);
+  return getDays(month, year).reduce((p: Date[][], c, i) => {
+    if (i % 7 === 0) {
+      p[p.length] = [];
+    }
+    p[p.length - 1].push(c);
+    return p;
+  }, []);
 }
 
 /**
@@ -92,34 +114,30 @@ export function getWeeks(month: number, year: number): Date[][] {
  * @returns Date[] - a list of days of the week
  */
 function getDays(month: number, year: number): Date[] {
-    const dates: Date[] = [];
-    const firstDayOfMonth = new Date(year, month, 1);
-    const lastDayOfMonth = new Date(
-        year,
-        month,
-        getDaysInMonth(month, year)
-    );
-    dates.unshift(firstDayOfMonth);
-    for (
-        let d = addDaysToDate(firstDayOfMonth, -1);
-        d.getDay() !== 6;
-        d = addDaysToDate(d, -1)
-    ) {
-        dates.unshift(d);
-    }
-    for (
-        let d = addDaysToDate(firstDayOfMonth, 1);
-        d <= lastDayOfMonth;
-        d = addDaysToDate(d, 1)
-    ) {
-        dates.push(d);
-    }
-    for (
-        let d = addDaysToDate(lastDayOfMonth, 1);
-        d.getDay() !== 0;
-        d = addDaysToDate(d, 1)
-    ) {
-        dates.push(d);
-    }
-    return dates;
+  const dates: Date[] = [];
+  const firstDayOfMonth = new Date(year, month, 1);
+  const lastDayOfMonth = new Date(year, month, getDaysInMonth(month, year));
+  dates.unshift(firstDayOfMonth);
+  for (
+    let d = addDaysToDate(firstDayOfMonth, -1);
+    d.getDay() !== 6;
+    d = addDaysToDate(d, -1)
+  ) {
+    dates.unshift(d);
+  }
+  for (
+    let d = addDaysToDate(firstDayOfMonth, 1);
+    d <= lastDayOfMonth;
+    d = addDaysToDate(d, 1)
+  ) {
+    dates.push(d);
+  }
+  for (
+    let d = addDaysToDate(lastDayOfMonth, 1);
+    d.getDay() !== 0;
+    d = addDaysToDate(d, 1)
+  ) {
+    dates.push(d);
+  }
+  return dates;
 }
