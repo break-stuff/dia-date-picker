@@ -1,4 +1,5 @@
 import {
+  isValidDate,
   isOutOfRange,
   getMonths,
   getDaysOfTheWeek,
@@ -150,5 +151,29 @@ describe("getDaysInMonth function", () => {
 
     //Assert
     expect(result).toBe(29);
+  });
+});
+
+describe("isValidDate function", () => {
+  test("should return 'false' when passed 'foo'", () => {
+    // Arrange
+    const date = new Date('foo');
+
+    // Act
+    const result = isValidDate(date);
+
+    //Assert
+    expect(result).toBe(false);
+  });
+
+  test("should return 'true' when passed '2/22/2022'", () => {
+    // Arrange
+    const date = new Date('2/22/2022');
+
+    // Act
+    const result = isValidDate(date);
+
+    //Assert
+    expect(result).toBe(true);
   });
 });

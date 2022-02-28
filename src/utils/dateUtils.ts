@@ -4,19 +4,37 @@ interface IWeekDay {
 }
 
 /**
+ * Checks to see if date object is a valid date
+ * @param date date to evaluate
+ * @returns boolean
+ */
+export function isValidDate(date: Date) {
+  return date instanceof Date && !isNaN(date as any);
+}
+
+/**
+ * Converts date string to a format that has cross-browser support
+ * @param date date string consisting of numeric day, month, and year
+ * @returns string - date string where all non-numeric characters have been converted to "/" - "mm-dd-yyyy" => ""
+ */
+export function formatDateString(date: string): string {
+  return date.replace(/\D/g, "/");
+}
+
+/**
  * Converts date to full format based on locale
- * @param date 
- * @param locale 
+ * @param date
+ * @param locale
  * @returns returns date in full format based on locale
  */
 export function getFullDate(date: Date, locale: string): string {
-  const formatter = new Intl.DateTimeFormat(locale, { dateStyle: "full" });
+  const formatter = new Intl.DateTimeFormat(locale, { dateStyle: "long" });
   return formatter.format(date);
 }
 
 /**
  * Converts date to short ISO format - YYYY-MM-DD
- * @param date 
+ * @param date
  * @returns returns short date in ISO format - 2022-02-22
  */
 export function getShortIsoDate(date: Date) {
@@ -80,7 +98,7 @@ export function getMonthLabel(
     month: "long",
     year: "numeric",
   });
-  return format(new Date(Date.UTC(year, month)));
+  return format(new Date(Date.UTC(year, month + 1)));
 }
 
 /**
