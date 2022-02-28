@@ -88,10 +88,10 @@ export class KsDatepicker extends LitElement {
   private _curDate: Date = new Date(Date.now());
 
   @state()
-  private _curMonth: number = this._curDate.getMonth();
+  private _selectedMonth: number = this._curDate.getMonth();
 
   @state()
-  private _curYear: number = this._curDate.getFullYear();
+  private _selectedYear: number = this._curDate.getFullYear();
 
   @state()
   private _focusIndex = 0;
@@ -115,13 +115,7 @@ export class KsDatepicker extends LitElement {
   private $calendar: HTMLElement | undefined;
 
   protected firstUpdated(): void {
-    window.addEventListener("click", (e: MouseEvent) => {
-      if (this.contains(e.target as HTMLElement)) {
-        return;
-      }
-
-      this._expanded = false;
-    });
+    this._hideOnDocumentClick();
   }
 
   public show(): void {
@@ -135,6 +129,16 @@ export class KsDatepicker extends LitElement {
     this._expanded = false;
     this._focusIndex = 4;
     setTimeout(() => this.$input?.focus());
+  }
+
+  private _hideOnDocumentClick() {
+    window.addEventListener("click", (e: MouseEvent) => {
+      if (this.contains(e.target as HTMLElement)) {
+        return;
+      }
+
+      this._expanded = false;
+    });
   }
 
   private _pickDate(d: Date) {
@@ -154,8 +158,8 @@ export class KsDatepicker extends LitElement {
     this.value = date.toLocaleDateString(this._getLocale());
     this.$input.value = this.value;
     this._selectedDate = date;
-    this._curMonth = date.getMonth();
-    this._curYear = date.getFullYear();
+    this._selectedMonth = date.getMonth();
+    this._selectedYear = date.getFullYear();
     this._updateDateButton(date);
   }
 
@@ -238,31 +242,31 @@ export class KsDatepicker extends LitElement {
   }
 
   private _monthChangeHandler(e: Event): void {
-    this._curMonth = +(e.target as HTMLSelectElement).value;
+    this._selectedMonth = +(e.target as HTMLSelectElement).value;
     this._focusIndex = 0;
   }
 
   private _yearInputHandler(e: InputEvent): void {
-    this._curYear = +(e.target as HTMLInputElement).value;
+    this._selectedYear = +(e.target as HTMLInputElement).value;
     this._focusIndex = 1;
   }
 
   private _prevMonthClickHandler(): void {
-    if (this._curMonth === 0) {
-      this._curMonth = 11;
-      this._curYear -= 1;
+    if (this._selectedMonth === 0) {
+      this._selectedMonth = 11;
+      this._selectedYear -= 1;
     } else {
-      this._curMonth -= 1;
+      this._selectedMonth -= 1;
     }
     this._focusIndex = 2;
   }
 
   private _nextMonthClickHandler(): void {
-    if (this._curMonth === 11) {
-      this._curMonth = 0;
-      this._curYear += 1;
+    if (this._selectedMonth === 11) {
+      this._selectedMonth = 0;
+      this._selectedYear += 1;
     } else {
-      this._curMonth += 1;
+      this._selectedMonth += 1;
     }
     this._focusIndex = 3;
   }
@@ -281,8 +285,8 @@ export class KsDatepicker extends LitElement {
     }
 
     this._selectedDate = inputDate;
-    this._curMonth = this._selectedDate.getMonth();
-    this._curYear = this._selectedDate.getFullYear();
+    this._selectedMonth = this._selectedDate.getMonth();
+    this._selectedYear = this._selectedDate.getFullYear();
   }
 
   private _clearInput(): void {
@@ -376,8 +380,8 @@ export class KsDatepicker extends LitElement {
         class="${classMap({ "calendar-dropdown": true, open: this._expanded })}"
         role="dialog"
         aria-label="${getMonthLabel(
-          this._curMonth,
-          this._curYear,
+          this._selectedMonth,
+          this._selectedYear,
           this._getLocale()
         )}"
         @keydown="${this._keyDownHandler}"
@@ -447,7 +451,7 @@ export class KsDatepicker extends LitElement {
             >
               ${getMonths(this._getLocale()).map(
                 (month, i) => html`
-                  <option value="${i}" ?selected="${i === this._curMonth}">
+                  <option value="${i}" ?selected="${i === this._selectedMonth}">
                     ${month}
                   </option>
                 `
@@ -462,7 +466,7 @@ export class KsDatepicker extends LitElement {
             id="year_selector"
             class="year-selector"
             type="number"
-            .value="${this._curYear}"
+            .value="${this._selectedYear}"
             @input="${this._yearInputHandler}"
           />
         </span>
@@ -471,8 +475,8 @@ export class KsDatepicker extends LitElement {
             class="arrow"
             @click="${this._prevMonthClickHandler}"
             aria-label="${getMonthLabel(
-              this._curMonth - 1,
-              this._curYear,
+              this._selectedMonth - 1,
+              this._selectedYear,
               this._getLocale()
             )}"
           >
@@ -482,8 +486,8 @@ export class KsDatepicker extends LitElement {
             class="arrow"
             @click="${this._nextMonthClickHandler}"
             aria-label="${getMonthLabel(
-              this._curMonth + 1,
-              this._curYear,
+              this._selectedMonth + 1,
+              this._selectedYear,
               this._getLocale()
             )}"
           >
@@ -504,7 +508,7 @@ export class KsDatepicker extends LitElement {
         aria-labelledby="calendar_header"
       >
         <caption id="calendar_header" class="sr-only">
-          ${getMonthLabel(this._curMonth, this._curYear, this._getLocale())}
+          ${getMonthLabel(this._selectedMonth, this._selectedYear, this._getLocale())}
         </caption>
         <thead role="rowgroup">
           <tr class="week-days" role="row">
@@ -522,7 +526,7 @@ export class KsDatepicker extends LitElement {
           </tr>
         </thead>
         <tbody role="rowgroup">
-          ${getWeeks(this._curMonth, this._curYear).map((week) =>
+          ${getWeeks(this._selectedMonth, this._selectedYear).map((week) =>
             this._weekTemplate(week, focusDate)
           )}
         </tbody>
@@ -548,7 +552,7 @@ export class KsDatepicker extends LitElement {
       <td class="day" role="gridcell" aria-selected="${isSelected}">
         <button
           id="${getShortIsoDate(day)}"
-          class="${day.getMonth() !== this._curMonth ? "other-month" : ""}"
+          class="${day.getMonth() !== this._selectedMonth ? "other-month" : ""}"
           aria-label="${getFullDate(day, this._getLocale())}"
           aria-current="${isToday ? "date" : false}"
           tabindex="${isSelected ? 0 : -1}"
