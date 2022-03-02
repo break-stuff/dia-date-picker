@@ -16,11 +16,11 @@ export default {
        ['today-label']: 'Today',
        
     },
-    // parameters: {
-    //     actions: {
-    //         handles: ['find'],
-    //     },
-    // },
+    parameters: {
+        actions: {
+            handles: ['ks-change'],
+        },
+    },
 };
 
 const Template = (args: any) => {
