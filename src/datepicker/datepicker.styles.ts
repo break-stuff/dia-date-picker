@@ -6,6 +6,7 @@ export const styles = css`
     --outline: solid 2px #71a5d1;
     --outline-offset: 0.125rem;
     --border-color: #4f7494;
+    --focus-color: #d7e6ff;
 
     position: relative;
     display: inline-block;
@@ -66,6 +67,7 @@ export const styles = css`
   .main-input-label {
     display: block;
     margin-bottom: 0.25rem;
+    cursor: pointer;
   }
 
   .controls {
@@ -76,10 +78,47 @@ export const styles = css`
   }
 
   .main-input {
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  .main-input-controls {
     background-color: white;
     border: solid 2px var(--border-color);
     border-radius: 0.25rem;
     padding: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .main-input-controls:focus-within {
+    outline: var(--outline);
+    outline-offset: var(--outline-offset);
+  }
+
+  .main-input-controls input {
+    text-align: center;
+    border: 0;
+    padding: 0.125rem;
+    // margin: 0 0.25rem;
+  }
+
+  .main-input-controls input:focus {
+    outline: 0;
+    // background-color: #dee2e9;
+  }
+
+  .main-input-controls .month {
+    min-width: 2rem;
+  }
+
+  .main-input-controls .year {
+    // padding: 0;
+  }
+
+  .main-input-controls input::-webkit-inner-spin-button {
+    display: none;
   }
 
   .calendar-toggle {
@@ -88,9 +127,9 @@ export const styles = css`
     border: 0;
     font-size: 1.5rem;
     color: var(--border-color);
-    position: absolute;
-    right: 0.25rem;
-    margin: 0.125rem;
+    // position: absolute;
+    // right: 0.25rem;
+    // margin: 0.125rem;
     padding-top: 0.125rem;
     outline-offset: 0;
     display: inline-flex;
@@ -224,7 +263,7 @@ export const styles = css`
     text-align: center;
     font-size: 1rem;
   }
-  .day {
+  .calendar .day {
     cursor: pointer;
     border-radius: 100%;
   }
