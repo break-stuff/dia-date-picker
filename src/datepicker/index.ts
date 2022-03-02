@@ -397,10 +397,10 @@ export class KsDatepicker extends LitElement {
   }
 
   private labelClickHandler() {
-    this.$monthInput?.focus();
+    this.$monthInput?.select();
   }
 
-  private monthInputKeyUpHandler(e: KeyboardEvent) {
+  private mainMonthKeyUpHandler(e: KeyboardEvent) {
     switch (e.key) {
       case "ArrowRight":
         this.$dayInput?.select();
@@ -413,20 +413,20 @@ export class KsDatepicker extends LitElement {
     }
   }
 
-  private yearInputKeyUpHandler(e: KeyboardEvent) {
-    switch (e.key) {
-      case "ArrowLeft":
+  private mainMonthInputHandler() {
+    const value = this.$monthInput?.value;
+
+    if (value) {
+      this._selectedMonth = Number(value);
+      console.log(this._selectedMonth);
+
+      if (this._selectedMonth > 1) {
         this.$dayInput?.select();
-        break;
-      case " ":
-        this.show();
-        break;
-      default:
-        return;
+      }
     }
   }
 
-  private dayInputKeyUpHandler(e: KeyboardEvent) {
+  private mainDayKeyUpHandler(e: KeyboardEvent) {
     switch (e.key) {
       case "ArrowLeft":
         this.$monthInput?.select();
@@ -439,6 +439,39 @@ export class KsDatepicker extends LitElement {
         break;
       default:
         return;
+    }
+  }
+
+  private mainDayInputHandler() {
+    const value = this.$dayInput?.value;
+
+    if (value) {
+      this._selectedDay = Number(value);
+
+      if (this._selectedDay > 3) {
+        this.$yearInput?.select();
+      }
+    }
+  }
+
+  private mainYearKeyUpHandler(e: KeyboardEvent) {
+    switch (e.key) {
+      case "ArrowLeft":
+        this.$dayInput?.select();
+        break;
+      case " ":
+        this.show();
+        break;
+      default:
+        return;
+    }
+  }
+
+  private mainYearInputHandler() {
+    const value = this.$yearInput?.value;
+
+    if (value) {
+      this._selectedYear = Number(value);
     }
   }
 
@@ -464,7 +497,7 @@ export class KsDatepicker extends LitElement {
     this.onRender();
 
     return html`
-      ${this._mainInputTemplate()}
+      ${this.mainInputTemplate()}
       <div
         id="calendar-dropdown"
         class="${classMap({ "calendar-dropdown": true, open: this._expanded })}"
@@ -476,13 +509,13 @@ export class KsDatepicker extends LitElement {
         )}"
         @keydown="${this.dropdownKeyDownHandler}"
       >
-        ${this._topControlsTemplate()} ${this._calendarTemplate()}
-        ${this._bottomControlsTemplate()}
+        ${this.topControlsTemplate()} ${this.calendarTemplate()}
+        ${this.bottomControlsTemplate()}
       </div>
     `;
   }
 
-  private _mainInputTemplate() {
+  private mainInputTemplate() {
     return html`
       <div class="controls">
         <fieldset class="main-input">
@@ -498,7 +531,8 @@ export class KsDatepicker extends LitElement {
               min="1"
               max="12"
               placeholder="mm"
-              @keyup="${this.monthInputKeyUpHandler}"
+              @keyup="${this.mainMonthKeyUpHandler}"
+              @input="${this.mainMonthInputHandler}"
             />
             <span aria-hidden="true">/</span>
             <label for="day" class="sr-only">${this.dayLabel}</label>
@@ -509,7 +543,8 @@ export class KsDatepicker extends LitElement {
               min="1"
               max="${getDaysInMonth(this._selectedMonth, this._selectedYear)}"
               placeholder="dd"
-              @keyup="${this.dayInputKeyUpHandler}"
+              @keyup="${this.mainDayKeyUpHandler}"
+              @input="${this.mainDayInputHandler}"
             />
             <span aria-hidden="true">/</span>
             <label for="year" class="sr-only">${this.yearLabel}</label>
@@ -520,7 +555,8 @@ export class KsDatepicker extends LitElement {
               min="1"
               max="9999"
               placeholder="yyyy"
-              @keyup="${this.yearInputKeyUpHandler}"
+              @keyup="${this.mainYearKeyUpHandler}"
+              @input="${this.mainYearInputHandler}"
             />
             <button
               class="calendar-toggle"
@@ -558,7 +594,7 @@ export class KsDatepicker extends LitElement {
     `;
   }
 
-  private _topControlsTemplate() {
+  private topControlsTemplate() {
     return html`
       <div class="top-controls">
         <span class="left-controls">
@@ -574,8 +610,7 @@ export class KsDatepicker extends LitElement {
                   <option value="${i}" ?selected="${i === this._selectedMonth}">
                     ${month}
                   </option>
-                `
-              )}
+                `)}
             </select>
             <span class="month-icon">
                 <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="chevron_down"><g><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></g></svg>
@@ -617,7 +652,7 @@ export class KsDatepicker extends LitElement {
     `;
   }
 
-  private _calendarTemplate() {
+  private calendarTemplate() {
     const focusDate = this.getFocusDate();
 
     return html`
@@ -651,22 +686,22 @@ export class KsDatepicker extends LitElement {
         </thead>
         <tbody role="rowgroup">
           ${getWeeks(this._selectedMonth, this._selectedYear).map((week) =>
-            this._weekTemplate(week, focusDate)
+            this.weekTemplate(week, focusDate)
           )}
         </tbody>
       </table>
     `;
   }
 
-  private _weekTemplate(week: Date[], focusDate: Date | null | undefined) {
+  private weekTemplate(week: Date[], focusDate: Date | null | undefined) {
     return html`
       <tr class="week" role="row">
-        ${week.map((day) => this._dayTemplate(day, focusDate))}
+        ${week.map((day) => this.dayTemplate(day, focusDate))}
       </tr>
     `;
   }
 
-  private _dayTemplate(day: Date, focusDate: Date | null | undefined) {
+  private dayTemplate(day: Date, focusDate: Date | null | undefined) {
     const isSelected =
       focusDate?.toLocaleDateString() === day.toLocaleDateString();
     const isToday =
@@ -690,7 +725,7 @@ export class KsDatepicker extends LitElement {
     `;
   }
 
-  private _bottomControlsTemplate() {
+  private bottomControlsTemplate() {
     return html`
       <div class="bottom-controls">
         <button class="clear" @click="${this.clearInput}">
