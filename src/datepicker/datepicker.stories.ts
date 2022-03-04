@@ -18,7 +18,7 @@ export default {
     },
     parameters: {
         actions: {
-            handles: ['ks-change'],
+            handles: ['ks-change', 'ks-input'],
         },
     },
 };

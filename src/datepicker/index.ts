@@ -173,6 +173,8 @@ export class KsDatepicker extends LitElement {
   }
 
   private pickDate(d: Date) {
+    console.log("PICKED", d);
+
     if (isOutOfRange(d, this._minDate, this._maxDate)) {
       return;
     }
@@ -181,26 +183,23 @@ export class KsDatepicker extends LitElement {
     this.hide();
   }
 
-  private emitChange() {
-    const options = {
-      detail: { value: getShortIsoDate(this._selectedDate as Date) },
-      bubbles: true,
-      composed: true,
-    };
-    this.dispatchEvent(new CustomEvent("ks-change", options));
+  private selectDate(date: Date) {
+    this.value = date.toLocaleDateString(this.getLocale());
+    this.setSelectedValues(date);
+    this.setFocusableDate(date);
   }
 
-  private selectDate(date: Date) {
-    // if (!this.$input) {
-    //   return;
-    // }
-
-    this.value = date.toLocaleDateString(this.getLocale());
-    // this.$input.value = this.value;
+  private setSelectedValues(date: Date) {
     this._selectedDate = date;
+    this._selectedDay = date.getDate();
     this._selectedMonth = date.getMonth();
     this._selectedYear = date.getFullYear();
-    this.setFocusableDate(date);
+
+    (this.$dayInput as HTMLInputElement).value = this._selectedDay.toString();
+    (this.$monthInput as HTMLInputElement).value = (
+      this._selectedMonth + 1
+    ).toString();
+    (this.$yearInput as HTMLInputElement).value = this._selectedYear.toString();
   }
 
   private setFocusableDate(date: Date) {
@@ -258,6 +257,44 @@ export class KsDatepicker extends LitElement {
     )
       ? (this._minDate as Date)
       : (this._selectedDate as Date);
+  }
+
+  /**
+   *
+   * EVENT EMITTERS
+   *
+   */
+
+  private emitChange() {
+    const options = {
+      detail: { value: getShortIsoDate(this._selectedDate as Date) },
+      bubbles: true,
+      composed: true,
+    };
+    this.dispatchEvent(new CustomEvent("ks-change", options));
+  }
+
+  private emitInput() {
+    if (
+      !this.$dayInput?.value ||
+      !this.$monthInput?.value ||
+      !this.$yearInput?.value
+    ) {
+      return;
+    }
+
+    const date = new Date(
+      this._selectedYear,
+      this._selectedMonth - 1,
+      this._selectedDay
+    );
+    const options = {
+      detail: { value: getShortIsoDate(date) },
+      bubbles: true,
+      composed: true,
+    };
+
+    this.dispatchEvent(new CustomEvent("ks-input", options));
   }
 
   /**
@@ -339,20 +376,6 @@ export class KsDatepicker extends LitElement {
     this._focusIndex = 3;
   }
 
-  private mainInputHandler(e: KeyboardEvent) {
-    const inputDate = new Date(
-      formatDateString((e.target as HTMLInputElement).value)
-    );
-
-    if (!isValidDate(inputDate)) {
-      return;
-    }
-
-    this._selectedDate = inputDate;
-    this._selectedMonth = this._selectedDate.getMonth();
-    this._selectedYear = this._selectedDate.getFullYear();
-  }
-
   private dropdownKeyDownHandler(e: KeyboardEvent): void {
     switch (e.key) {
       case "Tab":
@@ -404,11 +427,14 @@ export class KsDatepicker extends LitElement {
     switch (e.key) {
       case "ArrowRight":
         this.$dayInput?.select();
-        break;
+        return;
       case " ":
         this.show();
-        break;
+        return;
       default:
+        if (!isNaN(e.key as any)) {
+          this.mainMonthInputHandler();
+        }
         return;
     }
   }
@@ -416,42 +442,75 @@ export class KsDatepicker extends LitElement {
   private mainMonthInputHandler() {
     const value = this.$monthInput?.value;
 
-    if (value) {
-      this._selectedMonth = Number(value);
-      console.log(this._selectedMonth);
-
-      if (this._selectedMonth > 1) {
-        this.$dayInput?.select();
-      }
+    if (!value) {
+      return;
     }
+
+    let month = Number(value);
+    if (month > 12) {
+      month = 12;
+      (this.$monthInput as HTMLInputElement).value = month.toString();
+    }
+
+    if (month < 1) {
+      month = 1;
+      (this.$monthInput as HTMLInputElement).value = month.toString();
+    }
+
+    this._selectedMonth = month;
+
+    if (this._selectedMonth > 1) {
+      this.$dayInput?.select();
+    }
+
+    this.emitInput();
   }
 
   private mainDayKeyUpHandler(e: KeyboardEvent) {
     switch (e.key) {
       case "ArrowLeft":
         this.$monthInput?.select();
-        break;
+        return;
       case "ArrowRight":
         this.$yearInput?.select();
-        break;
+        return;
       case " ":
         this.show();
-        break;
-      default:
         return;
+      default:
+        if (!isNaN(e.key as any)) {
+          this.mainDayInputHandler();
+        }
+        break;
     }
   }
 
   private mainDayInputHandler() {
     const value = this.$dayInput?.value;
 
-    if (value) {
-      this._selectedDay = Number(value);
-
-      if (this._selectedDay > 3) {
-        this.$yearInput?.select();
-      }
+    if (!value) {
+      return;
     }
+
+    let day = Number(value);
+    const maxDays = getDaysInMonth(this._selectedMonth, this._selectedYear);
+    if (day > maxDays) {
+      day = maxDays;
+      (this.$dayInput as HTMLInputElement).value = maxDays.toString();
+    }
+
+    if (day < 1) {
+      day = 1;
+      (this.$dayInput as HTMLInputElement).value = day.toString();
+    }
+
+    this._selectedDay = day;
+
+    if (this._selectedDay > 3) {
+      this.$yearInput?.select();
+    }
+
+    this.emitInput();
   }
 
   private mainYearKeyUpHandler(e: KeyboardEvent) {
@@ -463,6 +522,9 @@ export class KsDatepicker extends LitElement {
         this.show();
         break;
       default:
+        if (!isNaN(e.key as any)) {
+          this.mainYearInputHandler();
+        }
         return;
     }
   }
@@ -470,9 +532,23 @@ export class KsDatepicker extends LitElement {
   private mainYearInputHandler() {
     const value = this.$yearInput?.value;
 
-    if (value) {
-      this._selectedYear = Number(value);
+    if (!value) {
+      return;
     }
+
+    let year = Number(value);
+    if (year > 9999) {
+      year = 9999;
+      (this.$yearInput as HTMLInputElement).value = year.toString();
+    }
+
+    if (year < 1) {
+      year = 1;
+      (this.$yearInput as HTMLInputElement).value = year.toString();
+    }
+
+    this._selectedYear = Number(value);
+    this.emitInput();
   }
 
   private onRender() {
@@ -532,7 +608,6 @@ export class KsDatepicker extends LitElement {
               max="12"
               placeholder="mm"
               @keyup="${this.mainMonthKeyUpHandler}"
-              @input="${this.mainMonthInputHandler}"
             />
             <span aria-hidden="true">/</span>
             <label for="day" class="sr-only">${this.dayLabel}</label>
@@ -544,7 +619,6 @@ export class KsDatepicker extends LitElement {
               max="${getDaysInMonth(this._selectedMonth, this._selectedYear)}"
               placeholder="dd"
               @keyup="${this.mainDayKeyUpHandler}"
-              @input="${this.mainDayInputHandler}"
             />
             <span aria-hidden="true">/</span>
             <label for="year" class="sr-only">${this.yearLabel}</label>
@@ -556,7 +630,6 @@ export class KsDatepicker extends LitElement {
               max="9999"
               placeholder="yyyy"
               @keyup="${this.mainYearKeyUpHandler}"
-              @input="${this.mainYearInputHandler}"
             />
             <button
               class="calendar-toggle"
@@ -610,7 +683,8 @@ export class KsDatepicker extends LitElement {
                   <option value="${i}" ?selected="${i === this._selectedMonth}">
                     ${month}
                   </option>
-                `)}
+                `
+              )}
             </select>
             <span class="month-icon">
                 <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="chevron_down"><g><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></g></svg>
