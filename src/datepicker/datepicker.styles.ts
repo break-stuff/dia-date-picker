@@ -249,6 +249,22 @@ export const styles = css`
     clear: both;
     margin: 0.5rem 0;
   }
+
+  .calendar tbody {
+    opacity: 0.125;
+  }
+  .calendar .prev {
+    transform: translateY(-0.75rem);
+  }
+  .calendar .next {
+    transform: translateY(0.75rem);
+  }
+
+  .calendar .show {
+    opacity: 1;
+    transform: translateY(0rem);
+    transition: all 0.4s ease-in-out;
+  }
   .calendar .week-days td {
     color: #9a9a9a;
   }
