@@ -3,7 +3,6 @@
 import { html, LitElement } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { live } from "lit/directives/live.js";
 
 import { getFocusableElements } from "../utils/domUtils";
 import {
@@ -140,7 +139,8 @@ export class KsDatepicker extends LitElement {
     this.initMainInputValues();
   }
 
-  protected async performUpdate(): Promise<unknown> {
+  protected async performUpdate() {
+    // update selected values when value changes
     this.initMainInputValues();
     return super.performUpdate();
   }
@@ -230,7 +230,7 @@ export class KsDatepicker extends LitElement {
 
   private getSelectedDate() {
     return this.value
-      ? new Date(live(this.value) as string)
+      ? new Date(this.value as string)
       : this._selectedDate
       ? this._selectedDate
       : this._curDate;
