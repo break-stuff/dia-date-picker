@@ -3,6 +3,7 @@
 import { html, LitElement } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
+import { live } from "lit/directives/live.js";
 
 import { getFocusableElements } from "../utils/domUtils";
 import {
@@ -136,10 +137,12 @@ export class KsDatepicker extends LitElement {
 
   protected firstUpdated(): void {
     this.hideOnDocumentClick();
-    const selectedDate = this.value
-      ? new Date(formatDateString(this.value))
-      : this._curDate;
-    this.setSelectedValues(selectedDate);
+    this.initMainInputValues();
+  }
+
+  protected async performUpdate(): Promise<unknown> {
+    this.initMainInputValues();
+    return super.performUpdate();
   }
 
   /**
@@ -208,6 +211,13 @@ export class KsDatepicker extends LitElement {
    *
    */
 
+  private initMainInputValues() {
+    const selectedDate = this.value
+      ? new Date(formatDateString(this.value))
+      : this._curDate;
+    this.setSelectedValues(selectedDate);
+  }
+
   private hideOnDocumentClick() {
     window.addEventListener("click", (e: MouseEvent) => {
       if (this.contains(e.target as HTMLElement)) {
@@ -219,10 +229,10 @@ export class KsDatepicker extends LitElement {
   }
 
   private getSelectedDate() {
-    return this._selectedDate
+    return this.value
+      ? new Date(live(this.value) as string)
+      : this._selectedDate
       ? this._selectedDate
-      : this.value
-      ? new Date(this.value as string)
       : this._curDate;
   }
 
@@ -247,7 +257,7 @@ export class KsDatepicker extends LitElement {
     this._selectedMonth = date.getMonth();
     this._selectedYear = date.getFullYear();
 
-    if (this.value) {
+    if (this.value && this.$dayInput) {
       this.setMainDayInput();
       this.setMainMonthInput();
       this.setMainYearInput();
@@ -321,7 +331,7 @@ export class KsDatepicker extends LitElement {
       day < 10 && day !== "" ? "0" + day : day.toString();
   }
 
-  private setMainMonthInput(month: number | string = (this._selectedMonth + 1)) {
+  private setMainMonthInput(month: number | string = this._selectedMonth + 1) {
     (this.$monthInput as HTMLInputElement).value =
       month < 10 && month !== "" ? "0" + month : month.toString();
   }
@@ -791,10 +801,7 @@ export class KsDatepicker extends LitElement {
             >
               ${getMonths(this.getLocale()).map(
                 (month, i) => html`
-                  <option
-                    value="${i}"
-                    ?selected="${i === this._selectedMonth}"
-                  >
+                  <option value="${i}" ?selected="${i === this._selectedMonth}">
                     ${month}
                   </option>
                 `
