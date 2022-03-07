@@ -45,6 +45,11 @@ const Template = (args: any) => {
 export const Default: any = Template.bind({});
 Default.args = {};
 
+export const PresetValue: any = Template.bind({});
+PresetValue.args = {
+    value: '12/2/2020'
+};
+
 export const MinMaxDates: any = Template.bind({});
 MinMaxDates.args = {
     ['min-date']: '2/2/2022',

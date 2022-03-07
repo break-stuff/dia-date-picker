@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-console */
-import { html, LitElement, TemplateResult } from "lit";
+import { html, LitElement } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 
@@ -128,8 +128,18 @@ export class KsDatepicker extends LitElement {
   @query("#calendar_controls tbody")
   private $calendarControls: HTMLElement | undefined;
 
+  /**
+   *
+   * LIFECYCLE HOOKS
+   *
+   */
+
   protected firstUpdated(): void {
     this.hideOnDocumentClick();
+    const selectedDate = this.value
+      ? new Date(formatDateString(this.value))
+      : this._curDate;
+    this.setSelectedValues(selectedDate);
   }
 
   /**
@@ -149,6 +159,47 @@ export class KsDatepicker extends LitElement {
     this._expanded = false;
     this._focusIndex = 4;
     setTimeout(() => this.$monthInput?.focus());
+  }
+
+  /**
+   *
+   * EVENT EMITTERS
+   *
+   */
+
+  private emitChange() {
+    const options = {
+      detail: { value: getShortIsoDate(this._selectedDate as Date) },
+      bubbles: true,
+      composed: true,
+    };
+    this.dispatchEvent(new CustomEvent("ks-change", options));
+  }
+
+  private emitInput() {
+    if (
+      !this.$dayInput?.value ||
+      !this.$monthInput?.value ||
+      !this.$yearInput?.value
+    ) {
+      return;
+    }
+
+    const date = new Date(
+      this._selectedYear,
+      this._selectedMonth - 1,
+      this._selectedDay
+    );
+
+    this.value = getShortIsoDate(date);
+
+    const options = {
+      detail: { value: this.value },
+      bubbles: true,
+      composed: true,
+    };
+
+    this.dispatchEvent(new CustomEvent("ks-input", options));
   }
 
   /**
@@ -185,7 +236,7 @@ export class KsDatepicker extends LitElement {
   }
 
   private selectDate(date: Date) {
-    this.value = date.toLocaleDateString(this.getLocale());
+    this.value = getShortIsoDate(date);
     this.setSelectedValues(date);
     this.setFocusableDate(date);
   }
@@ -196,9 +247,11 @@ export class KsDatepicker extends LitElement {
     this._selectedMonth = date.getMonth();
     this._selectedYear = date.getFullYear();
 
-    this.setMainDayInput();
-    this.setMainMonthInput(this._selectedMonth + 1);
-    this.setMainYearInput();
+    if (this.value) {
+      this.setMainDayInput();
+      this.setMainMonthInput();
+      this.setMainYearInput();
+    }
   }
 
   private setFocusableDate(date: Date) {
@@ -244,6 +297,10 @@ export class KsDatepicker extends LitElement {
     this.setMainDayInput("");
     this.setMainMonthInput("");
     this.setMainYearInput("");
+    this._selectedDay = this._curDate.getDate();
+    this._selectedMonth = this._curDate.getMonth() + 1;
+    this._selectedYear = this._curDate.getFullYear();
+
     this.hide();
   }
 
@@ -256,17 +313,17 @@ export class KsDatepicker extends LitElement {
       ? (this._minDate as Date)
       : new Date(this._selectedYear, this._selectedMonth, this._selectedDay);
 
-    console.log(date);
-
     return date;
   }
 
   private setMainDayInput(day: number | string = this._selectedDay) {
-    (this.$dayInput as HTMLInputElement).value = day.toString();
+    (this.$dayInput as HTMLInputElement).value =
+      day < 10 && day !== "" ? "0" + day : day.toString();
   }
 
-  private setMainMonthInput(month: number | string = this._selectedMonth) {
-    (this.$monthInput as HTMLInputElement).value = month.toString();
+  private setMainMonthInput(month: number | string = (this._selectedMonth + 1)) {
+    (this.$monthInput as HTMLInputElement).value =
+      month < 10 && month !== "" ? "0" + month : month.toString();
   }
 
   private setMainYearInput(year: number | string = this._selectedYear) {
@@ -286,7 +343,7 @@ export class KsDatepicker extends LitElement {
       this.setMainMonthInput(month);
     }
 
-    if (month < 1) {
+    if (month < 0) {
       month = 1;
       this.setMainMonthInput(month);
     }
@@ -301,7 +358,7 @@ export class KsDatepicker extends LitElement {
       this.setMainDayInput(maxDays);
     }
 
-    if (day < 1) {
+    if (day < 0) {
       day = 1;
       this.setMainDayInput(day);
     }
@@ -337,51 +394,13 @@ export class KsDatepicker extends LitElement {
 
   /**
    *
-   * EVENT EMITTERS
-   *
-   */
-
-  private emitChange() {
-    const options = {
-      detail: { value: getShortIsoDate(this._selectedDate as Date) },
-      bubbles: true,
-      composed: true,
-    };
-    this.dispatchEvent(new CustomEvent("ks-change", options));
-  }
-
-  private emitInput() {
-    if (
-      !this.$dayInput?.value ||
-      !this.$monthInput?.value ||
-      !this.$yearInput?.value
-    ) {
-      return;
-    }
-
-    const date = new Date(
-      this._selectedYear,
-      this._selectedMonth - 1,
-      this._selectedDay
-    );
-
-    const options = {
-      detail: { value: getShortIsoDate(date) },
-      bubbles: true,
-      composed: true,
-    };
-
-    this.dispatchEvent(new CustomEvent("ks-input", options));
-  }
-
-  /**
-   *
    * EVENT HANDLERS
    *
    */
 
   private dayKeyUpHandler(day: Date, e: KeyboardEvent) {
     let newDate: Date = new Date();
+
     switch (e.key) {
       case "ArrowUp":
         newDate = addDaysToDate(day, -7);
@@ -462,7 +481,7 @@ export class KsDatepicker extends LitElement {
       this._selectedMonth += 1;
     }
 
-    this.setMainMonthInput();
+    this.setMainInputValues();
     this._focusIndex = 3;
     this.calendarControlsFadeUp();
   }
@@ -555,7 +574,7 @@ export class KsDatepicker extends LitElement {
 
     this._selectedMonth = this.getValidMonth(value);
 
-    if (this._selectedMonth > 1) {
+    if (value.length > 1 || this._selectedMonth > 1) {
       this.$dayInput?.select();
     }
 
@@ -598,7 +617,7 @@ export class KsDatepicker extends LitElement {
 
     this._selectedDay = this.getValidDay(value);
 
-    if (this._selectedDay > 3) {
+    if (value.length > 1 || this._selectedDay > 3) {
       this.$yearInput?.select();
     }
 
@@ -641,8 +660,6 @@ export class KsDatepicker extends LitElement {
   }
 
   private onRender() {
-    console.log("RENDER");
-
     this._minDate = (
       this.minDate ? new Date(formatDateString(this.minDate)) : null
     ) as Date;
@@ -660,7 +677,7 @@ export class KsDatepicker extends LitElement {
    *
    */
 
-  render(): TemplateResult {
+  render() {
     this.onRender();
 
     return html`
@@ -776,7 +793,7 @@ export class KsDatepicker extends LitElement {
                 (month, i) => html`
                   <option
                     value="${i}"
-                    ?selected="${i === this._selectedMonth - 1}"
+                    ?selected="${i === this._selectedMonth}"
                   >
                     ${month}
                   </option>

@@ -100,7 +100,7 @@ export const styles = css`
   .main-input-controls input {
     text-align: center;
     border: 0;
-    padding: 0.125rem;
+    padding: 0.125rem 0;
     min-width: 2rem;
   }
 
@@ -130,6 +130,7 @@ export const styles = css`
     outline-offset: 0;
     display: inline-flex;
     align-items: center;
+    margin-left: 0.125rem;
   }
 
   .calendar-toggle .icon {
@@ -169,7 +170,7 @@ export const styles = css`
     width: 0;
     border-bottom-color: #c5d1da;
     bottom: 100%;
-    left: 50%;
+    left: 25%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
   }
@@ -182,7 +183,7 @@ export const styles = css`
     width: 0;
     border-bottom-color: #fff;
     bottom: 100%;
-    left: 50%;
+    left: 25%;
     margin-bottom: calc(var(--ks-spacing-size-xxxs) * -1);
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
@@ -263,7 +264,7 @@ export const styles = css`
   .calendar .show {
     opacity: 1;
     transform: translateY(0rem);
-    transition: all 0.4s ease-in-out;
+    transition: all 0.3s linear
   }
   .calendar .week-days td {
     color: #9a9a9a;
