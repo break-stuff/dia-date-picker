@@ -141,7 +141,7 @@ export class KsDatepicker extends LitElement {
 
   protected async performUpdate() {
     // update selected values when value changes
-    this.updateMainInputValues();
+    setTimeout(() => this.updateMainInputValues());
     return super.performUpdate();
   }
 
@@ -188,13 +188,13 @@ export class KsDatepicker extends LitElement {
       return;
     }
 
-    const date = new Date(
+    this._selectedDate = new Date(
       this._selectedYear,
-      this._selectedMonth - 1,
+      this._selectedMonth,
       this._selectedDay
     );
 
-    this.value = getShortIsoDate(date);
+    this.value = getShortIsoDate(this._selectedDate);
 
     const options = {
       detail: { value: this.value },
@@ -572,6 +572,7 @@ export class KsDatepicker extends LitElement {
       case "ArrowDown":
         if (month) {
           this._selectedMonth = Number(month) - 1;
+          this.emitInput();
         }
         return;
       default:
@@ -619,6 +620,7 @@ export class KsDatepicker extends LitElement {
       case "ArrowDown":
         if (day) {
           this._selectedDay = Number(day);
+          this.emitInput();
         }
         return;
       case " ":
@@ -659,6 +661,7 @@ export class KsDatepicker extends LitElement {
       case "ArrowDown":
         if (year) {
           this._selectedYear = Number(year);
+          this.emitInput();
         }
         return;
       case " ":
