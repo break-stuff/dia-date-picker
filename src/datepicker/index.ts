@@ -141,7 +141,7 @@ export class KsDatepicker extends LitElement {
 
   protected async performUpdate() {
     // update selected values when value changes
-    this.initMainInputValues();
+    this.updateMainInputValues();
     return super.performUpdate();
   }
 
@@ -211,11 +211,25 @@ export class KsDatepicker extends LitElement {
    *
    */
 
-  private initMainInputValues() {
+   private initMainInputValues() {
     const selectedDate = this.value
       ? new Date(formatDateString(this.value))
       : this._curDate;
     this.setSelectedValues(selectedDate);
+  }
+
+  private updateMainInputValues() {
+    if(!this.value) {
+      return;
+    }
+
+    const valueDate = new Date(formatDateString(this.value));
+
+    if(valueDate.toLocaleDateString() === this._selectedDate?.toLocaleDateString()) {
+      return
+    }
+    
+    this.setSelectedValues(valueDate);
   }
 
   private hideOnDocumentClick() {
