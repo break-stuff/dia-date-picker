@@ -15,7 +15,6 @@ import {
   getFullDate,
   getMonthLabel,
   formatDateString,
-  isValidDate,
   getDaysInMonth,
 } from '../utils/dateUtils';
 
