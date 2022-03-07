@@ -1,10 +1,10 @@
-import { fixture, assert } from "@open-wc/testing";
-import { KsDatepicker } from "./index";
+import { fixture, assert } from '@open-wc/testing';
+import { KsDatepicker } from './index';
 
 const tag = new KsDatepicker().tagName;
 
-describe("datepicker accessibility", () => {
-  it("test basic element accessibility", async () => {
+describe('datepicker accessibility', () => {
+  it('test basic element accessibility', async () => {
     // Arrange
     const $el = await fixture<KsDatepicker>(
       `<${tag} label="Select Date"></${tag}>`
@@ -16,13 +16,13 @@ describe("datepicker accessibility", () => {
     await assert.isAccessible($el);
   });
 
-  it("check accessibility when menu is open", async () => {
+  it('check accessibility when menu is open', async () => {
     // Arrange
     const $el = await fixture<KsDatepicker>(
       `<${tag} label="Select Date"></${tag}>`
     );
     const $calendarToggle = $el.shadowRoot?.querySelector(
-      ".calendar-toggle"
+      '.calendar-toggle'
     ) as HTMLButtonElement;
 
     // Act
@@ -32,11 +32,11 @@ describe("datepicker accessibility", () => {
     setTimeout(() => assert.isAccessible($el));
   });
 
-  it("decreases the count on button click", async () => {
+  it('decreases the count on button click', async () => {
     // Arrange
     const $el = await fixture<KsDatepicker>(`<${tag}></${tag}>`);
     const $calendarToggle = $el.shadowRoot?.querySelector(
-      ".calendar-toggle"
+      '.calendar-toggle'
     ) as HTMLButtonElement;
 
     // Act
@@ -44,7 +44,7 @@ describe("datepicker accessibility", () => {
 
     // Assert
     setTimeout(() =>
-      assert.equal($calendarToggle.getAttribute("aria-expanded"), "true")
+      assert.equal($calendarToggle.getAttribute('aria-expanded'), 'true')
     );
   });
 });

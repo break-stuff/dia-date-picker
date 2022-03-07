@@ -18,7 +18,7 @@ export function isValidDate(date: Date) {
  * @returns string - date string where all non-numeric characters have been converted to "/" - "mm-dd-yyyy" => ""
  */
 export function formatDateString(date: string): string {
-  return date.replace(/\D/g, "/");
+  return date.replace(/\D/g, '/');
 }
 
 /**
@@ -28,7 +28,7 @@ export function formatDateString(date: string): string {
  * @returns returns date in full format based on locale
  */
 export function getFullDate(date: Date, locale: string): string {
-  const formatter = new Intl.DateTimeFormat(locale, { dateStyle: "long" });
+  const formatter = new Intl.DateTimeFormat(locale, { dateStyle: 'long' });
   return formatter.format(date);
 }
 
@@ -83,8 +83,8 @@ export function getSelectableDateInScope(
  * @returns string[] - list of months
  */
 export function getMonths(locale: string): string[] {
-  const { format } = new Intl.DateTimeFormat(locale, { month: "long" });
-  return [...Array(12).keys()].map((m) =>
+  const { format } = new Intl.DateTimeFormat(locale, { month: 'long' });
+  return [...Array(12).keys()].map(m =>
     format(new Date(Date.UTC(2021, m + 1)))
   );
 }
@@ -95,8 +95,8 @@ export function getMonthLabel(
   locale: string
 ): string {
   const { format } = new Intl.DateTimeFormat(locale, {
-    month: "long",
-    year: "numeric",
+    month: 'long',
+    year: 'numeric',
   });
   return format(new Date(Date.UTC(year, month + 1)));
 }
@@ -107,12 +107,12 @@ export function getMonthLabel(
  * @returns IWeekDay[] - list of week day abbreviations and full names
  */
 export function getDaysOfTheWeek(locale: string): IWeekDay[] {
-  const abbrFormat = new Intl.DateTimeFormat(locale, { weekday: "narrow" })
+  const abbrFormat = new Intl.DateTimeFormat(locale, { weekday: 'narrow' })
     .format;
-  const fullFormat = new Intl.DateTimeFormat(locale, { weekday: "long" })
+  const fullFormat = new Intl.DateTimeFormat(locale, { weekday: 'long' })
     .format;
 
-  return [...Array(7).keys()].map((day) => {
+  return [...Array(7).keys()].map(day => {
     return {
       abbr: abbrFormat(new Date(Date.UTC(2021, 5, day))),
       fullDay: fullFormat(new Date(Date.UTC(2021, 5, day))),

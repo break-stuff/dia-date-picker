@@ -1,10 +1,10 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-console */
-import { html, LitElement } from "lit";
-import { customElement, property, query, state } from "lit/decorators.js";
-import { classMap } from "lit/directives/class-map.js";
+import { html, LitElement } from 'lit';
+import { customElement, property, query, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 
-import { getFocusableElements } from "../utils/domUtils";
+import { getFocusableElements } from '../utils/domUtils';
 import {
   addDaysToDate,
   getDaysOfTheWeek,
@@ -17,9 +17,9 @@ import {
   formatDateString,
   isValidDate,
   getDaysInMonth,
-} from "../utils/dateUtils";
+} from '../utils/dateUtils';
 
-import { styles } from "./datepicker.styles";
+import { styles } from './datepicker.styles';
 
 /**
  * @tag ks-datepicker
@@ -46,7 +46,7 @@ import { styles } from "./datepicker.styles";
  *
  * @event {CustomEvent} ks-change - emits the date as short ISO string when calendar date is selected
  */
-@customElement("ks-datepicker")
+@customElement('ks-datepicker')
 export class KsDatepicker extends LitElement {
   static styles = styles;
 
@@ -59,26 +59,26 @@ export class KsDatepicker extends LitElement {
   @property({ type: String })
   locale: string | undefined;
 
-  @property({ attribute: "min-date", type: String })
+  @property({ attribute: 'min-date', type: String })
   minDate: string | undefined;
 
-  @property({ attribute: "max-date", type: String })
+  @property({ attribute: 'max-date', type: String })
   maxDate: string | undefined;
 
-  @property({ attribute: "day-label", type: String })
-  dayLabel = "Day";
+  @property({ attribute: 'day-label', type: String })
+  dayLabel = 'Day';
 
-  @property({ attribute: "month-label", type: String })
-  monthLabel = "Month";
+  @property({ attribute: 'month-label', type: String })
+  monthLabel = 'Month';
 
-  @property({ attribute: "year-label", type: String })
-  yearLabel = "Year";
+  @property({ attribute: 'year-label', type: String })
+  yearLabel = 'Year';
 
-  @property({ attribute: "clear-label", type: String })
-  clearLabel = "Clear";
+  @property({ attribute: 'clear-label', type: String })
+  clearLabel = 'Clear';
 
-  @property({ attribute: "today-label", type: String })
-  todayLabel = "Today";
+  @property({ attribute: 'today-label', type: String })
+  todayLabel = 'Today';
 
   @state()
   private _expanded = false;
@@ -110,22 +110,22 @@ export class KsDatepicker extends LitElement {
   @state()
   private $focusableEls: HTMLElement[] = [];
 
-  @query("#day")
+  @query('#day')
   private $dayInput: HTMLInputElement | undefined;
 
-  @query("#month")
+  @query('#month')
   private $monthInput: HTMLInputElement | undefined;
 
-  @query("#year")
+  @query('#year')
   private $yearInput: HTMLInputElement | undefined;
 
   @query('.calendar [tabindex="0"]')
   private $calendarFocusableButton: HTMLButtonElement | undefined;
 
-  @query("#calendar-dropdown")
+  @query('#calendar-dropdown')
   private $calendarDropdown: HTMLElement | undefined;
 
-  @query("#calendar_controls tbody")
+  @query('#calendar_controls tbody')
   private $calendarControls: HTMLElement | undefined;
 
   /**
@@ -176,7 +176,7 @@ export class KsDatepicker extends LitElement {
       bubbles: true,
       composed: true,
     };
-    this.dispatchEvent(new CustomEvent("ks-change", options));
+    this.dispatchEvent(new CustomEvent('ks-change', options));
   }
 
   private emitInput() {
@@ -202,7 +202,7 @@ export class KsDatepicker extends LitElement {
       composed: true,
     };
 
-    this.dispatchEvent(new CustomEvent("ks-input", options));
+    this.dispatchEvent(new CustomEvent('ks-input', options));
   }
 
   /**
@@ -211,7 +211,7 @@ export class KsDatepicker extends LitElement {
    *
    */
 
-   private initMainInputValues() {
+  private initMainInputValues() {
     const selectedDate = this.value
       ? new Date(formatDateString(this.value))
       : this._curDate;
@@ -219,21 +219,24 @@ export class KsDatepicker extends LitElement {
   }
 
   private updateMainInputValues() {
-    if(!this.value) {
+    if (!this.value) {
       return;
     }
 
     const valueDate = new Date(formatDateString(this.value));
 
-    if(valueDate.toLocaleDateString() === this._selectedDate?.toLocaleDateString()) {
-      return
+    if (
+      valueDate.toLocaleDateString() ===
+      this._selectedDate?.toLocaleDateString()
+    ) {
+      return;
     }
-    
+
     this.setSelectedValues(valueDate);
   }
 
   private hideOnDocumentClick() {
-    window.addEventListener("click", (e: MouseEvent) => {
+    window.addEventListener('click', (e: MouseEvent) => {
       if (this.contains(e.target as HTMLElement)) {
         return;
       }
@@ -286,16 +289,16 @@ export class KsDatepicker extends LitElement {
       this.$focusableEls.splice(4, 1, $control);
 
       this.resetDayButtons();
-      $control?.setAttribute("tabindex", "0");
-      $control?.setAttribute("aria-select", "true");
+      $control?.setAttribute('tabindex', '0');
+      $control?.setAttribute('aria-select', 'true');
       $control?.focus();
     });
   }
 
   private resetDayButtons() {
-    this.$calendarDropdown?.querySelectorAll("table button").forEach((x) => {
-      x.setAttribute("tabindex", "-1");
-      x.setAttribute("aria-selected", "false");
+    this.$calendarDropdown?.querySelectorAll('table button').forEach(x => {
+      x.setAttribute('tabindex', '-1');
+      x.setAttribute('aria-selected', 'false');
     });
   }
 
@@ -310,7 +313,7 @@ export class KsDatepicker extends LitElement {
   private getLocale(): string {
     return this.locale
       ? this.locale
-      : navigator.language || (navigator.languages || ["en"])[0];
+      : navigator.language || (navigator.languages || ['en'])[0];
   }
 
   private setDateForToday(): void {
@@ -318,9 +321,9 @@ export class KsDatepicker extends LitElement {
   }
 
   private clearInput(): void {
-    this.setMainDayInput("");
-    this.setMainMonthInput("");
-    this.setMainYearInput("");
+    this.setMainDayInput('');
+    this.setMainMonthInput('');
+    this.setMainYearInput('');
     this._selectedDay = this._curDate.getDate();
     this._selectedMonth = this._curDate.getMonth() + 1;
     this._selectedYear = this._curDate.getFullYear();
@@ -342,12 +345,12 @@ export class KsDatepicker extends LitElement {
 
   private setMainDayInput(day: number | string = this._selectedDay) {
     (this.$dayInput as HTMLInputElement).value =
-      day < 10 && day !== "" ? "0" + day : day.toString();
+      day < 10 && day !== '' ? '0' + day : day.toString();
   }
 
   private setMainMonthInput(month: number | string = this._selectedMonth + 1) {
     (this.$monthInput as HTMLInputElement).value =
-      month < 10 && month !== "" ? "0" + month : month.toString();
+      month < 10 && month !== '' ? '0' + month : month.toString();
   }
 
   private setMainYearInput(year: number | string = this._selectedYear) {
@@ -405,15 +408,15 @@ export class KsDatepicker extends LitElement {
   }
 
   private calendarControlsFadeDown() {
-    this.$calendarControls?.classList.remove("show", "prev", "next");
-    this.$calendarControls?.classList.add("prev");
-    setTimeout(() => this.$calendarControls?.classList.add("show"));
+    this.$calendarControls?.classList.remove('show', 'prev', 'next');
+    this.$calendarControls?.classList.add('prev');
+    setTimeout(() => this.$calendarControls?.classList.add('show'));
   }
 
   private calendarControlsFadeUp() {
-    this.$calendarControls?.classList.remove("show", "prev", "next");
-    this.$calendarControls?.classList.add("next");
-    setTimeout(() => this.$calendarControls?.classList.add("show"));
+    this.$calendarControls?.classList.remove('show', 'prev', 'next');
+    this.$calendarControls?.classList.add('next');
+    setTimeout(() => this.$calendarControls?.classList.add('show'));
   }
 
   /**
@@ -426,22 +429,22 @@ export class KsDatepicker extends LitElement {
     let newDate: Date = new Date();
 
     switch (e.key) {
-      case "ArrowUp":
+      case 'ArrowUp':
         newDate = addDaysToDate(day, -7);
         break;
-      case "ArrowDown":
+      case 'ArrowDown':
         newDate = addDaysToDate(day, 7);
         break;
-      case "ArrowLeft":
+      case 'ArrowLeft':
         newDate = addDaysToDate(day, -1);
         break;
-      case "ArrowRight":
+      case 'ArrowRight':
         newDate = addDaysToDate(day, 1);
         break;
-      case "Enter":
+      case 'Enter':
         this.pickDate(day);
         break;
-      case "Escape":
+      case 'Escape':
         e.preventDefault();
         if (
           day.toLocaleDateString() === this._selectedDate?.toLocaleDateString()
@@ -512,10 +515,10 @@ export class KsDatepicker extends LitElement {
 
   private dropdownKeyDownHandler(e: KeyboardEvent): void {
     switch (e.key) {
-      case "Tab":
+      case 'Tab':
         this.dropdownTabHandler(e);
         break;
-      case "Escape":
+      case 'Escape':
         this.dropdownEscKeyHandler();
         break;
       default:
@@ -561,15 +564,15 @@ export class KsDatepicker extends LitElement {
     const month = (e.target as HTMLInputElement)?.value;
 
     switch (e.key) {
-      case "ArrowRight":
+      case 'ArrowRight':
         this.$dayInput?.select();
         return;
-      case " ":
+      case ' ':
         e.preventDefault();
         this.show();
         return;
-      case "ArrowUp":
-      case "ArrowDown":
+      case 'ArrowUp':
+      case 'ArrowDown':
         if (month) {
           this._selectedMonth = Number(month) - 1;
           this.emitInput();
@@ -584,7 +587,7 @@ export class KsDatepicker extends LitElement {
   }
 
   private preventSpaceKeyDownHandler(e: KeyboardEvent) {
-    if (e.key === " ") {
+    if (e.key === ' ') {
       e.preventDefault();
       return false;
     }
@@ -610,20 +613,20 @@ export class KsDatepicker extends LitElement {
     const day = (e.target as HTMLInputElement)?.value;
 
     switch (e.key) {
-      case "ArrowLeft":
+      case 'ArrowLeft':
         this.$monthInput?.select();
         return;
-      case "ArrowRight":
+      case 'ArrowRight':
         this.$yearInput?.select();
         return;
-      case "ArrowUp":
-      case "ArrowDown":
+      case 'ArrowUp':
+      case 'ArrowDown':
         if (day) {
           this._selectedDay = Number(day);
           this.emitInput();
         }
         return;
-      case " ":
+      case ' ':
         this.show();
         return;
       default:
@@ -654,17 +657,17 @@ export class KsDatepicker extends LitElement {
     const year = (e.target as HTMLInputElement)?.value;
 
     switch (e.key) {
-      case "ArrowLeft":
+      case 'ArrowLeft':
         this.$dayInput?.select();
         break;
-      case "ArrowUp":
-      case "ArrowDown":
+      case 'ArrowUp':
+      case 'ArrowDown':
         if (year) {
           this._selectedYear = Number(year);
           this.emitInput();
         }
         return;
-      case " ":
+      case ' ':
         this.show();
         break;
       default:
@@ -711,7 +714,7 @@ export class KsDatepicker extends LitElement {
       ${this.mainInputTemplate()}
       <div
         id="calendar-dropdown"
-        class="${classMap({ "calendar-dropdown": true, open: this._expanded })}"
+        class="${classMap({ 'calendar-dropdown': true, open: this._expanded })}"
         role="dialog"
         aria-label="${getMonthLabel(
           this._selectedMonth,
@@ -930,7 +933,7 @@ export class KsDatepicker extends LitElement {
         <thead role="rowgroup">
           <tr class="week-days" role="row">
             ${getDaysOfTheWeek(this.getLocale()).map(
-              (day) =>
+              day =>
                 html`<th
                   scope="col"
                   role="columnheader"
@@ -943,7 +946,7 @@ export class KsDatepicker extends LitElement {
           </tr>
         </thead>
         <tbody role="rowgroup" class="show">
-          ${getWeeks(this._selectedMonth, this._selectedYear).map((week) =>
+          ${getWeeks(this._selectedMonth, this._selectedYear).map(week =>
             this.weekTemplate(week, focusDate)
           )}
         </tbody>
@@ -954,7 +957,7 @@ export class KsDatepicker extends LitElement {
   private weekTemplate(week: Date[], focusDate: Date | null | undefined) {
     return html`
       <tr class="week" role="row">
-        ${week.map((day) => this.dayTemplate(day, focusDate))}
+        ${week.map(day => this.dayTemplate(day, focusDate))}
       </tr>
     `;
   }
@@ -969,9 +972,9 @@ export class KsDatepicker extends LitElement {
       <td class="day" role="gridcell" aria-selected="${isSelected}">
         <button
           id="${getShortIsoDate(day)}"
-          class="${day.getMonth() !== this._selectedMonth ? "other-month" : ""}"
+          class="${day.getMonth() !== this._selectedMonth ? 'other-month' : ''}"
           aria-label="${getFullDate(day, this.getLocale())}"
-          aria-current="${isToday ? "date" : false}"
+          aria-current="${isToday ? 'date' : false}"
           tabindex="${isSelected ? 0 : -1}"
           ?disabled="${isOutOfRange(day, this._minDate, this._maxDate)}"
           @click="${() => this.pickDate(day)}"
@@ -999,6 +1002,6 @@ export class KsDatepicker extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "ks-datepicker": KsDatepicker;
+    'ks-datepicker': KsDatepicker;
   }
 }

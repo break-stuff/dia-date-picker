@@ -5,11 +5,11 @@ import {
   getDaysOfTheWeek,
   addDaysToDate,
   getWeeks,
-  getDaysInMonth
-} from "../dateUtils";
+  getDaysInMonth,
+} from '../dateUtils';
 
-describe("isOutOfRange function", () => {
-  test("should be in range", () => {
+describe('isOutOfRange function', () => {
+  test('should be in range', () => {
     // Arrange
     const checkDate = new Date('2022-2-10');
     const minDate = new Date('2022-2-2');
@@ -22,7 +22,7 @@ describe("isOutOfRange function", () => {
     expect(result).toBe(false);
   });
 
-  test("should be out of range", () => {
+  test('should be out of range', () => {
     // Arrange
     const checkDate = new Date('2022-2-25');
     const minDate = new Date('2022-2-2');
@@ -36,8 +36,8 @@ describe("isOutOfRange function", () => {
   });
 });
 
-describe("getMonths function", () => {
-  test("should return an array of English months", () => {
+describe('getMonths function', () => {
+  test('should return an array of English months', () => {
     // Arrange
 
     // Act
@@ -48,44 +48,44 @@ describe("getMonths function", () => {
     expect(result[11]).toBe('December');
   });
 
-  test("should return an array of Polish months", () => {
+  test('should return an array of Polish months', () => {
     // Arrange
 
     // Act
     const result = getMonths('pl-PL');
 
     //Assert
-    expect(result[0]).toBe("styczeń");
-    expect(result[11]).toBe("grudzień");
+    expect(result[0]).toBe('styczeń');
+    expect(result[11]).toBe('grudzień');
   });
 });
 
-describe("getDaysOfTheWeek function", () => {
-  test("should return an array of English days", () => {
+describe('getDaysOfTheWeek function', () => {
+  test('should return an array of English days', () => {
     // Arrange
 
     // Act
-    const result = getDaysOfTheWeek("en-US");
+    const result = getDaysOfTheWeek('en-US');
 
     //Assert
-    expect(result[0].abbr).toBe("S");
-    expect(result[3].abbr).toBe("W");
+    expect(result[0].abbr).toBe('S');
+    expect(result[3].abbr).toBe('W');
   });
 
-  test("should return an array of Chinese days", () => {
+  test('should return an array of Chinese days', () => {
     // Arrange
 
     // Act
-    const result = getDaysOfTheWeek("zh-CN");
+    const result = getDaysOfTheWeek('zh-CN');
 
     //Assert
-    expect(result[0].abbr).toBe("日");
-    expect(result[4].abbr).toBe("四");
+    expect(result[0].abbr).toBe('日');
+    expect(result[4].abbr).toBe('四');
   });
 });
 
-describe("addDaysToDate function", () => {
-  test("should add 3 days to date", () => {
+describe('addDaysToDate function', () => {
+  test('should add 3 days to date', () => {
     // Arrange
     const startDate = new Date('2022-2-22');
 
@@ -93,10 +93,10 @@ describe("addDaysToDate function", () => {
     const result = addDaysToDate(startDate, 3);
 
     //Assert
-    expect(result.toLocaleDateString("en-US")).toBe("2/25/2022");
+    expect(result.toLocaleDateString('en-US')).toBe('2/25/2022');
   });
 
-  test("should subtract 5 days from date", () => {
+  test('should subtract 5 days from date', () => {
     // Arrange
     const startDate = new Date('2022-2-22');
 
@@ -104,36 +104,36 @@ describe("addDaysToDate function", () => {
     const result = addDaysToDate(startDate, -5);
 
     //Assert
-    expect(result.toLocaleDateString("en-US")).toBe("2/17/2022");
+    expect(result.toLocaleDateString('en-US')).toBe('2/17/2022');
   });
 });
 
-describe("getWeeks function", () => {
-  test("should get weeks for February 2022", () => {
+describe('getWeeks function', () => {
+  test('should get weeks for February 2022', () => {
     // Arrange
 
     // Act
     const result = getWeeks(1, 2022);
 
     //Assert
-    expect(result[0][0].toLocaleDateString('en-US')).toBe("1/30/2022");
-    expect(result[4][6].toLocaleDateString('en-US')).toBe("3/5/2022");
+    expect(result[0][0].toLocaleDateString('en-US')).toBe('1/30/2022');
+    expect(result[4][6].toLocaleDateString('en-US')).toBe('3/5/2022');
   });
 
-  test("should get weeks for March 2023", () => {
+  test('should get weeks for March 2023', () => {
     // Arrange
 
     // Act
     const result = getWeeks(2, 2023);
 
     //Assert
-    expect(result[0][0].toLocaleDateString('en-US')).toBe("2/26/2023");
-    expect(result[4][6].toLocaleDateString('en-US')).toBe("4/1/2023");
+    expect(result[0][0].toLocaleDateString('en-US')).toBe('2/26/2023');
+    expect(result[4][6].toLocaleDateString('en-US')).toBe('4/1/2023');
   });
 });
 
-describe("getDaysInMonth function", () => {
-  test("should get 31 for January 2022", () => {
+describe('getDaysInMonth function', () => {
+  test('should get 31 for January 2022', () => {
     // Arrange
 
     // Act
@@ -143,7 +143,7 @@ describe("getDaysInMonth function", () => {
     expect(result).toBe(31);
   });
 
-  test("should get 29 day in February for a leap year", () => {
+  test('should get 29 day in February for a leap year', () => {
     // Arrange
 
     // Act
@@ -154,7 +154,7 @@ describe("getDaysInMonth function", () => {
   });
 });
 
-describe("isValidDate function", () => {
+describe('isValidDate function', () => {
   test("should return 'false' when passed 'foo'", () => {
     // Arrange
     const date = new Date('foo');

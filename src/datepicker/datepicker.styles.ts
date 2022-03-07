@@ -1,4 +1,4 @@
-import { css } from "lit";
+import { css } from 'lit';
 
 export const styles = css`
   :host {
@@ -163,7 +163,7 @@ export const styles = css`
   }
   .calendar-dropdown:before {
     border: 10px solid transparent;
-    content: "";
+    content: '';
     display: block;
     height: 0;
     position: absolute;
@@ -176,7 +176,7 @@ export const styles = css`
   }
   .calendar-dropdown:after {
     border: 9px solid transparent;
-    content: "";
+    content: '';
     display: block;
     height: 0;
     position: absolute;
@@ -264,7 +264,7 @@ export const styles = css`
   .calendar .show {
     opacity: 1;
     transform: translateY(0rem);
-    transition: all 0.3s linear
+    transition: all 0.3s linear;
   }
   .calendar .week-days td {
     color: #9a9a9a;
@@ -280,18 +280,18 @@ export const styles = css`
     cursor: pointer;
     border-radius: 100%;
   }
-  [aria-current="date"] {
+  [aria-current='date'] {
     border: solid 2px #899ebb;
   }
-  [aria-selected="true"] {
+  [aria-selected='true'] {
     background: #8db3d3;
   }
-  [aria-selected="true"]:hover {
+  [aria-selected='true']:hover {
     background: #8db3d3;
   }
   .day button:hover,
   .day button:focus,
-  .day button[tabindex="0"] {
+  .day button[tabindex='0'] {
     background-color: #d4deec;
     border-radius: 100%;
   }

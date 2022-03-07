@@ -1,30 +1,29 @@
-import "./index";
+import './index';
 
 export default {
-    title: 'Components/Date Picker',
-    component: 'ks-datepicker',
-    args: {
-       value: '',
-       label: 'Select Date',
-       locale: 'en-US',
-       ['min-date']: '',
-       ['max-date']: '',
-       ['day-label']: 'Day',
-       ['month-label']: 'Month',
-       ['year-label']: 'Year',
-       ['clear-label']: 'Clear',
-       ['today-label']: 'Today',
-       
+  title: 'Components/Date Picker',
+  component: 'ks-datepicker',
+  args: {
+    value: '',
+    label: 'Select Date',
+    locale: 'en-US',
+    ['min-date']: '',
+    ['max-date']: '',
+    ['day-label']: 'Day',
+    ['month-label']: 'Month',
+    ['year-label']: 'Year',
+    ['clear-label']: 'Clear',
+    ['today-label']: 'Today',
+  },
+  parameters: {
+    actions: {
+      handles: ['ks-change', 'ks-input'],
     },
-    parameters: {
-        actions: {
-            handles: ['ks-change', 'ks-input'],
-        },
-    },
+  },
 };
 
 const Template = (args: any) => {
-    return `
+  return `
         <ks-datepicker
             value="${args.value}"
             label="${args.label}"
@@ -39,7 +38,7 @@ const Template = (args: any) => {
         ></ks-datepicker>
         <!--<span>some random inline content</span>
         <div>some random block content</div>-->
-    `
+    `;
 };
 
 export const Default: any = Template.bind({});
@@ -47,13 +46,13 @@ Default.args = {};
 
 export const PresetValue: any = Template.bind({});
 PresetValue.args = {
-    value: '12/2/2020'
+  value: '12/2/2020',
 };
 
 export const MinMaxDates: any = Template.bind({});
 MinMaxDates.args = {
-    ['min-date']: '2/2/2022',
-    ['max-date']: '2-22-22'
+  ['min-date']: '2/2/2022',
+  ['max-date']: '2-22-22',
 };
 
 // using Bootstrap icons - https://icons.getbootstrap.com/
