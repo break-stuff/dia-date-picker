@@ -58,6 +58,9 @@ export class KsDatepicker extends LitElement {
   @property({ type: String })
   locale: string | undefined;
 
+  @property({ type: Boolean })
+  required = false;
+
   @property({ attribute: 'min-date', type: String })
   minDate: string | undefined;
 
@@ -81,6 +84,9 @@ export class KsDatepicker extends LitElement {
 
   @state()
   private _expanded = false;
+
+  @state()
+  private _isValid = true;
 
   @state()
   private _selectedDate: Date | undefined;
@@ -418,6 +424,12 @@ export class KsDatepicker extends LitElement {
     setTimeout(() => this.$calendarControls?.classList.add('show'));
   }
 
+  private validate() {
+    if(!this.$dayInput?.checkValidity() || !this.$monthInput?.checkValidity() || !this.$yearInput?.checkValidity()) {
+      this._isValid = false;
+    }
+  }
+
   /**
    *
    * EVENT HANDLERS
@@ -744,6 +756,8 @@ export class KsDatepicker extends LitElement {
               min="1"
               max="12"
               placeholder="mm"
+              novalidate
+              ?required=${this.required}
               @keyup="${this.mainMonthKeyUpHandler}"
               @keydown="${this.preventSpaceKeyDownHandler}"
             />
@@ -756,6 +770,8 @@ export class KsDatepicker extends LitElement {
               min="1"
               max="${getDaysInMonth(this._selectedMonth, this._selectedYear)}"
               placeholder="dd"
+              novalidate
+              ?required=${this.required}
               @keyup="${this.mainDayKeyUpHandler}"
               @keydown="${this.preventSpaceKeyDownHandler}"
             />
@@ -768,6 +784,8 @@ export class KsDatepicker extends LitElement {
               min="1"
               max="9999"
               placeholder="yyyy"
+              novalidate
+              ?required=${this.required}
               @keyup="${this.mainYearKeyUpHandler}"
               @keydown="${this.preventSpaceKeyDownHandler}"
             />

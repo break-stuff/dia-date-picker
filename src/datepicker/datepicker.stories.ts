@@ -6,6 +6,7 @@ export default {
   args: {
     value: '',
     label: 'Select Date',
+    required: false,
     locale: 'en-US',
     ['min-date']: '',
     ['max-date']: '',
@@ -27,6 +28,7 @@ const Template = (args: any) => {
         <ks-datepicker
             value="${args.value}"
             label="${args.label}"
+            required="${args.required}"
             locale="${args.locale}"
             min-date="${args['min-date']}"
             max-date="${args['max-date']}"
