@@ -55,9 +55,6 @@ export class KsDatepicker extends LitElement {
   @property({ type: String })
   label: string | undefined;
 
-  @property({ type: String })
-  locale: string | undefined;
-
   @property({ type: Boolean })
   required = false;
 
@@ -316,8 +313,8 @@ export class KsDatepicker extends LitElement {
   }
 
   private getLocale(): string {
-    return this.locale
-      ? this.locale
+    return this.lang
+      ? this.lang
       : navigator.language || (navigator.languages || ['en'])[0];
   }
 

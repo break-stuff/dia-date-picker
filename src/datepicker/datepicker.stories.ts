@@ -7,7 +7,7 @@ export default {
     value: '',
     label: 'Select Date',
     required: false,
-    locale: 'en-US',
+    lang: 'en-US',
     ['min-date']: '',
     ['max-date']: '',
     ['day-label']: 'Day',
@@ -29,7 +29,7 @@ const Template = (args: any) => {
             value="${args.value}"
             label="${args.label}"
             required="${args.required}"
-            locale="${args.locale}"
+            lang="${args.lang}"
             min-date="${args['min-date']}"
             max-date="${args['max-date']}"
             day-label="${args['day-label']}"
