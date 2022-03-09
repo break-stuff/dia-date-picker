@@ -137,7 +137,7 @@ export class KsDatepicker extends LitElement {
    */
 
   protected firstUpdated(): void {
-    this.hideOnDocumentClick();
+    this.onComponentBlur();
     this.initMainInputValues();
   }
 
@@ -237,8 +237,9 @@ export class KsDatepicker extends LitElement {
     this.setSelectedValues(valueDate);
   }
 
-  private hideOnDocumentClick() {
+  private onComponentBlur() {
     window.addEventListener('click', (e: MouseEvent) => {
+      this.validate();
       if (this.contains(e.target as HTMLElement)) {
         return;
       }
@@ -422,7 +423,19 @@ export class KsDatepicker extends LitElement {
   }
 
   private validate() {
-    if(!this.$dayInput?.checkValidity() || !this.$monthInput?.checkValidity() || !this.$yearInput?.checkValidity()) {
+    this._isValid = true;
+
+    if (
+      !this.$dayInput?.checkValidity() ||
+      !this.$monthInput?.checkValidity() ||
+      !this.$yearInput?.checkValidity()
+    ) {
+      this._isValid = false;
+    }
+
+    if (
+      isOutOfRange(this._selectedDate as Date, this._minDate, this._maxDate)
+    ) {
       this._isValid = false;
     }
   }
@@ -741,10 +754,20 @@ export class KsDatepicker extends LitElement {
     return html`
       <div class="controls">
         <fieldset class="main-input">
-          <legend class="main-input-label" @click="${this.labelClickHandler}">
+          <legend
+            id="main_label"
+            class="main-input-label"
+            @click="${this.labelClickHandler}"
+          >
             ${this.label}
           </legend>
-          <div class="main-input-controls">
+          <div
+            class="main-input-controls"
+            role="textbox"
+            aria-labelledby="main_label"
+            aria-required="${this.required}"
+            aria-invalid="${!this._isValid}"
+          >
             <label for="month" class="sr-only">${this.monthLabel}</label>
             <input
               id="month"
@@ -753,7 +776,7 @@ export class KsDatepicker extends LitElement {
               min="1"
               max="12"
               placeholder="mm"
-              novalidate
+              formnovalidate
               ?required=${this.required}
               @keyup="${this.mainMonthKeyUpHandler}"
               @keydown="${this.preventSpaceKeyDownHandler}"
@@ -767,7 +790,7 @@ export class KsDatepicker extends LitElement {
               min="1"
               max="${getDaysInMonth(this._selectedMonth, this._selectedYear)}"
               placeholder="dd"
-              novalidate
+              formnovalidate
               ?required=${this.required}
               @keyup="${this.mainDayKeyUpHandler}"
               @keydown="${this.preventSpaceKeyDownHandler}"
@@ -781,7 +804,7 @@ export class KsDatepicker extends LitElement {
               min="1"
               max="9999"
               placeholder="yyyy"
-              novalidate
+              formnovalidate
               ?required=${this.required}
               @keyup="${this.mainYearKeyUpHandler}"
               @keydown="${this.preventSpaceKeyDownHandler}"

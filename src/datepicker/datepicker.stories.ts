@@ -28,7 +28,7 @@ const Template = (args: any) => {
         <ks-datepicker
             value="${args.value}"
             label="${args.label}"
-            required="${args.required}"
+            ${args.required ? 'required' : ''}
             lang="${args.lang}"
             min-date="${args['min-date']}"
             max-date="${args['max-date']}"
@@ -56,20 +56,3 @@ MinMaxDates.args = {
   ['min-date']: '2/2/2022',
   ['max-date']: '2-22-22',
 };
-
-// using Bootstrap icons - https://icons.getbootstrap.com/
-// const IconTemplate = (args: any) => `
-//     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css" />
-//     <style>
-//         my-search {
-//             --font-size: ${args['--font-size']};
-//             --padding: ${args['--padding']};
-//         }
-//     </style>
-//     <my-search label="${args.label}">${args.default}</my-search>
-// `;
-
-// export const Icon: any = IconTemplate.bind({});
-// Icon.args = {
-//     default: "<i class=\"bi bi-search\"></i>"
-// };
