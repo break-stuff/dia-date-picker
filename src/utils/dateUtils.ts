@@ -98,7 +98,7 @@ export function getMonthLabel(
     month: 'long',
     year: 'numeric',
   });
-  return format(new Date(Date.UTC(year, month + 1)));
+  return format(new Date(year, month + 1, 0));
 }
 
 /**
