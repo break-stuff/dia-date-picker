@@ -4,7 +4,7 @@
     "lib": ["es2017", "dom", "dom.iterable"],
     "declaration": true,
     "emitDeclarationOnly": true,
-    "outDir": "./types",
+    "outDir": "./dist",
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -19,7 +19,11 @@
   },
   "include": ["src/**/*.ts"],
   "exclude": [
+    "node_modules",
+    "**/*.styles.*",
+    "**/*.stories.*",
     "**/*.test.*",
+    "**/*.tests.*",
     "**/__mocks__/*",
     "**/__tests__/*"
   ],
