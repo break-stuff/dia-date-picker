@@ -85,7 +85,7 @@ export function getSelectableDateInScope(
 export function getMonths(locale: string): string[] {
   const { format } = new Intl.DateTimeFormat(locale, { month: 'long' });
   return [...Array(12).keys()].map(m =>
-    format(new Date(Date.UTC(2021, m + 1)))
+    format(new Date(2021, m, 1))
   );
 }
 
@@ -113,9 +113,10 @@ export function getDaysOfTheWeek(locale: string): IWeekDay[] {
     .format;
 
   return [...Array(7).keys()].map(day => {
+    const date = new Date(Date.UTC(2021, 5, day));
     return {
-      abbr: abbrFormat(new Date(Date.UTC(2021, 5, day))),
-      fullDay: fullFormat(new Date(Date.UTC(2021, 5, day))),
+      abbr: abbrFormat(date),
+      fullDay: fullFormat(date),
     };
   });
 }
