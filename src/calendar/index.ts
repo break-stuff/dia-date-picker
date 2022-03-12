@@ -111,9 +111,11 @@ export class KsCalendar extends LitElement {
     this.dispatchEvent(new CustomEvent('date-focused', options));
   }
 
-  private emitSelected() {
+  private emitSelected(reset = false) {
     const options = {
-      detail: { value: getShortIsoDate(this._selectedDate as Date) },
+      detail: {
+        value: reset ? undefined : getShortIsoDate(this._selectedDate as Date),
+      },
       bubbles: true,
       composed: true,
     };
@@ -167,7 +169,6 @@ export class KsCalendar extends LitElement {
       const $control = this.shadowRoot?.querySelector(
         `[id="${getShortIsoDate(date)}"]`
       ) as HTMLButtonElement;
-      console.log(date);
 
       this.$focusableEls.splice(4, 1, $control);
 
@@ -197,8 +198,9 @@ export class KsCalendar extends LitElement {
 
   private clearInput(): void {
     this._selectedDay = this._curDate.getDate();
-    this._selectedMonth = this._curDate.getMonth() + 1;
+    this._selectedMonth = this._curDate.getMonth();
     this._selectedYear = this._curDate.getFullYear();
+    this.emitSelected(true);
   }
 
   private getFocusDate(): Date {
@@ -231,6 +233,11 @@ export class KsCalendar extends LitElement {
    *
    */
 
+  private dayKeyDownHandler() {
+    // prevent scrolling when using arrow keys
+    return false;
+  }
+
   private dayKeyUpHandler(day: Date, e: KeyboardEvent) {
     let newDate: Date = new Date();
 
@@ -258,10 +265,6 @@ export class KsCalendar extends LitElement {
         return;
     }
 
-    // if (isOutOfRange(newDate, this._minDate, this._maxDate)) {
-    //   return;
-    // }
-
     if (this._selectedMonth > newDate.getMonth()) {
       this.calendarControlsFadeDown();
     } else if (this._selectedMonth < newDate.getMonth()) {
@@ -273,43 +276,35 @@ export class KsCalendar extends LitElement {
   }
 
   private monthChangeHandler(e: Event): void {
-    this._selectedMonth = +(e.target as HTMLSelectElement).value + 1;
+    this._selectedMonth = parseInt((e.target as HTMLSelectElement).value);
   }
 
   private yearInputHandler(e: InputEvent): void {
-    this._selectedYear = +(e.target as HTMLInputElement).value;
+    this._selectedYear = parseInt((e.target as HTMLInputElement).value);
   }
 
   private prevMonthClickHandler(): void {
     if (this._selectedMonth === 0) {
       this._selectedMonth = 11;
-      this._selectedYear -= 1;
+      this._selectedYear--;
     } else {
-      this._selectedMonth -= 1;
+      this._selectedMonth--;
     }
 
-    this.setSelectedDay();
+    this.emitFocus();
     this.calendarControlsFadeDown();
   }
 
   private nextMonthClickHandler(): void {
     if (this._selectedMonth === 11) {
       this._selectedMonth = 0;
-      this._selectedYear += 1;
+      this._selectedYear++;
     } else {
-      this._selectedMonth += 1;
+      this._selectedMonth++;
     }
 
-    this.setSelectedDay();
+    this.emitFocus();
     this.calendarControlsFadeUp();
-  }
-
-  private setSelectedDay() {
-    this._selectedDay =
-      this._selectedMonth === this._curDate.getMonth() &&
-      this._selectedYear === this._curDate.getFullYear()
-        ? this._curDate.getDate()
-        : 1;
   }
 
   private onRender() {
@@ -509,6 +504,7 @@ export class KsCalendar extends LitElement {
           tabindex="${isSelected ? 0 : -1}"
           ?disabled="${isOutOfRange(day, this._minDate, this._maxDate)}"
           @click="${() => this.pickDate(day)}"
+          @keydown="${this.dayKeyDownHandler}"
           @keyup="${(e: KeyboardEvent) => this.dayKeyUpHandler(day, e)}"
         >
           ${day.getDate()}
