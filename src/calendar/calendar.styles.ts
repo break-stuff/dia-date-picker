@@ -5,7 +5,7 @@ export const styles = css`
     --primary-color: #293d4e;
     --outline: solid 2px #71a5d1;
     --outline-offset: 0.125rem;
-    --border-color: #4f7494;
+    --border-color: #266194;
     --focus-color: #d7e6ff;
 
     position: relative;
@@ -61,83 +61,6 @@ export const styles = css`
     clip: rect(0, 0, 0, 0) !important;
     white-space: nowrap !important;
     border: 0 !important;
-  }
-
-  /* MAIN INPUT */
-  .main-input-label {
-    display: block;
-    margin-bottom: 0.25rem;
-    cursor: pointer;
-  }
-
-  .controls {
-    display: inline-flex;
-    justify-content: flex-start;
-    align-items: center;
-    position: relative;
-  }
-
-  .main-input {
-    border: 0;
-    padding: 0;
-    margin: 0;
-  }
-
-  .main-input-controls {
-    background-color: white;
-    border: solid 2px var(--border-color);
-    border-radius: 0.25rem;
-    padding: 0.5rem;
-    display: inline-flex;
-    align-items: center;
-  }
-
-  .main-input-controls:focus-within {
-    outline: var(--outline);
-    outline-offset: var(--outline-offset);
-  }
-
-  .main-input-controls input {
-    text-align: center;
-    border: 0;
-    padding: 0.125rem 0;
-    min-width: 2rem;
-  }
-
-  .main-input-controls input:focus {
-    outline: 0;
-  }
-
-  .main-input-controls .month {
-    min-width: 2rem;
-  }
-
-  .main-input-controls .year {
-    // padding: 0;
-  }
-
-  .main-input-controls input::-webkit-inner-spin-button {
-    display: none;
-  }
-
-  .calendar-toggle {
-    padding: 0;
-    background: transparent;
-    border: 0;
-    font-size: 1.5rem;
-    color: var(--border-color);
-    padding-top: 0.125rem;
-    outline-offset: 0;
-    display: inline-flex;
-    align-items: center;
-    margin-left: 0.125rem;
-  }
-
-  .calendar-toggle .icon {
-    margin-top: -0.25rem;
-  }
-
-  .calendar-toggle:focus {
   }
 
   .icon {
@@ -287,12 +210,12 @@ export const styles = css`
     background: #fff;
   }
   [aria-selected='true']:hover {
-    background: #8db3d3;
+    background: #d4deec;
   }
   .day button:hover,
   .day button:focus,
   .day button[tabindex='0'] {
-    background-color: #d4deec;
+    background-color: #e0e7f3;
     border-radius: 100%;
   }
 
