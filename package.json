@@ -51,6 +51,7 @@
     "@web/dev-server": "^0.1.29",
     "@web/dev-server-esbuild": "^0.2.16",
     "@web/test-runner": "^0.13.26",
+    "@web/test-runner-commands": "^0.6.1",
     "@web/test-runner-playwright": "^0.8.8",
     "babel-loader": "^8.2.3",
     "eslint": "^7.32.0",
@@ -68,7 +69,9 @@
     "vite": "^2.8.0"
   },
   "eslintConfig": {
-    "extends": ["@open-wc/eslint-config"]
+    "extends": [
+      "@open-wc/eslint-config"
+    ]
   },
   "prettier": {
     "singleQuote": true,
