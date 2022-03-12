@@ -276,11 +276,27 @@ export class KsCalendar extends LitElement {
   }
 
   private monthChangeHandler(e: Event): void {
-    this._selectedMonth = parseInt((e.target as HTMLSelectElement).value);
+    const newMonth = parseInt((e.target as HTMLSelectElement).value);
+    const isFuture = newMonth > this._selectedMonth;
+    this._selectedMonth = newMonth;
+
+    if (isFuture) {
+      this.calendarControlsFadeUp();
+    } else {
+      this.calendarControlsFadeDown();
+    }
   }
 
   private yearInputHandler(e: InputEvent): void {
-    this._selectedYear = parseInt((e.target as HTMLInputElement).value);
+    const newYear = parseInt((e.target as HTMLInputElement).value);
+    const isFuture = newYear > this._selectedYear;
+    this._selectedYear = newYear;
+
+    if (isFuture) {
+      this.calendarControlsFadeUp();
+    } else {
+      this.calendarControlsFadeDown();
+    }
   }
 
   private prevMonthClickHandler(): void {
