@@ -141,12 +141,16 @@ export class KsCalendar extends LitElement {
     this.setSelectedValues(selectedDate);
   }
 
-  private getSelectedDate() {
-    return this.value
+  private setSelectedDate() {
+    const selectedDate = this.value
       ? new Date(this.value as string)
       : this._selectedDate
       ? this._selectedDate
       : this._curDate;
+
+    this.setSelectedValues(selectedDate);
+
+    return selectedDate;
   }
 
   private pickDate(d: Date) {
@@ -346,7 +350,7 @@ export class KsCalendar extends LitElement {
       this.maxDate ? new Date(formatDateString(this.maxDate)) : null
     ) as Date;
 
-    this._selectedDate = this.getSelectedDate();
+    this.setSelectedDate();
   }
 
   /**
