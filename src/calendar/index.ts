@@ -180,7 +180,7 @@ export class KsCalendar extends LitElement {
 
       this.resetDayButtons();
       $control?.setAttribute('aria-selected', 'true');
-      $control?.setAttribute('tabindex', '1');
+      $control?.setAttribute('tabindex', '0');
       $control?.focus();
     });
   }
