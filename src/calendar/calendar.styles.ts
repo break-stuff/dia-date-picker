@@ -154,7 +154,7 @@ export const styles = css`
   }
 
   .day.other-month {
-    color: #7e7e7e;
+    color: #6d6d6d;
   }
 
   .day:hover,
