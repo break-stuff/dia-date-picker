@@ -180,6 +180,7 @@ export class KsCalendar extends LitElement {
 
       this.resetDayButtons();
       $control?.setAttribute('aria-selected', 'true');
+      $control?.setAttribute('tabindex', '1');
       $control?.focus();
     });
   }
@@ -286,6 +287,8 @@ export class KsCalendar extends LitElement {
     this._selectedMonth = newMonth;
     this._selectedDate = this.getFocusDate();
 
+    this.emitFocus();
+
     if (isFuture) {
       this.calendarControlsFadeUp();
     } else {
@@ -298,6 +301,8 @@ export class KsCalendar extends LitElement {
     const isFuture = newYear > this._selectedYear;
     this._selectedYear = newYear;
     this._selectedDate = this.getFocusDate();
+
+    this.emitFocus();
 
     if (isFuture) {
       this.calendarControlsFadeUp();
