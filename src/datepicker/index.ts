@@ -5,7 +5,7 @@ import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import '../calendar';
 
-import { FOCUSABLE_ELEMENTS, getFocusableElements } from '../utils/domUtils';
+import { getFocusableElements } from '../utils/domUtils';
 import {
   getShortIsoDate,
   isOutOfRange,
@@ -111,9 +111,6 @@ export class KsDatepicker extends LitElement {
   @state()
   private $calendarLastElement: HTMLElement | undefined;
 
-  @state()
-  private $calendarDayElement: HTMLElement | undefined;
-
   @query('#day')
   private $dayInput: HTMLInputElement | undefined;
 
@@ -122,12 +119,6 @@ export class KsDatepicker extends LitElement {
 
   @query('#year')
   private $yearInput: HTMLInputElement | undefined;
-
-  @query('.calendar [tabindex="0"]')
-  private $calendarFocusableButton: HTMLButtonElement | undefined;
-
-  @query('#calendar-dropdown')
-  private $calendarDropdown: HTMLElement | undefined;
 
   @query('ks-calendar')
   private $calendar: HTMLElement | undefined;
@@ -158,7 +149,7 @@ export class KsDatepicker extends LitElement {
 
   public show(): void {
     this._expanded = true;
-    setTimeout(() => this.$calendarDayElement?.focus(), 200);
+    this.setDayFocus();
   }
 
   public hide(): void {
@@ -236,6 +227,18 @@ export class KsDatepicker extends LitElement {
       this._expanded = false;
       this.validate();
     });
+  }
+
+  private setDayFocus() {
+    setTimeout(
+      () =>
+        (
+          this.$calendar?.shadowRoot?.querySelector(
+            `.day[aria-selected="true"]`
+          ) as HTMLElement
+        )?.focus(),
+      200
+    );
   }
 
   private getSelectedDate() {
@@ -371,11 +374,15 @@ export class KsDatepicker extends LitElement {
     }
   }
 
-  private setCalendarElementVariables() {    
-    this.$calendarFocusableElements = getFocusableElements(this.$calendar?.shadowRoot);
+  private setCalendarElementVariables() {
+    this.$calendarFocusableElements = getFocusableElements(
+      this.$calendar?.shadowRoot
+    );
     this.$calendarFirstElement = this.$calendarFocusableElements[0];
-    this.$calendarLastElement = this.$calendarFocusableElements[this.$calendarFocusableElements.length - 1];
-    this.$calendarDayElement = this.$calendarFocusableElements.find(x => x.classList.contains('day'));
+    this.$calendarLastElement =
+      this.$calendarFocusableElements[
+        this.$calendarFocusableElements.length - 1
+      ];
   }
 
   /**
@@ -402,7 +409,8 @@ export class KsDatepicker extends LitElement {
   }
 
   private dropdownTabHandler(e: KeyboardEvent): void {
-    const $focusedElement = (e.target as HTMLElement).shadowRoot?.activeElement as HTMLElement;
+    const $focusedElement = (e.target as HTMLElement).shadowRoot
+      ?.activeElement as HTMLElement;
 
     if (e.shiftKey) {
       this.dropdownBackwardTabHandler($focusedElement, e);
@@ -411,15 +419,21 @@ export class KsDatepicker extends LitElement {
     }
   }
 
-  private dropdownBackwardTabHandler($focusedElement: Element, e: KeyboardEvent): void {
-    if($focusedElement === this.$calendarFirstElement) {
+  private dropdownBackwardTabHandler(
+    $focusedElement: Element,
+    e: KeyboardEvent
+  ): void {
+    if ($focusedElement === this.$calendarFirstElement) {
       e.preventDefault();
       this.$calendarLastElement?.focus();
     }
   }
 
-  private dropdownForwardTabHandler($focusedElement: Element, e: KeyboardEvent): void {
-    if($focusedElement === this.$calendarLastElement) {
+  private dropdownForwardTabHandler(
+    $focusedElement: Element,
+    e: KeyboardEvent
+  ): void {
+    if ($focusedElement === this.$calendarLastElement) {
       e.preventDefault();
       this.$calendarFirstElement?.focus();
     }
@@ -477,6 +491,7 @@ export class KsDatepicker extends LitElement {
     }
 
     this._selectedMonth = this.getValidMonth(value);
+    this.updateSelectedDate();
 
     if (value.length > 1 || this._selectedMonth > 1) {
       this.$dayInput?.select();
@@ -499,6 +514,7 @@ export class KsDatepicker extends LitElement {
       case 'ArrowDown':
         if (day) {
           this._selectedDay = Number(day);
+          this.updateSelectedDate();
           this.emitInput();
         }
         return;
@@ -521,6 +537,7 @@ export class KsDatepicker extends LitElement {
     }
 
     this._selectedDay = this.getValidDay(value);
+    this.updateSelectedDate();
 
     if (value.length > 1 || this._selectedDay > 3) {
       this.$yearInput?.select();
@@ -540,6 +557,7 @@ export class KsDatepicker extends LitElement {
       case 'ArrowDown':
         if (year) {
           this._selectedYear = Number(year);
+          this.updateSelectedDate();
           this.emitInput();
         }
         return;
@@ -562,6 +580,7 @@ export class KsDatepicker extends LitElement {
     }
 
     this._selectedYear = this.getValidYear(value);
+    this.updateSelectedDate();
     this.emitInput();
   }
 
@@ -584,7 +603,7 @@ export class KsDatepicker extends LitElement {
       this.setInputValues();
     }
 
-    this.hide();
+    setTimeout(() => this.hide(), 200);
   }
 
   private onRender() {
