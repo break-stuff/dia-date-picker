@@ -92,6 +92,12 @@ export class KsCalendar extends LitElement {
   @query('#calendar_controls tbody')
   private $calendarControls: HTMLElement | undefined;
 
+  /**
+   *
+   * LIFECYCLE HOOKS
+   *
+   */
+
   protected firstUpdated(): void {
     this.initSelectedValues();
   }
@@ -196,22 +202,16 @@ export class KsCalendar extends LitElement {
   }
 
   private clearInput(): void {
+    this.value = undefined;
     this._selectedDay = this._curDate.getDate();
     this._selectedMonth = this._curDate.getMonth();
     this._selectedYear = this._curDate.getFullYear();
+    this._selectedDate = this.getFocusDate();
     this.emitSelected(true);
   }
 
   private getFocusDate(): Date {
-    const date = isOutOfRange(
-      this._selectedDate as Date,
-      this._minDate,
-      this._maxDate
-    )
-      ? (this._minDate as Date)
-      : new Date(this._selectedYear, this._selectedMonth, this._selectedDay);
-
-    return date;
+    return new Date(this._selectedYear, this._selectedMonth, this._selectedDay);
   }
 
   private calendarControlsFadeDown() {
@@ -264,11 +264,7 @@ export class KsCalendar extends LitElement {
         return;
     }
 
-    if (this._selectedMonth > newDate.getMonth()) {
-      this.calendarControlsFadeDown();
-    } else if (this._selectedMonth < newDate.getMonth()) {
-      this.calendarControlsFadeUp();
-    }
+    this.setKeyBoardCalendarAnimation(newDate);
 
     this.selectDate(newDate);
     if(!isOutOfRange(newDate, this._minDate, this._maxDate)) {
@@ -276,10 +272,19 @@ export class KsCalendar extends LitElement {
     }
   }
 
+  private setKeyBoardCalendarAnimation(date: Date) {
+    if (this._selectedMonth > date.getMonth()) {
+      this.calendarControlsFadeDown();
+    } else if (this._selectedMonth < date.getMonth()) {
+      this.calendarControlsFadeUp();
+    }
+  }
+
   private monthChangeHandler(e: Event): void {
     const newMonth = parseInt((e.target as HTMLSelectElement).value);
     const isFuture = newMonth > this._selectedMonth;
     this._selectedMonth = newMonth;
+    this._selectedDate = this.getFocusDate();
 
     if (isFuture) {
       this.calendarControlsFadeUp();
@@ -292,6 +297,7 @@ export class KsCalendar extends LitElement {
     const newYear = parseInt((e.target as HTMLInputElement).value);
     const isFuture = newYear > this._selectedYear;
     this._selectedYear = newYear;
+    this._selectedDate = this.getFocusDate();
 
     if (isFuture) {
       this.calendarControlsFadeUp();
@@ -308,6 +314,7 @@ export class KsCalendar extends LitElement {
       this._selectedMonth--;
     }
 
+    this._selectedDate = this.getFocusDate();
     this.emitFocus();
     this.calendarControlsFadeDown();
   }
@@ -320,6 +327,7 @@ export class KsCalendar extends LitElement {
       this._selectedMonth++;
     }
 
+    this._selectedDate = this.getFocusDate();
     this.emitFocus();
     this.calendarControlsFadeUp();
   }
@@ -456,8 +464,6 @@ export class KsCalendar extends LitElement {
   }
 
   private calendarTemplate() {
-    const focusDate = this.getFocusDate();
-
     return html`
       <table
         id="calendar_controls"
@@ -490,24 +496,24 @@ export class KsCalendar extends LitElement {
         </thead>
         <tbody role="rowgroup" class="show">
           ${getWeeks(this._selectedMonth, this._selectedYear).map(week =>
-            this.weekTemplate(week, focusDate)
+            this.weekTemplate(week)
           )}
         </tbody>
       </table>
     `;
   }
 
-  private weekTemplate(week: Date[], focusDate: Date | null | undefined) {
+  private weekTemplate(week: Date[]) {
     return html`
       <tr class="week" role="row">
-        ${week.map(day => this.dayTemplate(day, focusDate))}
+        ${week.map(day => this.dayTemplate(day))}
       </tr>
     `;
   }
 
-  private dayTemplate(day: Date, focusDate: Date | null | undefined) {
+  private dayTemplate(day: Date) {
     const isSelected =
-      focusDate?.toLocaleDateString() === day.toLocaleDateString();
+      this._selectedDate?.toLocaleDateString() === day.toLocaleDateString();
     const isToday =
       this._curDate.toLocaleDateString() === day.toLocaleDateString();
 
