@@ -13,6 +13,7 @@ export const styles = css`
     line-height: 1;
     font-family: sans-serif;
     color: var(--primary-color);
+    min-width: 16rem;
   }
 
   *:focus {
@@ -26,11 +27,11 @@ export const styles = css`
   select {
     font-size: 1rem;
     padding: 0.25rem;
-    line-height: 1;
+    line-height: 1.2;
     margin: 0;
     -webkit-appearance: none;
     border-radius: 0.25rem;
-    border: solid 1px var(--border-color);
+    border: 0;
     background-color: white;
     color: var(--primary-color);
   }
@@ -44,11 +45,6 @@ export const styles = css`
     border: 0;
     padding: 0;
     color: var(--border-color);
-  }
-
-  button[disabled] {
-    cursor: not-allowed;
-    color: #ccc;
   }
 
   .sr-only {
@@ -66,57 +62,6 @@ export const styles = css`
   .icon {
     width: 1em;
     height: 1em;
-  }
-
-  /* CALENDAR DROPDOWN */
-
-  .calendar-dropdown {
-    background-color: white;
-    border-radius: 5px;
-    padding: 1rem;
-    position: absolute;
-    margin-top: 10px;
-    visibility: hidden;
-    opacity: 0;
-    border: solid 1px #e6e6e6;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
-    transition: all 0.3s ease-in-out;
-    z-index: 1;
-    transform: translateY(-0.25rem);
-  }
-  .calendar-dropdown:before {
-    border: 10px solid transparent;
-    content: '';
-    display: block;
-    height: 0;
-    position: absolute;
-    width: 0;
-    border-bottom-color: #c5d1da;
-    bottom: 100%;
-    left: 25%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-  }
-  .calendar-dropdown:after {
-    border: 9px solid transparent;
-    content: '';
-    display: block;
-    height: 0;
-    position: absolute;
-    width: 0;
-    border-bottom-color: #fff;
-    bottom: 100%;
-    left: 25%;
-    margin-bottom: calc(var(--ks-spacing-size-xxxs) * -1);
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    transition: all 0.3s ease-in-out;
-  }
-  .calendar-dropdown.open {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0rem);
-    transition: all 0.3s ease-in-out;
   }
 
   /* TOP CONTROLS */
@@ -171,12 +116,10 @@ export const styles = css`
   /* CALENDAR CONTROL */
   .calendar {
     clear: both;
-    margin: 0.5rem 0;
+    margin: 1rem 0;
+    width: 100%;
   }
 
-  .calendar tbody {
-    opacity: 0.125;
-  }
   .calendar .prev {
     transform: translateY(-0.75rem);
   }
@@ -189,57 +132,59 @@ export const styles = css`
     transform: translateY(0rem);
     transition: all 0.3s linear;
   }
-  .calendar .week-days td {
-    color: #9a9a9a;
+
+  .calendar tbody {
+    opacity: 0.125;
   }
-  .calendar td {
-    width: 2em;
-    height: 2em;
-    vertical-align: middle;
-    text-align: center;
-    font-size: 1rem;
-  }
-  .calendar .day {
+
+  .day {
+    background-color: transparent;
+    border: none;
+    border-radius: 0.25rem;
     cursor: pointer;
-    border-radius: 100%;
+    font-size: 1rem;
+    height: 2em;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+    width: 2em;
+    color: #266194;
   }
-  [aria-current='date'] {
+
+  .day.other-month {
+    color: #7e7e7e;
+  }
+
+  .day:hover,
+  .day:focus,
+  .day[tabindex='0'] {
+    background-color: #e0e7f3;
+    color: black;
+    border-radius: 0.25rem;
+  }
+
+  .day[aria-current='date'] {
     border: solid 2px #899ebb;
   }
-  [aria-selected='true'] {
-    background: #fff;
+  .day[aria-selected='true'] {
+    background: #0158d1;
+    color: white;
   }
-  [aria-selected='true']:hover {
-    background: #d4deec;
-  }
-  .day button:hover,
-  .day button:focus,
-  .day button[tabindex='0'] {
-    background-color: #e0e7f3;
-    border-radius: 100%;
+  .day[aria-selected='true']:hover {
+    background: #0158d1;
+    color: white;
   }
 
-  tbody td button {
-    padding: 0;
-    margin: 0;
-    line-height: 1;
-    border: none;
-    background-color: transparent;
-    width: 2em;
-    height: 2em;
-    vertical-align: middle;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 100%;
-    font-size: 1rem;
-  }
-
-  tbody td button[disabled]:hover {
+  .day[aria-disabled='true'] {
+    cursor: not-allowed;
+    color: #ccc;
     background-color: transparent;
   }
 
-  .other-month {
-    color: #3f3f3f;
+  .day[aria-disabled='true']:hover {
+    background-color: transparent;
   }
 
   /* BOTTOM CONTROLS */

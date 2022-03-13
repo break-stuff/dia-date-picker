@@ -168,19 +168,18 @@ export class KsCalendar extends LitElement {
     setTimeout(() => {
       const $control = this.shadowRoot?.querySelector(
         `[id="${getShortIsoDate(date)}"]`
-      ) as HTMLButtonElement;
+      ) as HTMLElement;
 
       this.$focusableEls.splice(4, 1, $control);
 
       this.resetDayButtons();
-      $control?.setAttribute('tabindex', '0');
-      $control?.setAttribute('aria-select', 'true');
+      $control?.setAttribute('aria-selected', 'true');
       $control?.focus();
     });
   }
 
   private resetDayButtons() {
-    this.shadowRoot?.querySelectorAll('table button').forEach(x => {
+    this.shadowRoot?.querySelectorAll('.day').forEach(x => {
       x.setAttribute('tabindex', '-1');
       x.setAttribute('aria-selected', 'false');
     });
@@ -272,7 +271,9 @@ export class KsCalendar extends LitElement {
     }
 
     this.selectDate(newDate);
-    this.emitFocus();
+    if(!isOutOfRange(newDate, this._minDate, this._maxDate)) {
+      this.emitFocus();
+    }
   }
 
   private monthChangeHandler(e: Event): void {
@@ -511,20 +512,22 @@ export class KsCalendar extends LitElement {
       this._curDate.toLocaleDateString() === day.toLocaleDateString();
 
     return html`
-      <td class="day" role="gridcell" aria-selected="${isSelected}">
-        <button
-          id="${getShortIsoDate(day)}"
-          class="${day.getMonth() !== this._selectedMonth ? 'other-month' : ''}"
-          aria-label="${getFullDate(day, this.getLocale())}"
-          aria-current="${isToday ? 'date' : false}"
-          tabindex="${isSelected ? 0 : -1}"
-          ?disabled="${isOutOfRange(day, this._minDate, this._maxDate)}"
-          @click="${() => this.pickDate(day)}"
-          @keydown="${this.dayKeyDownHandler}"
-          @keyup="${(e: KeyboardEvent) => this.dayKeyUpHandler(day, e)}"
-        >
+      <td
+        id="${getShortIsoDate(day)}"
+        role="gridcell"
+        aria-selected="${isSelected}"
+        class="day ${day.getMonth() !== this._selectedMonth ? 'other-month' : ''}"
+        aria-label="${getFullDate(day, this.getLocale())}"
+        aria-current="${isToday ? 'date' : false}"
+        tabindex="${isSelected ? 0 : -1}"
+        aria-disabled="${isOutOfRange(day, this._minDate, this._maxDate)}"
+        @click="${() => this.pickDate(day)}"
+        @keydown="${this.dayKeyDownHandler}"
+        @keyup="${(e: KeyboardEvent) => this.dayKeyUpHandler(day, e)}"
+      >
+        <span aria-hidden="true">
           ${day.getDate()}
-        </button>
+        </span>
       </td>
     `;
   }
