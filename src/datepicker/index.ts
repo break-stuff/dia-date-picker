@@ -606,7 +606,7 @@ export class KsDatepicker extends LitElement {
     setTimeout(() => this.hide(), 200);
   }
 
-  private onRender() {
+  private beforeRender() {
     this._minDate = (
       this.minDate ? new Date(formatDateString(this.minDate)) : null
     ) as Date;
@@ -625,7 +625,7 @@ export class KsDatepicker extends LitElement {
    */
 
   render() {
-    this.onRender();
+    this.beforeRender();
 
     return html`
       ${this.mainInputTemplate()}

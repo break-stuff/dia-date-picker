@@ -337,7 +337,7 @@ export class KsCalendar extends LitElement {
     this.calendarControlsFadeUp();
   }
 
-  private onRender() {
+  private beforeRender() {
     this._minDate = (
       this.minDate ? new Date(formatDateString(this.minDate)) : null
     ) as Date;
@@ -356,7 +356,7 @@ export class KsCalendar extends LitElement {
    */
 
   render() {
-    this.onRender();
+    this.beforeRender();
 
     return html`
       ${this.topControlsTemplate()} ${this.calendarTemplate()}
