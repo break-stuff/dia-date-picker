@@ -3,16 +3,12 @@
 import { html, LitElement } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import '../calendar';
 
-import { getFocusableElements } from '../utils/domUtils';
+import { FOCUSABLE_ELEMENTS, getFocusableElements } from '../utils/domUtils';
 import {
-  addDaysToDate,
-  getDaysOfTheWeek,
   getShortIsoDate,
-  getMonths,
-  getWeeks,
   isOutOfRange,
-  getFullDate,
   getMonthLabel,
   formatDateString,
   getDaysInMonth,
@@ -101,16 +97,22 @@ export class KsDatepicker extends LitElement {
   private _selectedYear: number = this._curDate.getFullYear();
 
   @state()
-  private _focusIndex = 0;
-
-  @state()
   private _minDate: Date | null = null;
 
   @state()
   private _maxDate: Date | null = null;
 
   @state()
-  private $focusableEls: HTMLElement[] = [];
+  private $calendarFocusableElements: HTMLElement[] | undefined;
+
+  @state()
+  private $calendarFirstElement: HTMLElement | undefined;
+
+  @state()
+  private $calendarLastElement: HTMLElement | undefined;
+
+  @state()
+  private $calendarDayElement: HTMLElement | undefined;
 
   @query('#day')
   private $dayInput: HTMLInputElement | undefined;
@@ -127,8 +129,8 @@ export class KsDatepicker extends LitElement {
   @query('#calendar-dropdown')
   private $calendarDropdown: HTMLElement | undefined;
 
-  @query('#calendar_controls tbody')
-  private $calendarControls: HTMLElement | undefined;
+  @query('ks-calendar')
+  private $calendar: HTMLElement | undefined;
 
   /**
    *
@@ -139,6 +141,7 @@ export class KsDatepicker extends LitElement {
   protected firstUpdated(): void {
     this.onComponentBlur();
     this.initMainInputValues();
+    setTimeout(() => this.setCalendarElementVariables());
   }
 
   protected async performUpdate() {
@@ -154,15 +157,12 @@ export class KsDatepicker extends LitElement {
    */
 
   public show(): void {
-    this.$focusableEls = getFocusableElements(this.$calendarDropdown);
     this._expanded = true;
-    this._focusIndex = 4;
-    setTimeout(() => this.$calendarFocusableButton?.focus(), 200);
+    setTimeout(() => this.$calendarDayElement?.focus(), 200);
   }
 
   public hide(): void {
     this._expanded = false;
-    this._focusIndex = 4;
     setTimeout(() => this.$monthInput?.focus());
   }
 
@@ -171,15 +171,6 @@ export class KsDatepicker extends LitElement {
    * EVENT EMITTERS
    *
    */
-
-  private emitChange() {
-    const options = {
-      detail: { value: getShortIsoDate(this._selectedDate as Date) },
-      bubbles: true,
-      composed: true,
-    };
-    this.dispatchEvent(new CustomEvent('ks-change', options));
-  }
 
   private emitInput() {
     if (
@@ -190,13 +181,8 @@ export class KsDatepicker extends LitElement {
       return;
     }
 
-    this._selectedDate = new Date(
-      this._selectedYear,
-      this._selectedMonth,
-      this._selectedDay
-    );
-
-    this.value = getShortIsoDate(this._selectedDate);
+    this.updateSelectedDate();
+    this.value = getShortIsoDate(this._selectedDate as Date);
 
     const options = {
       detail: { value: this.value },
@@ -218,6 +204,10 @@ export class KsDatepicker extends LitElement {
       ? new Date(formatDateString(this.value))
       : this._curDate;
     this.setSelectedValues(selectedDate);
+
+    if (this.value) {
+      this.setInputValues();
+    }
   }
 
   private updateMainInputValues() {
@@ -239,12 +229,12 @@ export class KsDatepicker extends LitElement {
 
   private onComponentBlur() {
     window.addEventListener('click', (e: MouseEvent) => {
-      this.validate();
       if (this.contains(e.target as HTMLElement)) {
         return;
       }
 
       this._expanded = false;
+      this.validate();
     });
   }
 
@@ -256,19 +246,12 @@ export class KsDatepicker extends LitElement {
       : this._curDate;
   }
 
-  private pickDate(d: Date) {
-    if (isOutOfRange(d, this._minDate, this._maxDate)) {
-      return;
-    }
-    this.selectDate(d);
-    this.emitChange();
-    this.hide();
-  }
-
-  private selectDate(date: Date) {
-    this.value = getShortIsoDate(date);
-    this.setSelectedValues(date);
-    this.setFocusableDate(date);
+  private updateSelectedDate() {
+    this._selectedDate = new Date(
+      this._selectedYear,
+      this._selectedMonth,
+      this._selectedDay
+    );
   }
 
   private setSelectedValues(date: Date) {
@@ -276,33 +259,26 @@ export class KsDatepicker extends LitElement {
     this._selectedDay = date.getDate();
     this._selectedMonth = date.getMonth();
     this._selectedYear = date.getFullYear();
+  }
 
-    if (this.value && this.$dayInput) {
-      this.setMainDayInput();
-      this.setMainMonthInput();
-      this.setMainYearInput();
+  setInputValues() {
+    if (!this.$dayInput) {
+      return;
     }
+
+    this.setMainDayInput();
+    this.setMainMonthInput();
+    this.setMainYearInput();
   }
 
-  private setFocusableDate(date: Date) {
-    setTimeout(() => {
-      const $control = this.$calendarDropdown?.querySelector(
-        `[id="${getShortIsoDate(date)}"]`
-      ) as HTMLButtonElement;
-      this.$focusableEls.splice(4, 1, $control);
+  resetInputValues() {
+    if (!this.$dayInput) {
+      return;
+    }
 
-      this.resetDayButtons();
-      $control?.setAttribute('tabindex', '0');
-      $control?.setAttribute('aria-select', 'true');
-      $control?.focus();
-    });
-  }
-
-  private resetDayButtons() {
-    this.$calendarDropdown?.querySelectorAll('table button').forEach(x => {
-      x.setAttribute('tabindex', '-1');
-      x.setAttribute('aria-selected', 'false');
-    });
+    this.setMainDayInput('');
+    this.setMainMonthInput('');
+    this.setMainYearInput('');
   }
 
   private toggleCalendar() {
@@ -319,33 +295,6 @@ export class KsDatepicker extends LitElement {
       : navigator.language || (navigator.languages || ['en'])[0];
   }
 
-  private setDateForToday(): void {
-    this.pickDate(new Date());
-  }
-
-  private clearInput(): void {
-    this.setMainDayInput('');
-    this.setMainMonthInput('');
-    this.setMainYearInput('');
-    this._selectedDay = this._curDate.getDate();
-    this._selectedMonth = this._curDate.getMonth() + 1;
-    this._selectedYear = this._curDate.getFullYear();
-
-    this.hide();
-  }
-
-  private getFocusDate(): Date {
-    const date = isOutOfRange(
-      this._selectedDate as Date,
-      this._minDate,
-      this._maxDate
-    )
-      ? (this._minDate as Date)
-      : new Date(this._selectedYear, this._selectedMonth, this._selectedDay);
-
-    return date;
-  }
-
   private setMainDayInput(day: number | string = this._selectedDay) {
     (this.$dayInput as HTMLInputElement).value =
       day < 10 && day !== '' ? '0' + day : day.toString();
@@ -358,12 +307,6 @@ export class KsDatepicker extends LitElement {
 
   private setMainYearInput(year: number | string = this._selectedYear) {
     (this.$yearInput as HTMLInputElement).value = year.toString();
-  }
-
-  private setMainInputValues() {
-    this.setMainYearInput();
-    this.setMainMonthInput();
-    this.setMainDayInput();
   }
 
   private getValidMonth(value: string) {
@@ -410,18 +353,6 @@ export class KsDatepicker extends LitElement {
     return year;
   }
 
-  private calendarControlsFadeDown() {
-    this.$calendarControls?.classList.remove('show', 'prev', 'next');
-    this.$calendarControls?.classList.add('prev');
-    setTimeout(() => this.$calendarControls?.classList.add('show'));
-  }
-
-  private calendarControlsFadeUp() {
-    this.$calendarControls?.classList.remove('show', 'prev', 'next');
-    this.$calendarControls?.classList.add('next');
-    setTimeout(() => this.$calendarControls?.classList.add('show'));
-  }
-
   private validate() {
     this._isValid = true;
 
@@ -440,98 +371,21 @@ export class KsDatepicker extends LitElement {
     }
   }
 
+  private setCalendarElementVariables() {    
+    this.$calendarFocusableElements = getFocusableElements(this.$calendar?.shadowRoot);
+    this.$calendarFirstElement = this.$calendarFocusableElements[0];
+    this.$calendarLastElement = this.$calendarFocusableElements[this.$calendarFocusableElements.length - 1];
+    this.$calendarDayElement = this.$calendarFocusableElements.find(x => x.classList.contains('day'));
+  }
+
   /**
    *
    * EVENT HANDLERS
    *
    */
 
-  private dayKeyUpHandler(day: Date, e: KeyboardEvent) {
-    let newDate: Date = new Date();
-
-    switch (e.key) {
-      case 'ArrowUp':
-        newDate = addDaysToDate(day, -7);
-        break;
-      case 'ArrowDown':
-        newDate = addDaysToDate(day, 7);
-        break;
-      case 'ArrowLeft':
-        newDate = addDaysToDate(day, -1);
-        break;
-      case 'ArrowRight':
-        newDate = addDaysToDate(day, 1);
-        break;
-      case 'Enter':
-        this.pickDate(day);
-        break;
-      case 'Escape':
-        e.preventDefault();
-        if (
-          day.toLocaleDateString() === this._selectedDate?.toLocaleDateString()
-        ) {
-          this.hide();
-        }
-
-        newDate = this._curDate as Date;
-        break;
-      default:
-        return;
-    }
-
-    if (isOutOfRange(newDate, this._minDate, this._maxDate)) {
-      return;
-    }
-
-    if (this._selectedMonth > newDate.getMonth()) {
-      this.calendarControlsFadeDown();
-    } else if (this._selectedMonth < newDate.getMonth()) {
-      this.calendarControlsFadeUp();
-    }
-
-    this.selectDate(newDate);
-  }
-
   private inputControlClickHandler() {
     this.toggleCalendar();
-  }
-
-  private dropdownMonthChangeHandler(e: Event): void {
-    this._selectedMonth = +(e.target as HTMLSelectElement).value + 1;
-    this.setMainInputValues();
-    this._focusIndex = 0;
-  }
-
-  private dropdownYearInputHandler(e: InputEvent): void {
-    this._selectedYear = +(e.target as HTMLInputElement).value;
-    this.setMainInputValues();
-    this._focusIndex = 1;
-  }
-
-  private prevMonthClickHandler(): void {
-    if (this._selectedMonth === 0) {
-      this._selectedMonth = 11;
-      this._selectedYear -= 1;
-    } else {
-      this._selectedMonth -= 1;
-    }
-
-    this.setMainInputValues();
-    this._focusIndex = 2;
-    this.calendarControlsFadeDown();
-  }
-
-  private nextMonthClickHandler(): void {
-    if (this._selectedMonth === 11) {
-      this._selectedMonth = 0;
-      this._selectedYear += 1;
-    } else {
-      this._selectedMonth += 1;
-    }
-
-    this.setMainInputValues();
-    this._focusIndex = 3;
-    this.calendarControlsFadeUp();
   }
 
   private dropdownKeyDownHandler(e: KeyboardEvent): void {
@@ -548,29 +402,27 @@ export class KsDatepicker extends LitElement {
   }
 
   private dropdownTabHandler(e: KeyboardEvent): void {
-    e.preventDefault();
+    const $focusedElement = (e.target as HTMLElement).shadowRoot?.activeElement as HTMLElement;
 
     if (e.shiftKey) {
-      this.dropdownBackwardTabHandler();
+      this.dropdownBackwardTabHandler($focusedElement, e);
     } else {
-      this.dropdownForwardTabHandler();
+      this.dropdownForwardTabHandler($focusedElement, e);
     }
   }
 
-  private dropdownBackwardTabHandler(): void {
-    this._focusIndex =
-      this._focusIndex === 0
-        ? this.$focusableEls.length - 1
-        : --this._focusIndex;
-    this.$focusableEls[this._focusIndex]?.focus();
+  private dropdownBackwardTabHandler($focusedElement: Element, e: KeyboardEvent): void {
+    if($focusedElement === this.$calendarFirstElement) {
+      e.preventDefault();
+      this.$calendarLastElement?.focus();
+    }
   }
 
-  private dropdownForwardTabHandler(): void {
-    this._focusIndex =
-      this.$focusableEls.length - 1 === this._focusIndex
-        ? 0
-        : ++this._focusIndex;
-    this.$focusableEls[this._focusIndex].focus();
+  private dropdownForwardTabHandler($focusedElement: Element, e: KeyboardEvent): void {
+    if($focusedElement === this.$calendarLastElement) {
+      e.preventDefault();
+      this.$calendarFirstElement?.focus();
+    }
   }
 
   private dropdownEscKeyHandler(): void {
@@ -596,6 +448,7 @@ export class KsDatepicker extends LitElement {
       case 'ArrowDown':
         if (month) {
           this._selectedMonth = Number(month) - 1;
+          this.updateSelectedDate();
           this.emitInput();
         }
         return;
@@ -612,6 +465,8 @@ export class KsDatepicker extends LitElement {
       e.preventDefault();
       return false;
     }
+
+    return true;
   }
 
   private mainMonthInputHandler() {
@@ -710,6 +565,28 @@ export class KsDatepicker extends LitElement {
     this.emitInput();
   }
 
+  private dateFocusedHandler(e: any) {
+    if (!e.detail.value) {
+      return;
+    }
+
+    const focusDate = new Date(e.detail.value);
+    this.setSelectedValues(focusDate);
+    this.setInputValues();
+  }
+
+  private dateSelectedHandler(e: any) {
+    if (!e.detail.value) {
+      this.resetInputValues();
+    } else {
+      const focusDate = new Date(e.detail.value);
+      this.setSelectedValues(focusDate);
+      this.setInputValues();
+    }
+
+    this.hide();
+  }
+
   private onRender() {
     this._minDate = (
       this.minDate ? new Date(formatDateString(this.minDate)) : null
@@ -744,8 +621,18 @@ export class KsDatepicker extends LitElement {
         )}"
         @keydown="${this.dropdownKeyDownHandler}"
       >
-        ${this.topControlsTemplate()} ${this.calendarTemplate()}
-        ${this.bottomControlsTemplate()}
+        <ks-calendar
+          .value=${getShortIsoDate(this._selectedDate as Date)}
+          min-date="${this.minDate || ''}"
+          max-date="${this.maxDate || ''}"
+          day-label="${this.dayLabel}"
+          month-label="${this.monthLabel}"
+          year-label="${this.yearLabel}"
+          clear-label="${this.clearLabel}"
+          today-label="${this.todayLabel}"
+          @date-focused="${this.dateFocusedHandler}"
+          @date-selected="${this.dateSelectedHandler}"
+        ></ks-calendar>
       </div>
     `;
   }
@@ -841,197 +728,6 @@ export class KsDatepicker extends LitElement {
             </button>
           </div>
         </fieldset>
-      </div>
-    `;
-  }
-
-  private topControlsTemplate() {
-    return html`
-      <div class="top-controls">
-        <span class="left-controls">
-          <label class="month-label">
-            <span class="sr-only">${this.monthLabel}</span>
-            <select
-              id="month_selector"
-              class="month-selector"
-              @change="${this.dropdownMonthChangeHandler}"
-            >
-              ${getMonths(this.getLocale()).map(
-                (month, i) => html`
-                  <option value="${i}" ?selected="${i === this._selectedMonth}">
-                    ${month}
-                  </option>
-                `
-              )}
-            </select>
-            <span class="month-icon">
-              <svg
-                class="icon"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <g>
-                  <path
-                    d="m6 9 6 6 6-6"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
-                  ></path>
-                </g>
-              </svg>
-            </span>
-          </label>
-          <label for="year_selector" class="sr-only">${this.yearLabel}</label>
-          <input
-            id="year_selector"
-            class="year-selector"
-            type="number"
-            value="${this._selectedYear}"
-            @input="${this.dropdownYearInputHandler}"
-          />
-        </span>
-        <span class="right-controls">
-          <button
-            class="arrow"
-            @click="${this.prevMonthClickHandler}"
-            aria-label="${getMonthLabel(
-              this._selectedMonth - 1,
-              this._selectedYear,
-              this.getLocale()
-            )}"
-          >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-width="1.5"
-              >
-                <path d="m16 9-4-4-4 4" stroke-linejoin="round"></path>
-                <path d="M12 5.277V20"></path>
-              </g>
-            </svg>
-          </button>
-          <button
-            class="arrow"
-            @click="${this.nextMonthClickHandler}"
-            aria-label="${getMonthLabel(
-              this._selectedMonth + 1,
-              this._selectedYear,
-              this.getLocale()
-            )}"
-          >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-width="1.5"
-              >
-                <path d="m8 15 4 4 4-4" stroke-linejoin="round"></path>
-                <path d="M12 18.723V4"></path>
-              </g>
-            </svg>
-          </button>
-        </span>
-      </div>
-    `;
-  }
-
-  private calendarTemplate() {
-    const focusDate = this.getFocusDate();
-
-    return html`
-      <table
-        id="calendar_controls"
-        class="calendar"
-        role="grid"
-        aria-multiselectable="false"
-        aria-labelledby="calendar_header"
-      >
-        <caption id="calendar_header" class="sr-only">
-          ${getMonthLabel(
-            this._selectedMonth,
-            this._selectedYear,
-            this.getLocale()
-          )}
-        </caption>
-        <thead role="rowgroup">
-          <tr class="week-days" role="row">
-            ${getDaysOfTheWeek(this.getLocale()).map(
-              day =>
-                html`<th
-                  scope="col"
-                  role="columnheader"
-                  title="${day.fullDay}"
-                  aria-label="${day.fullDay}"
-                >
-                  ${day.abbr}
-                </th>`
-            )}
-          </tr>
-        </thead>
-        <tbody role="rowgroup" class="show">
-          ${getWeeks(this._selectedMonth, this._selectedYear).map(week =>
-            this.weekTemplate(week, focusDate)
-          )}
-        </tbody>
-      </table>
-    `;
-  }
-
-  private weekTemplate(week: Date[], focusDate: Date | null | undefined) {
-    return html`
-      <tr class="week" role="row">
-        ${week.map(day => this.dayTemplate(day, focusDate))}
-      </tr>
-    `;
-  }
-
-  private dayTemplate(day: Date, focusDate: Date | null | undefined) {
-    const isSelected =
-      focusDate?.toLocaleDateString() === day.toLocaleDateString();
-    const isToday =
-      this._curDate.toLocaleDateString() === day.toLocaleDateString();
-
-    return html`
-      <td class="day" role="gridcell" aria-selected="${isSelected}">
-        <button
-          id="${getShortIsoDate(day)}"
-          class="${day.getMonth() !== this._selectedMonth ? 'other-month' : ''}"
-          aria-label="${getFullDate(day, this.getLocale())}"
-          aria-current="${isToday ? 'date' : false}"
-          tabindex="${isSelected ? 0 : -1}"
-          ?disabled="${isOutOfRange(day, this._minDate, this._maxDate)}"
-          @click="${() => this.pickDate(day)}"
-          @keyup="${(e: KeyboardEvent) => this.dayKeyUpHandler(day, e)}"
-        >
-          ${day.getDate()}
-        </button>
-      </td>
-    `;
-  }
-
-  private bottomControlsTemplate() {
-    return html`
-      <div class="bottom-controls">
-        <button class="clear" @click="${this.clearInput}">
-          ${this.clearLabel}
-        </button>
-        <button class="today" @click="${this.setDateForToday}">
-          ${this.todayLabel}
-        </button>
       </div>
     `;
   }
