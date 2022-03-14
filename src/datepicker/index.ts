@@ -100,7 +100,7 @@ export class KsDatepicker extends LitElement {
   private _selectedDay: number = this._curDate.getDay();
 
   @state()
-  private _selectedMonth: number = this._curDate.getMonth();
+  private _selectedMonth: number = this._curDate.getMonth(); // Base 0
 
   @state()
   private _selectedYear: number = this._curDate.getFullYear();
