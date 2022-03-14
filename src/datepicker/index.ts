@@ -332,7 +332,7 @@ export class KsDatepicker extends LitElement {
       month = 1;
       this.setMainMonthInput(month);
     }
-    return month;
+    return month - 1;
   }
 
   private getValidDay(value: string) {
