@@ -155,10 +155,10 @@ export const styles = css`
 
   .calendar-dropdown {
     background-color: white;
-    border-radius: 5px;
+    border-radius: 0.25rem;
     padding: 1rem;
     position: absolute;
-    margin-top: 10px;
+    margin-top: -0.75rem;
     visibility: hidden;
     opacity: 0;
     border: solid 1px #e6e6e6;
@@ -174,7 +174,7 @@ export const styles = css`
     height: 0;
     position: absolute;
     width: 0;
-    border-bottom-color: #c5d1da;
+    border-bottom-color: #e6e6e6;
     bottom: 100%;
     left: 25%;
     -webkit-transform: translateX(-50%);

@@ -75,11 +75,20 @@ export class KsDatepicker extends LitElement {
   @property({ attribute: 'today-label', type: String })
   todayLabel = 'Today';
 
+  @property({ attribute: 'required-error-message', type: String })
+  requiredErrorMessage = 'This field is required';
+
+  @property({ attribute: 'range-error-message', type: String })
+  rangeErrorMessage = 'The date you have selected is unavailable';
+
   @state()
   private _expanded = false;
 
   @state()
   private _isValid = true;
+
+  @state()
+  private errorMessage = this.requiredErrorMessage;
 
   @state()
   private _selectedDate: Date | undefined;
@@ -364,12 +373,14 @@ export class KsDatepicker extends LitElement {
       !this.$monthInput?.checkValidity() ||
       !this.$yearInput?.checkValidity()
     ) {
+      this.errorMessage = this.requiredErrorMessage;
       this._isValid = false;
     }
 
     if (
       isOutOfRange(this._selectedDate as Date, this._minDate, this._maxDate)
     ) {
+      this.errorMessage = this.rangeErrorMessage;
       this._isValid = false;
     }
   }
@@ -751,7 +762,7 @@ export class KsDatepicker extends LitElement {
               </svg>
             </button>
           </div>
-          <div id="error_message" class="error-message">This field is required.</div>
+          <div id="error_message" class="error-message">${this.errorMessage}</div>
         </fieldset>
       </div>
     `;
