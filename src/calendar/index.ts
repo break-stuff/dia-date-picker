@@ -237,11 +237,6 @@ export class KsCalendar extends LitElement {
    *
    */
 
-  private dayKeyDownHandler() {
-    // prevent scrolling when using arrow keys
-    return false;
-  }
-
   private dayKeyUpHandler(day: Date, e: KeyboardEvent) {
     let newDate: Date = new Date();
 
@@ -533,8 +528,8 @@ export class KsCalendar extends LitElement {
         aria-current="${isToday ? 'date' : false}"
         tabindex="${isSelected ? 0 : -1}"
         aria-disabled="${isOutOfRange(day, this._minDate, this._maxDate)}"
+        onkeydown="return false"
         @click="${() => this.pickDate(day)}"
-        @keydown="${this.dayKeyDownHandler}"
         @keyup="${(e: KeyboardEvent) => this.dayKeyUpHandler(day, e)}"
       >
         <span aria-hidden="true">${day.getDate()}</span>
