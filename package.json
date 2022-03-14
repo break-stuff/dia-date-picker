@@ -18,6 +18,7 @@
     "build": "npm run clean && vite build && tsc --emitDeclarationOnly && npm run manifest",
     "test": "web-test-runner",
     "test:watch": "web-test-runner --watch",
+    "deploy": "npm run build &&yy ./deploy.sh",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "manifest:dev": "cem analyze --dev --watch --litelement --globs \"./src/**/index.ts\"",
