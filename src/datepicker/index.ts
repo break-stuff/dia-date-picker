@@ -15,6 +15,7 @@ import {
 } from '../utils/dateUtils';
 
 import { styles } from './datepicker.styles';
+import icon from '../utils/icons';
 
 /**
  * @tag ks-datepicker
@@ -738,28 +739,7 @@ export class KsDatepicker extends LitElement {
               aria-controls="calendar-dropdown"
               @click="${this.inputControlClickHandler}"
             >
-              <svg
-                class="icon"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-label="calendar"
-              >
-                <g
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-width="1.5"
-                >
-                  <g fill="none" stroke-linejoin="round">
-                    <path d="M4 7h16v13H4z" stroke="none"></path>
-                    <path d="M4.75 7.75h14.5v11.5H4.75z"></path>
-                  </g>
-                  <g fill="currentColor" stroke-linejoin="round">
-                    <path d="M4 8h16v2H4z" stroke="none"></path>
-                    <path fill="none" d="M4.75 8.75h14.5v.5H4.75z"></path>
-                  </g>
-                  <path fill="none" d="M8 13h8m-8 3h6M8 8V5m8 3V5"></path>
-                </g>
-              </svg>
+              ${icon('calendar')}
             </button>
           </div>
           <div id="error_message" class="error-message">${this.errorMessage}</div>

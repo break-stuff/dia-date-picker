@@ -13,6 +13,7 @@ import {
   getMonthLabel,
   formatDateString,
 } from '../utils/dateUtils';
+import icon from '../utils/icons';
 
 import { styles } from './calendar.styles';
 
@@ -379,25 +380,7 @@ export class KsCalendar extends LitElement {
                 `
               )}
             </select>
-            <span class="month-icon">
-              <svg
-                class="icon"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <g>
-                  <path
-                    d="m6 9 6 6 6-6"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
-                  ></path>
-                </g>
-              </svg>
-            </span>
+            <span class="month-icon"> ${icon('chevron_down')} </span>
           </label>
           <label for="year_selector" class="sr-only">${this.yearLabel}</label>
           <input
@@ -418,21 +401,7 @@ export class KsCalendar extends LitElement {
               this.getLocale()
             )}"
           >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-width="1.5"
-              >
-                <path d="m16 9-4-4-4 4" stroke-linejoin="round"></path>
-                <path d="M12 5.277V20"></path>
-              </g>
-            </svg>
+            ${icon('arrow_up')}
           </button>
           <button
             class="arrow next"
@@ -443,21 +412,7 @@ export class KsCalendar extends LitElement {
               this.getLocale()
             )}"
           >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-width="1.5"
-              >
-                <path d="m8 15 4 4 4-4" stroke-linejoin="round"></path>
-                <path d="M12 18.723V4"></path>
-              </g>
-            </svg>
+            ${icon('arrow_down')}
           </button>
         </span>
       </div>
@@ -523,7 +478,9 @@ export class KsCalendar extends LitElement {
         id="${getShortIsoDate(day)}"
         role="gridcell"
         aria-selected="${isSelected}"
-        class="day ${day.getMonth() !== this._selectedMonth ? 'other-month' : ''}"
+        class="day ${day.getMonth() !== this._selectedMonth
+          ? 'other-month'
+          : ''}"
         aria-label="${getFullDate(day, this.getLocale())}"
         aria-current="${isToday ? 'date' : false}"
         tabindex="${isSelected ? 0 : -1}"
