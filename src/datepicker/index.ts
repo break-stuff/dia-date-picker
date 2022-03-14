@@ -46,19 +46,19 @@ export class KsDatepicker extends LitElement {
   static styles = styles;
 
   @property({ type: String, reflect: true })
-  value: string | undefined;
+  value?: string;
 
   @property({ type: String })
-  label: string | undefined;
+  label?: string;
 
   @property({ type: Boolean })
   required = false;
 
   @property({ attribute: 'min-date', type: String })
-  minDate: string | undefined;
+  minDate?: string;
 
   @property({ attribute: 'max-date', type: String })
-  maxDate: string | undefined;
+  maxDate?: string;
 
   @property({ attribute: 'day-label', type: String })
   dayLabel = 'Day';
@@ -91,7 +91,7 @@ export class KsDatepicker extends LitElement {
   private errorMessage = this.requiredErrorMessage;
 
   @state()
-  private _selectedDate: Date | undefined;
+  private _selectedDate?: Date;
 
   @state()
   private _curDate: Date = new Date(Date.now());
@@ -112,25 +112,25 @@ export class KsDatepicker extends LitElement {
   private _maxDate: Date | null = null;
 
   @state()
-  private $calendarFocusableElements: HTMLElement[] | undefined;
+  private $calendarFocusableElements?: HTMLElement[];
 
   @state()
-  private $calendarFirstElement: HTMLElement | undefined;
+  private $calendarFirstElement?: HTMLElement;
 
   @state()
-  private $calendarLastElement: HTMLElement | undefined;
+  private $calendarLastElement?: HTMLElement;
 
   @query('#day')
-  private $dayInput: HTMLInputElement | undefined;
+  private $dayInput?: HTMLInputElement;
 
   @query('#month')
-  private $monthInput: HTMLInputElement | undefined;
+  private $monthInput?: HTMLInputElement;
 
   @query('#year')
-  private $yearInput: HTMLInputElement | undefined;
+  private $yearInput?: HTMLInputElement;
 
   @query('ks-calendar')
-  private $calendar: HTMLElement | undefined;
+  private $calendar?: HTMLElement;
 
   /**
    *

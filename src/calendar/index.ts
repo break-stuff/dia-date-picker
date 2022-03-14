@@ -42,13 +42,13 @@ export class KsCalendar extends LitElement {
   static styles = styles;
 
   @property({ type: String, reflect: true })
-  value: string | undefined;
+  value?: string;
 
   @property({ attribute: 'min-date', type: String })
-  minDate: string | undefined;
+  minDate?: string;
 
   @property({ attribute: 'max-date', type: String })
-  maxDate: string | undefined;
+  maxDate?: string;
 
   @property({ attribute: 'day-label', type: String })
   dayLabel = 'Day';
@@ -66,7 +66,7 @@ export class KsCalendar extends LitElement {
   todayLabel = 'Today';
 
   @state()
-  private _selectedDate: Date | undefined;
+  private _selectedDate?: Date;
 
   @state()
   private _curDate: Date = new Date(Date.now());
@@ -90,7 +90,7 @@ export class KsCalendar extends LitElement {
   private $focusableEls: HTMLElement[] = [];
 
   @query('#calendar_controls tbody')
-  private $calendarControls: HTMLElement | undefined;
+  private $calendarControls?: HTMLElement;
 
   /**
    *
