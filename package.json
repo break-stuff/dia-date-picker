@@ -21,7 +21,7 @@
     "test:unit": "jest",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "manifest:dev": "cem analyze --watch --litelement --globs \"./src/**/index.ts\"",
+    "manifest:dev": "cem analyze --dev --watch --litelement --globs \"./src/**/index.ts\"",
     "manifest": "cem analyze --litelement --globs \"./src/**/index.ts\"",
     "lint": "npm run lint:eslint && npm run lint:prettier",
     "format": "npm run format:eslint && npm run format:prettier",
