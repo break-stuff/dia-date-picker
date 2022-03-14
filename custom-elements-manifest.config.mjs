@@ -33,7 +33,7 @@ export default {
 
 function removeMembers() {
   return {
-    name: "shoelace-react-event-names",
+    name: "clean-for-storybook",
     analyzePhase({ ts, node, moduleDoc, context }) {
       if (!context.dev) {
         return;
