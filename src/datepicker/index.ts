@@ -592,7 +592,7 @@ export class KsDatepicker extends LitElement {
     const focusDate = new Date(e.detail.value);
     this.setSelectedValues(focusDate);
     this.setInputValues();
-    this.validate();
+    setTimeout(() => this.validate());
   }
 
   private dateSelectedHandler(e: any) {
@@ -604,8 +604,10 @@ export class KsDatepicker extends LitElement {
       this.setInputValues();
     }
 
-    setTimeout(() => this.hide(), 100);
-    this.validate();
+    setTimeout(() => {
+      this.hide();
+      this.validate();
+    }, 100);
   }
 
   private beforeRender() {
