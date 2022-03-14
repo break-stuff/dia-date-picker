@@ -604,7 +604,7 @@ export class KsDatepicker extends LitElement {
       this.setInputValues();
     }
 
-    setTimeout(() => this.hide(), 200);
+    setTimeout(() => this.hide(), 100);
     this.validate();
   }
 
