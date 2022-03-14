@@ -665,6 +665,7 @@ export class KsDatepicker extends LitElement {
           year-label="${this.yearLabel}"
           clear-label="${this.clearLabel}"
           today-label="${this.todayLabel}"
+          lang="${this.getLocale()}"
           @date-focused="${this.dateFocusedHandler}"
           @date-selected="${this.dateSelectedHandler}"
         ></ks-calendar>
@@ -742,7 +743,7 @@ export class KsDatepicker extends LitElement {
               ${icon('calendar')}
             </button>
           </div>
-          <div id="error_message" class="error-message">${this.errorMessage}</div>
+          <div id="error_message" class="error-message" aria-live="assertive">${this.errorMessage}</div>
         </fieldset>
       </div>
     `;

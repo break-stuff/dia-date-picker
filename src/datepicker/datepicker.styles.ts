@@ -141,6 +141,8 @@ export const styles = css`
   .error-message {
     visibility: hidden;
     margin-top: 0.25rem;
+    color: #9a0000;
+    font-size: 0.9rem;
   }
 
   [aria-invalid='true'] ~ .error-message {
@@ -148,7 +150,7 @@ export const styles = css`
   }
 
   [aria-invalid='true'] {
-    border-color: red;
+    border-color: #9a0000;
   }
 
   /* CALENDAR DROPDOWN */

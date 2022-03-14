@@ -23,10 +23,10 @@
       <ul>
         <li>Make design and content customizable</li>
         <li>
-          Make the component accessible and easy to with various technologies
+          Make the component accessible and easy to use with various technologies
           (mouse, keyboard, screen reader, etc.)
         </li>
-        <li>Make usage and implementation intuitive and easy to use</li>
+        <li>Make usage and implementation intuitive</li>
         <li>
           Utilize the browsers native APIs to provide localization/translations
         </li>
@@ -86,12 +86,40 @@
   </code>
 </pre>
 
-      <ks-datepicker required></ks-datepicker>
+      <ks-datepicker label="Required Date" required></ks-datepicker>
+
+      <h2>Translations</h2>
+
+      <p>This component is almost entirely translated by the browser. Enter the locale of you favorite language and see how it is translated.</p>
+
+      <p>
+        Here are some options:
+
+        <ul>
+          <li>fr-CA (Canadian French)</li>
+          <li>ko-KR (Korean)</li>
+          <li>zh-CN (Mandarin Chinese)</li>
+          <li>iw (Hebrew)</li>
+          <li>el-GR (Greek)</li>
+          <li>ru-RU (Russian)</li>
+        </ul>
+      </p>
+
+      <label for="locale_input">My Language</label>
+      <input type="text" id="locale_input" value="en-US" />
+
+      <div id="translated_datepicker" class="my-xl">
+        <ks-datepicker label="en-US Input" lang="en-US"></ks-datepicker>
+      </div>
+
+      
 
       <h2>Road Map</h2>
 
       <p>
         <ul>
+          <li>[X] Dynamically generate calendar and labels based on native APIs</li>
+          <li>[X] Main input default format</li>
           <li>[X] Main input keyboard navigation</li>
           <li>[X] Calendar keyboard navigation</li>
           <li>[X] Calendar dialog keyboard trapping</li>
@@ -100,7 +128,7 @@
           <li>[X] Dates and labels translated by JavaScript API</li>
           <li>[X] "Clear" button to reset content</li>
           <li>[X] "Today" button to set selection to current date</li>
-          <li>[ ] Dynamic positioning of calendar dialog</li>
+          <li>[ ] Dynamically position calendar dialog</li>
           <li>[ ] Localized input format</li>
           <li>[ ] Custom input/output format</li>
           <li>[ ] Select multiple dates</li>
@@ -113,5 +141,12 @@
       </p>
 
     </main>
+    <script>
+      const $langInput = document.querySelector('#locale_input');
+      const $wrapper = document.querySelector('#translated_datepicker');
+      $langInput.addEventListener('input', e => {
+        $wrapper.innerHTML = `<ks-datepicker label="${e.target.value} Input" lang="${e.target.value}"></ks-datepicker>`
+      });
+    </script>
   </body>
 </html>
