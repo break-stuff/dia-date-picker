@@ -592,6 +592,7 @@ export class KsDatepicker extends LitElement {
     const focusDate = new Date(e.detail.value);
     this.setSelectedValues(focusDate);
     this.setInputValues();
+    this.validate();
   }
 
   private dateSelectedHandler(e: any) {
@@ -604,6 +605,7 @@ export class KsDatepicker extends LitElement {
     }
 
     setTimeout(() => this.hide(), 200);
+    this.validate();
   }
 
   private beforeRender() {
@@ -673,6 +675,7 @@ export class KsDatepicker extends LitElement {
             aria-labelledby="main_label"
             aria-required="${this.required}"
             aria-invalid="${!this._isValid}"
+            aria-errormessage="error_message"
           >
             <label for="month" class="sr-only">${this.monthLabel}</label>
             <input
@@ -746,6 +749,7 @@ export class KsDatepicker extends LitElement {
               </svg>
             </button>
           </div>
+          <div id="error_message" class="error-message">This field is required.</div>
         </fieldset>
       </div>
     `;

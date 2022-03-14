@@ -56,3 +56,8 @@ MinMaxDates.args = {
   ['min-date']: '2/2/2022',
   ['max-date']: '2-22-22',
 };
+
+export const Validation: any = Template.bind({});
+Validation.args = {
+  required: true
+};

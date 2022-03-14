@@ -138,6 +138,19 @@ export const styles = css`
     height: 1em;
   }
 
+  .error-message {
+    visibility: hidden;
+    margin-top: 0.25rem;
+  }
+
+  [aria-invalid='true'] ~ .error-message {
+    visibility: visible;
+  }
+
+  [aria-invalid='true'] {
+    border-color: red;
+  }
+
   /* CALENDAR DROPDOWN */
 
   .calendar-dropdown {
