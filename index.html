@@ -5,10 +5,113 @@
     <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kickstand Datepicker</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/kickstand-ui/dist/kickstand-ui/kickstand-ui.css"
+    />
     <script type="module" src="/src/index.ts"></script>
   </head>
-  <body>
-    <ks-datepicker></ks-datepicker>
-    <ks-calendar></ks-calendar>
+  <body class="bg-primary-lighter">
+    <main class="bg-light-lighter mx-auto p-lg shadow-sm">
+      <h1>Kickstand UI Date Picker Component</h1>
+
+      <p>
+        This is a prototype for Kickstand UI's custom date picker. The goal of
+        this component is:
+      </p>
+
+      <ul>
+        <li>Make design and content customizable</li>
+        <li>
+          Make the component accessible and easy to with various technologies
+          (mouse, keyboard, screen reader, etc.)
+        </li>
+        <li>Make usage and implementation intuitive and easy to use</li>
+        <li>
+          Utilize the browsers native APIs to provide localization/translations
+        </li>
+      </ul>
+
+      <h2>Usage</h2>
+
+<pre class="my-xl bg-light-light">
+  <code>
+    &lt;ks-datepicker label="Default"&gt;&lt;/ks-datepicker&gt;
+  </code>
+</pre>
+
+      <ks-datepicker label="Default"></ks-datepicker>
+
+      <p>
+        The default datepicker component will provide you with an input field
+        and the calendar dialog. The dialog can be activated by clicking
+        calendar icon on the right side of the input.
+      </p>
+
+      <h3>Keyboard Navigation</h3>
+
+      <p>You can navigate the day, month, and year input fields using the <kbd>LEFT</kbd> and <kbd>RIGHT</kbd> arrow keys. Focus will automatically shift as you add content to the input fields. Pressing the <kbd>SPACE</kbd> key when focused on either the month, day, or year inputs will open the calendar dialog.</p>
+
+      <p>Once the calendar dialog is open you can navigate the days in the calendar using the <kbd>ARROW</kbd> keys and the rest of the controls using the <kbd>TAB</kbd> key. to close the dialog and return to the input, press the <kbd>ESC</kbd> key</p>
+
+      <h2>Date Range</h2>
+
+      <p>
+        You can provide a range of available date using the
+        <code>min-date</code> and <code>max-date</code> attributes.
+      </p>
+
+<pre class="my-xl bg-light-light">
+  <code>
+    &lt;ks-datepicker 
+      label="Date Range" 
+      min-date="3/5/2022" 
+      max-date="3/20/2022"&gt;
+    &lt;/ks-datepicker&gt;
+  </code>
+</pre>
+
+      <ks-datepicker label="Date Range" min-date="3/5/2022" max-date="3/20/2022"></ks-datepicker>
+
+      <h2>Validation</h2>
+
+      <p>Beside setting the date range on the component, you can also indicate if it is required using the <code>required</code> attribute.</p>
+
+<pre class="my-xl bg-light-light">
+  <code>
+    &lt;ks-datepicker 
+      label="Required Date" 
+      required&gt;
+    &lt;/ks-datepicker&gt;
+  </code>
+</pre>
+
+      <ks-datepicker required></ks-datepicker>
+
+      <h2>Road Map</h2>
+
+      <p>
+        <ul>
+          <li>[X] Main input keyboard navigation</li>
+          <li>[X] Calendar keyboard navigation</li>
+          <li>[X] Calendar dialog keyboard trapping</li>
+          <li>[X] Min/Max dates</li>
+          <li>[X] Required validation</li>
+          <li>[X] Dates and labels translated by JavaScript API</li>
+          <li>[X] "Clear" button to reset content</li>
+          <li>[X] "Today" button to set selection to current date</li>
+          <li>[ ] Dynamic positioning of calendar dialog</li>
+          <li>[ ] Localized input format</li>
+          <li>[ ] Custom input/output format</li>
+          <li>[ ] Select multiple dates</li>
+          <li>[ ] Select date range</li>
+          <li>[ ] Disable multiple dates</li>
+          <li>[ ] Display multiple calendars</li>
+          <li>[ ] Slot calendar</li>
+          <li>[ ] Slot day content</li>
+        </ul>
+      </p>
+
+    </main>
   </body>
 </html>
