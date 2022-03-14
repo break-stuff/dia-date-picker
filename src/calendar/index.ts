@@ -270,11 +270,8 @@ export class KsCalendar extends LitElement {
     }
 
     this.setKeyBoardCalendarAnimation(newDate);
-
     this.selectDate(newDate);
-    if(!isOutOfRange(newDate, this._minDate, this._maxDate)) {
-      this.emitFocus();
-    }
+    this.emitFocus();
   }
 
   private setKeyBoardCalendarAnimation(date: Date) {
@@ -540,9 +537,7 @@ export class KsCalendar extends LitElement {
         @keydown="${this.dayKeyDownHandler}"
         @keyup="${(e: KeyboardEvent) => this.dayKeyUpHandler(day, e)}"
       >
-        <span aria-hidden="true">
-          ${day.getDate()}
-        </span>
+        <span aria-hidden="true">${day.getDate()}</span>
       </td>
     `;
   }
