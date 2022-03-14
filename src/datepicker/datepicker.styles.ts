@@ -112,10 +112,6 @@ export const styles = css`
     min-width: 2rem;
   }
 
-  .main-input-controls .year {
-    // padding: 0;
-  }
-
   .main-input-controls input::-webkit-inner-spin-button {
     display: none;
   }
@@ -135,9 +131,6 @@ export const styles = css`
 
   .calendar-toggle .icon {
     margin-top: -0.25rem;
-  }
-
-  .calendar-toggle:focus {
   }
 
   .icon {
@@ -194,134 +187,5 @@ export const styles = css`
     opacity: 1;
     transform: translateY(0rem);
     transition: all 0.3s ease-in-out;
-  }
-
-  /* TOP CONTROLS */
-  .top-controls {
-    display: flex;
-    justify-content: space-between;
-    align-content: stretch;
-  }
-
-  .top-controls .left-controls {
-    display: flex;
-  }
-  .month-label {
-    display: inline-flex;
-    align-items: stretch;
-    margin-right: 0.25rem;
-    position: relative;
-  }
-  .month-label select {
-    min-width: 6.25rem;
-  }
-  .month-icon {
-    pointer-events: none;
-    right: 0.25rem;
-    top: 0.5rem;
-    position: absolute;
-  }
-
-  .top-controls .right-controls > button {
-    margin-right: 0.125rem;
-  }
-
-  .top-controls .arrow {
-    display: inline-flex;
-    align-items: center;
-    font-size: 1.75rem;
-    color: var(--border-color);
-  }
-  .top-controls .arrow:hover {
-    // color: steelblue;
-    font-weight: 400;
-  }
-
-  .top-controls .year-selector {
-    width: 3.5rem;
-  }
-
-  .top-controls .year-selector::-webkit-inner-spin-button {
-    opacity: 1;
-  }
-
-  /* CALENDAR CONTROL */
-  .calendar {
-    clear: both;
-    margin: 0.5rem 0;
-  }
-
-  .calendar tbody {
-    opacity: 0.125;
-  }
-  .calendar .prev {
-    transform: translateY(-0.75rem);
-  }
-  .calendar .next {
-    transform: translateY(0.75rem);
-  }
-
-  .calendar .show {
-    opacity: 1;
-    transform: translateY(0rem);
-    transition: all 0.3s linear;
-  }
-  .calendar .week-days td {
-    color: #9a9a9a;
-  }
-  .calendar td {
-    width: 2em;
-    height: 2em;
-    vertical-align: middle;
-    text-align: center;
-    font-size: 1rem;
-  }
-  .calendar .day {
-    cursor: pointer;
-    border-radius: 100%;
-  }
-  [aria-current='date'] {
-    border: solid 2px #899ebb;
-  }
-  [aria-selected='true'] {
-    background: #8db3d3;
-  }
-  [aria-selected='true']:hover {
-    background: #8db3d3;
-  }
-  .day button:hover,
-  .day button:focus,
-  .day button[tabindex='0'] {
-    background-color: #d4deec;
-    border-radius: 100%;
-  }
-
-  tbody td button {
-    padding: 0;
-    margin: 0;
-    line-height: 1;
-    border: none;
-    background-color: transparent;
-    width: 2em;
-    height: 2em;
-    vertical-align: middle;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 100%;
-    font-size: 1rem;
-  }
-
-  tbody td button[disabled]:hover {
-    background-color: transparent;
-  }
-
-  .other-month {
-    color: gray;
-  }
-
-  /* BOTTOM CONTROLS */
-  .bottom-controls {
-    display: flex;
-    justify-content: space-between;
   }
 `;
