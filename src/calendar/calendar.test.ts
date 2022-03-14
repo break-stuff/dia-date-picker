@@ -8,13 +8,17 @@ async function element(selectedDay?: string) {
   const value = getShortIsoDate(
     selectedDay ? new Date(selectedDay) : new Date()
   );
+  console.log(value);
+
   const $el = await fixture<KsCalendar>(
     `<${tag} value="${selectedDay}"></${tag}>`
   );
 
   return {
     $el,
-    $selectedElement: $el.shadowRoot?.querySelector(`[id="${value}"]`) as HTMLButtonElement,
+    $selectedElement: $el.shadowRoot?.querySelector(
+      `[id="${value}"]`
+    ) as HTMLElement,
     $monthSelect: $el.shadowRoot?.querySelector(
       '.month-selector'
     ) as HTMLSelectElement,
@@ -31,7 +35,8 @@ async function element(selectedDay?: string) {
 describe('calendar default date', () => {
   it('test default element accessibility', async () => {
     // Arrange
-    const { $el } = await element();
+    const today = new Date().toLocaleDateString('en-US');
+    const { $el } = await element(today);
 
     // Act
 
@@ -50,10 +55,7 @@ describe('calendar default date', () => {
     await assert.equal($selectedElement?.getAttribute('id'), isoDate);
     await assert.equal($selectedElement?.getAttribute('tabindex'), '0');
     await assert.equal($selectedElement?.getAttribute('aria-current'), 'date');
-    await assert.equal(
-      $selectedElement?.parentElement?.getAttribute('aria-selected'),
-      'true'
-    );
+    await assert.equal($selectedElement?.getAttribute('aria-selected'), 'true');
   });
 
   it('check that current day and year have correct values', async () => {
@@ -77,8 +79,6 @@ describe('calendar default date', () => {
     await assert.equal($nextMonth?.getAttribute('aria-label'), 'October 2025');
   });
 });
-
-
 
 // describe('calendar keyboard funtionality tests', () => {
 //   it('test up arrow', async () => {
