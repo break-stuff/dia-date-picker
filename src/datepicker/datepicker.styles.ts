@@ -3,6 +3,7 @@ import { css } from 'lit';
 export const styles = css`
   :host {
     --primary-color: #293d4e;
+    --error-color: #9a0000;
     --outline: solid 2px #71a5d1;
     --outline-offset: 0.125rem;
     --border-color: #4f7494;
@@ -141,7 +142,7 @@ export const styles = css`
   .error-message {
     visibility: hidden;
     margin-top: 0.25rem;
-    color: #9a0000;
+    color: var(--error-color);
     font-size: 0.9rem;
   }
 
@@ -150,7 +151,7 @@ export const styles = css`
   }
 
   [aria-invalid='true'] {
-    border-color: #9a0000;
+    border-color: var(--error-color);
   }
 
   /* CALENDAR DROPDOWN */
@@ -192,7 +193,6 @@ export const styles = css`
     border-bottom-color: #fff;
     bottom: 100%;
     left: 25%;
-    margin-bottom: calc(var(--ks-spacing-size-xxxs) * -1);
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     transition: all 0.3s ease-in-out;
