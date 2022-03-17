@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import minifyHTML from 'rollup-plugin-minify-html-literals';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -15,4 +16,7 @@ export default defineConfig({
   optimizeDeps: {
     include: ['@open-wc/testing'],
   },
+  plugins: [
+    minifyHTML()
+  ]
 });
