@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-console */
-import { html, LitElement } from 'lit';
+import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import '../calendar';
@@ -14,7 +14,7 @@ import {
   getDaysInMonth,
 } from '../utils/dateUtils';
 
-import { styles } from './datepicker.styles';
+import styles from './datepicker.scss';
 import icon from '../utils/icons';
 
 /**
@@ -44,7 +44,7 @@ import icon from '../utils/icons';
  */
 @customElement('ks-datepicker')
 export class KsDatepicker extends LitElement {
-  static styles = styles;
+  static styles = unsafeCSS(styles);
 
   @property({ type: String, reflect: true })
   value?: string;
@@ -743,7 +743,9 @@ export class KsDatepicker extends LitElement {
               ${icon('calendar')}
             </button>
           </div>
-          <div id="error_message" class="error-message" aria-live="assertive">${this.errorMessage}</div>
+          <div id="error_message" class="error-message" aria-live="assertive">
+            ${this.errorMessage}
+          </div>
         </fieldset>
       </div>
     `;

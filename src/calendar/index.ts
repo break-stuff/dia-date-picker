@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-console */
-import { html, LitElement } from 'lit';
+import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import {
   addDaysToDate,
@@ -15,7 +15,7 @@ import {
 } from '../utils/dateUtils';
 import icon from '../utils/icons';
 
-import { styles } from './calendar.styles';
+import styles from './calendar.scss'
 
 /**
  * @tag ks-datepicker
@@ -40,7 +40,7 @@ import { styles } from './calendar.styles';
  */
 @customElement('ks-calendar')
 export class KsCalendar extends LitElement {
-  static styles = styles;
+  static styles = unsafeCSS(styles);
 
   @property({ type: String, reflect: true })
   value?: string;

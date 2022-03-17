@@ -1,0 +1,184 @@
+:host {
+  --primary-color: #2c5374;
+  --outline: solid 2px #71a5d1;
+  --outline-offset: 0.125rem;
+  --border-color: rgb(197, 209, 218);
+  --focus-color: #e0e7f3;
+  --alt-month-color: rgb(112, 112, 112);
+
+  display: inline;
+
+  *:focus {
+    outline: var(--outline);
+    outline-offset: var(--outline-offset);
+  }
+
+  /* RESETS */
+  button,
+  input,
+  select {
+    font-size: 1rem;
+    padding: 0.25rem;
+    line-height: 1.2;
+    margin: 0;
+    -webkit-appearance: none;
+    border-radius: 0.25rem;
+    border: 0;
+    background-color: white;
+    color: var(--primary-color);
+  }
+
+  label:hover,
+  button:hover {
+    cursor: pointer;
+  }
+
+  button {
+    color: var(--primary-color);
+  }
+
+  .sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  .icon {
+    width: 1em;
+    height: 1em;
+  }
+
+  /* TOP CONTROLS */
+  .top-controls {
+    display: flex;
+    justify-content: space-between;
+    align-content: stretch;
+
+    .left-controls {
+      display: flex;
+
+      .month-label {
+        display: inline-flex;
+        align-items: stretch;
+        margin-right: 0.25rem;
+        position: relative;
+
+        select {
+          min-width: 6.25rem;
+        }
+
+        .month-icon {
+          pointer-events: none;
+          right: 0.25rem;
+          top: 0.5rem;
+          position: absolute;
+        }
+      }
+
+      .year-selector {
+        width: 3.5rem;
+
+        &::-webkit-inner-spin-button {
+          opacity: 1;
+        }
+      }
+    }
+
+    .right-controls {
+      display: flex;
+
+      .arrow {
+        margin-left: 0.25rem;
+        display: inline-flex;
+        align-items: center;
+        font-size: 1.75rem;
+        color: var(--primary-color);
+      }
+    }
+  }
+
+  .calendar {
+    margin: 1rem 0;
+    width: 100%;
+    min-width: 16rem;
+
+    tbody {
+      opacity: 0.125;
+
+      &.prev {
+        transform: translateY(-0.75rem);
+      }
+
+      &.next {
+        transform: translateY(0.75rem);
+      }
+
+      &.show {
+        opacity: 1;
+        transform: translateY(0rem);
+        transition: all 0.3s linear;
+      }
+    }
+
+    .day {
+      background-color: transparent;
+      border: none;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      font-size: 1rem;
+      height: 2em;
+      line-height: 1;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      vertical-align: middle;
+      width: 2em;
+      color: var(--primary-color);
+
+      &.other-month {
+        color: var(--alt-month-color);
+        font-style: italic;
+      }
+
+      &:hover,
+      &:focus,
+      &[tabindex='0'] {
+        background-color: var(--focus-color);
+        color: black;
+      }
+
+      &[aria-current='date'] {
+        border: solid 2px var(--border-color);
+      }
+      &[aria-selected='true'] {
+        background: var(--primary-color);
+        color: white;
+      }
+      &[aria-selected='true']:hover {
+        background: var(--primary-color);
+        color: white;
+      }
+
+      &[aria-disabled='true'] {
+        cursor: not-allowed;
+        color: #ccc;
+        background-color: transparent;
+      }
+
+      &[aria-disabled='true']:hover {
+        background-color: transparent;
+      }
+    }
+  }
+
+  .bottom-controls {
+    display: flex;
+    justify-content: space-between;
+  }
+}
