@@ -645,31 +645,7 @@ export class KsDatepicker extends LitElement {
 
     return html`
       ${this.mainInputTemplate()}
-      <div
-        id="calendar-dropdown"
-        class="${classMap({ 'calendar-dropdown': true, open: this._expanded })}"
-        role="dialog"
-        aria-label="${getMonthLabel(
-          this._selectedMonth,
-          this._selectedYear,
-          this.getLocale()
-        )}"
-        @keydown="${this.dropdownKeyDownHandler}"
-      >
-        <ks-calendar
-          .value=${getShortIsoDate(this._selectedDate as Date)}
-          min-date="${this.minDate || ''}"
-          max-date="${this.maxDate || ''}"
-          day-label="${this.dayLabel}"
-          month-label="${this.monthLabel}"
-          year-label="${this.yearLabel}"
-          clear-label="${this.clearLabel}"
-          today-label="${this.todayLabel}"
-          lang="${this.getLocale()}"
-          @date-focused="${this.dateFocusedHandler}"
-          @date-selected="${this.dateSelectedHandler}"
-        ></ks-calendar>
-      </div>
+      ${this.dropdownTemplate()}
     `;
   }
 
@@ -747,6 +723,36 @@ export class KsDatepicker extends LitElement {
             ${this.errorMessage}
           </div>
         </fieldset>
+      </div>
+    `;
+  }
+
+  dropdownTemplate() {
+    return html`
+      <div
+        id="calendar-dropdown"
+        class="${classMap({ 'calendar-dropdown': true, open: this._expanded })}"
+        role="dialog"
+        aria-label="${getMonthLabel(
+          this._selectedMonth,
+          this._selectedYear,
+          this.getLocale()
+        )}"
+        @keydown="${this.dropdownKeyDownHandler}"
+      >
+        <ks-calendar
+          .value=${getShortIsoDate(this._selectedDate as Date)}
+          .min-date=${this.minDate}
+          .max-date=${this.maxDate}
+          day-label="${this.dayLabel}"
+          month-label="${this.monthLabel}"
+          year-label="${this.yearLabel}"
+          clear-label="${this.clearLabel}"
+          today-label="${this.todayLabel}"
+          lang="${this.getLocale()}"
+          @date-focused="${this.dateFocusedHandler}"
+          @date-selected="${this.dateSelectedHandler}"
+        ></ks-calendar>
       </div>
     `;
   }
