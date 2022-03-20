@@ -179,7 +179,6 @@ export class KsCalendar extends LitElement {
     this._selectedDay = date.getDate();
     this._selectedMonth = date.getMonth();
     this._selectedYear = date.getFullYear();
-    console.log(this._selectedMonth);
   }
 
   private setFocusableDate(date: Date) {
