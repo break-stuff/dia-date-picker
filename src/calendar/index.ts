@@ -14,8 +14,9 @@ import {
   formatDateString,
 } from '../utils/dateUtils';
 import icon from '../utils/icons';
+import { watch } from '../utils/watchDecorator';
 
-import styles from './calendar.scss'
+import styles from './calendar.scss';
 
 /**
  * @tag ks-datepicker
@@ -92,6 +93,11 @@ export class KsCalendar extends LitElement {
 
   @query('#calendar_controls tbody')
   private $calendarControls?: HTMLElement;
+
+  @watch('value', { waitUntilFirstUpdate: true })
+  handleValueChange() {
+    this.setSelectedDate();
+  }
 
   /**
    *
@@ -173,6 +179,7 @@ export class KsCalendar extends LitElement {
     this._selectedDay = date.getDate();
     this._selectedMonth = date.getMonth();
     this._selectedYear = date.getFullYear();
+    console.log(this._selectedMonth);
   }
 
   private setFocusableDate(date: Date) {
@@ -343,7 +350,7 @@ export class KsCalendar extends LitElement {
       this.maxDate ? new Date(formatDateString(this.maxDate)) : null
     ) as Date;
 
-    this.setSelectedDate();
+    // this.setSelectedDate();
   }
 
   /**
