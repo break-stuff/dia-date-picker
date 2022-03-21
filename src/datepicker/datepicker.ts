@@ -238,8 +238,6 @@ export class KsDatepicker extends LitElement {
       }
 
       this._expanded = false;
-
-      console.log(this._hadFocus);
       
       if(this._hadFocus) {
         this.validate();
@@ -757,8 +755,8 @@ export class KsDatepicker extends LitElement {
       >
         <ks-calendar
           .value=${getShortIsoDate(this._selectedDate as Date)}
-          .min-date=${this.minDate}
-          .max-date=${this.maxDate}
+          min-date="${this.minDate || ''}"
+          max-date="${this.maxDate || ''}"
           day-label="${this.dayLabel}"
           month-label="${this.monthLabel}"
           year-label="${this.yearLabel}"
