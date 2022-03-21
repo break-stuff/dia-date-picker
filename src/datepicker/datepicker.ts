@@ -89,7 +89,10 @@ export class KsDatepicker extends LitElement {
   private _isValid = true;
 
   @state()
-  private errorMessage = this.requiredErrorMessage;
+  private _hadFocus = false;
+
+  @state()
+  private _errorMessage = this.requiredErrorMessage;
 
   @state()
   private _selectedDate?: Date;
@@ -235,7 +238,12 @@ export class KsDatepicker extends LitElement {
       }
 
       this._expanded = false;
-      this.validate();
+
+      console.log(this._hadFocus);
+      
+      if(this._hadFocus) {
+        this.validate();
+      }
     });
   }
 
@@ -374,14 +382,14 @@ export class KsDatepicker extends LitElement {
       !this.$monthInput?.checkValidity() ||
       !this.$yearInput?.checkValidity()
     ) {
-      this.errorMessage = this.requiredErrorMessage;
+      this._errorMessage = this.requiredErrorMessage;
       this._isValid = false;
     }
 
     if (
       isOutOfRange(this._selectedDate as Date, this._minDate, this._maxDate)
     ) {
-      this.errorMessage = this.rangeErrorMessage;
+      this._errorMessage = this.rangeErrorMessage;
       this._isValid = false;
     }
   }
@@ -622,6 +630,10 @@ export class KsDatepicker extends LitElement {
     }, 100);
   }
 
+  private dateInputFocusHandler() {
+    this._hadFocus = true;
+  }
+
   private beforeRender() {
     this._minDate = (
       this.minDate ? new Date(formatDateString(this.minDate)) : null
@@ -678,6 +690,7 @@ export class KsDatepicker extends LitElement {
               placeholder="mm"
               formnovalidate
               ?required=${this.required}
+              @focus="${this.dateInputFocusHandler}"
               @keyup="${this.mainMonthKeyUpHandler}"
               @keydown="${this.preventSpaceKeyDownHandler}"
             />
@@ -692,6 +705,7 @@ export class KsDatepicker extends LitElement {
               placeholder="dd"
               formnovalidate
               ?required=${this.required}
+              @focus="${this.dateInputFocusHandler}"
               @keyup="${this.mainDayKeyUpHandler}"
               @keydown="${this.preventSpaceKeyDownHandler}"
             />
@@ -706,6 +720,7 @@ export class KsDatepicker extends LitElement {
               placeholder="yyyy"
               formnovalidate
               ?required=${this.required}
+              @focus="${this.dateInputFocusHandler}"
               @keyup="${this.mainYearKeyUpHandler}"
               @keydown="${this.preventSpaceKeyDownHandler}"
             />
@@ -720,7 +735,7 @@ export class KsDatepicker extends LitElement {
             </button>
           </div>
           <div id="error_message" class="error-message" aria-live="assertive">
-            ${this.errorMessage}
+            ${this._errorMessage}
           </div>
         </fieldset>
       </div>
