@@ -8,7 +8,6 @@ async function element(selectedDay?: string) {
   const value = getShortIsoDate(
     selectedDay ? new Date(selectedDay) : new Date()
   );
-  console.log(value);
 
   const $el = await fixture<KsCalendar>(
     `<${tag} value="${selectedDay}"></${tag}>`

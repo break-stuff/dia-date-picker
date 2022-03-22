@@ -48,3 +48,22 @@ describe('datepicker accessibility', () => {
     );
   });
 });
+
+describe('datepicker format', () => {
+  it('should have "mm/dd/yyyy" format when "lang" is "en-US"', async () => {
+    // Arrange
+    const $el = await fixture<KsDatepicker>(
+      `<${tag} label="Select Date" lang="en-US"></${tag}>`
+    );
+
+    // Act
+    const $inputs = [...$el.shadowRoot.querySelectorAll('input')];
+    const $dividers = $el.shadowRoot.querySelectorAll('span');
+
+    // Assert
+    await assert.equal($inputs[0].placeholder, 'mm');
+    await assert.equal($inputs[1].placeholder, 'dd');
+    await assert.equal($inputs[2].placeholder, 'yyyy');
+  });
+});
+
