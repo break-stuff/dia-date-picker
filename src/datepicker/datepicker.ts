@@ -238,8 +238,8 @@ export class KsDatepicker extends LitElement {
       }
 
       this._expanded = false;
-      
-      if(this._hadFocus) {
+
+      if (this._hadFocus) {
         this.validate();
       }
     });
@@ -401,6 +401,26 @@ export class KsDatepicker extends LitElement {
       this.$calendarFocusableElements[
         this.$calendarFocusableElements.length - 1
       ];
+  }
+
+  private getDateFormat() {
+    const locale = this.getLocale();
+    const localeFormat = new Date(1999, 11, 31)
+      .toLocaleDateString(locale)
+      .match(/[\d.]+|\D+/g)
+      ?.map(x => {
+        if (x === '12') {
+          return 'mm';
+        } else if (x === '31') {
+          return 'dd';
+        } else if (x === '1999') {
+          return 'yyyy';
+        } else {
+          return x;
+        }
+      });
+
+    return localeFormat || [];
   }
 
   /**
@@ -633,6 +653,7 @@ export class KsDatepicker extends LitElement {
   }
 
   private beforeRender() {
+    this.getDateFormat();
     this._minDate = (
       this.minDate ? new Date(formatDateString(this.minDate)) : null
     ) as Date;
@@ -653,13 +674,11 @@ export class KsDatepicker extends LitElement {
   render() {
     this.beforeRender();
 
-    return html`
-      ${this.mainInputTemplate()}
-      ${this.dropdownTemplate()}
-    `;
+    return html` ${this.mainInputTemplate()} ${this.dropdownTemplate()} `;
   }
 
   private mainInputTemplate() {
+    const dateFormat = this.getDateFormat();
     return html`
       <div class="controls">
         <fieldset class="main-input">
@@ -678,50 +697,11 @@ export class KsDatepicker extends LitElement {
             aria-invalid="${!this._isValid}"
             aria-errormessage="error_message"
           >
-            <label for="month" class="sr-only">${this.monthLabel}</label>
-            <input
-              id="month"
-              class="month"
-              type="number"
-              min="1"
-              max="12"
-              placeholder="mm"
-              formnovalidate
-              ?required=${this.required}
-              @focus="${this.dateInputFocusHandler}"
-              @keyup="${this.mainMonthKeyUpHandler}"
-              @keydown="${this.preventSpaceKeyDownHandler}"
-            />
-            <span aria-hidden="true">/</span>
-            <label for="day" class="sr-only">${this.dayLabel}</label>
-            <input
-              id="day"
-              class="day"
-              type="number"
-              min="1"
-              max="${getDaysInMonth(this._selectedMonth, this._selectedYear)}"
-              placeholder="dd"
-              formnovalidate
-              ?required=${this.required}
-              @focus="${this.dateInputFocusHandler}"
-              @keyup="${this.mainDayKeyUpHandler}"
-              @keydown="${this.preventSpaceKeyDownHandler}"
-            />
-            <span aria-hidden="true">/</span>
-            <label for="year" class="sr-only">${this.yearLabel}</label>
-            <input
-              id="year"
-              class="year"
-              type="number"
-              min="1"
-              max="9999"
-              placeholder="yyyy"
-              formnovalidate
-              ?required=${this.required}
-              @focus="${this.dateInputFocusHandler}"
-              @keyup="${this.mainYearKeyUpHandler}"
-              @keydown="${this.preventSpaceKeyDownHandler}"
-            />
+            ${this.inputTemplates(dateFormat[0])}
+            <span aria-hidden="true">${dateFormat[1]}</span>
+            ${this.inputTemplates(dateFormat[2])}
+            <span aria-hidden="true">${dateFormat[3]}</span>
+            ${this.inputTemplates(dateFormat[4])}
             <button
               class="calendar-toggle"
               aria-haspopup="true"
@@ -738,6 +718,67 @@ export class KsDatepicker extends LitElement {
         </fieldset>
       </div>
     `;
+  }
+
+  inputTemplates(input: string) {
+    if (input === 'dd') {
+      return html`
+        <label for="day" class="sr-only">${this.dayLabel}</label>
+        <input
+          id="day"
+          class="day"
+          type="number"
+          min="1"
+          max="${getDaysInMonth(this._selectedMonth, this._selectedYear)}"
+          placeholder="dd"
+          formnovalidate
+          ?required=${this.required}
+          @focus="${this.dateInputFocusHandler}"
+          @keyup="${this.mainDayKeyUpHandler}"
+          @keydown="${this.preventSpaceKeyDownHandler}"
+        />
+      `;
+    }
+
+    if (input === 'mm') {
+      return html`
+        <label for="month" class="sr-only">${this.monthLabel}</label>
+        <input
+          id="month"
+          class="month"
+          type="number"
+          min="1"
+          max="12"
+          placeholder="mm"
+          formnovalidate
+          ?required=${this.required}
+          @focus="${this.dateInputFocusHandler}"
+          @keyup="${this.mainMonthKeyUpHandler}"
+          @keydown="${this.preventSpaceKeyDownHandler}"
+        />
+      `;
+    }
+
+    if (input === 'yyyy') {
+      return html`
+        <label for="year" class="sr-only">${this.yearLabel}</label>
+        <input
+          id="year"
+          class="year"
+          type="number"
+          min="1"
+          max="9999"
+          placeholder="yyyy"
+          formnovalidate
+          ?required=${this.required}
+          @focus="${this.dateInputFocusHandler}"
+          @keyup="${this.mainYearKeyUpHandler}"
+          @keydown="${this.preventSpaceKeyDownHandler}"
+        />
+      `;
+    }
+
+    return '';
   }
 
   dropdownTemplate() {
