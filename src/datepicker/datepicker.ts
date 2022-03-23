@@ -391,6 +391,7 @@ export class KsDatepicker extends LitElement {
     ) {
       this._errorMessage = this.requiredErrorMessage;
       this._isValid = false;
+      return;
     }
 
     if (
@@ -398,6 +399,7 @@ export class KsDatepicker extends LitElement {
     ) {
       this._errorMessage = this.rangeErrorMessage;
       this._isValid = false;
+      return;
     }
   }
 
