@@ -100,10 +100,6 @@ export const styles = css`
     font-size: 1.75rem;
     color: var(--border-color);
   }
-  .top-controls .arrow:hover {
-    // color: steelblue;
-    font-weight: 400;
-  }
 
   .top-controls .year-selector {
     width: 3.5rem;
@@ -184,6 +180,7 @@ export const styles = css`
   }
 
   .day[aria-disabled='true']:hover {
+    color: #ccc;
     background-color: transparent;
   }
 
