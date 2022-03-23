@@ -533,6 +533,29 @@ export class KsDatepicker extends LitElement {
     return true;
   }
 
+  private yearKeyDownHandler(e: KeyboardEvent) {
+    const value = (e.target as HTMLInputElement).value;
+
+    switch (e.key) {
+      case 'ArrowUp':
+        if (!value) {
+          this._selectedYear = this._curDate.getFullYear() - 1;
+          this.setMainYearInput(this._selectedYear);
+        }
+        return;
+      case 'ArrowDown':
+        if (!value) {
+          this._selectedYear = this._curDate.getFullYear() + 1;
+          this.setMainYearInput(this._selectedYear);
+        }
+        return;
+      default:
+        break;
+    }
+
+    this.preventSpaceKeyDownHandler(e);
+  }
+
   private mainMonthInputHandler(e: KeyboardEvent, index: number) {
     const value = (e.target as HTMLInputElement).value;
 
@@ -626,21 +649,21 @@ export class KsDatepicker extends LitElement {
   }
 
   private goToNextInput(index: number) {
-    if(index === 0) {
+    if (index === 0) {
       this.$secondInput?.select();
     }
 
-    if(index === 2) {
+    if (index === 2) {
       this.$thirdInput?.select();
     }
   }
 
   private goToPrevInput(index: number) {
-    if(index === 4) {
+    if (index === 4) {
       this.$secondInput?.select();
     }
 
-    if(index === 2) {
+    if (index === 2) {
       this.$firstInput?.select();
     }
   }
@@ -808,7 +831,7 @@ export class KsDatepicker extends LitElement {
           ?required=${this.required}
           @focus="${this.dateInputFocusHandler}"
           @keyup="${(e: KeyboardEvent) => this.mainYearKeyUpHandler(e, index)}"
-          @keydown="${this.preventSpaceKeyDownHandler}"
+          @keydown="${this.yearKeyDownHandler}"
         />
       `;
     }
