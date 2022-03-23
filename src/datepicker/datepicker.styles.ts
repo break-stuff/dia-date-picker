@@ -105,6 +105,11 @@ export const styles = css`
     min-width: 2rem;
   }
 
+  .main-input-controls span {
+    font-size: 1.25rem;
+    padding: 0 0.125rem;
+  }
+
   .main-input-controls input:focus {
     outline: 0;
   }
