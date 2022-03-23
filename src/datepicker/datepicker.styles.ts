@@ -90,7 +90,7 @@ export const styles = css`
     border-radius: 0.25rem;
     padding: 0.5rem;
     display: inline-flex;
-    align-items: center;
+    align-content: center;
   }
 
   .main-input-controls:focus-within {
@@ -107,7 +107,7 @@ export const styles = css`
 
   .main-input-controls span {
     font-size: 1.25rem;
-    padding: 0 0.125rem;
+    padding: 0.125rem;
   }
 
   .main-input-controls input:focus {
