@@ -193,3 +193,27 @@ function getDays(month: number, year: number): Date[] {
   }
   return dates;
 }
+
+/**
+ * 
+ * @param locale 
+ * @returns string array of the month, day, and year along with its separators in the correct order based on locale
+ */
+export function getDateFormat(locale: string) {
+  const localeFormat = new Date(1999, 11, 31)
+    .toLocaleDateString(locale)
+    .match(/[\d.]+|\D+/g)
+    ?.map(x => {
+      if (x === '12') {
+        return 'mm';
+      } else if (x === '31') {
+        return 'dd';
+      } else if (x === '1999') {
+        return 'yyyy';
+      } else {
+        return x;
+      }
+    });
+
+  return localeFormat || [];
+}

@@ -11,6 +11,7 @@ import {
   getMonthLabel,
   formatDateString,
   getDaysInMonth,
+  getDateFormat,
 } from '../utils/dateUtils';
 
 import { styles } from './datepicker.styles';
@@ -472,26 +473,6 @@ export class KsDatepicker extends LitElement {
       ];
   }
 
-  private getDateFormat() {
-    const locale = this.getLocale();
-    const localeFormat = new Date(1999, 11, 31)
-      .toLocaleDateString(locale)
-      .match(/[\d.]+|\D+/g)
-      ?.map(x => {
-        if (x === '12') {
-          return 'mm';
-        } else if (x === '31') {
-          return 'dd';
-        } else if (x === '1999') {
-          return 'yyyy';
-        } else {
-          return x;
-        }
-      });
-
-    return localeFormat || [];
-  }
-
   /**
    *
    * EVENT HANDLERS
@@ -774,7 +755,6 @@ export class KsDatepicker extends LitElement {
   }
 
   private beforeRender() {
-    this.getDateFormat();
     this._selectedDate = this.getSelectedDate();
   }
 
@@ -791,7 +771,7 @@ export class KsDatepicker extends LitElement {
   }
 
   private mainInputTemplate() {
-    const dateFormat = this.getDateFormat();
+    const dateFormat = getDateFormat(this.getLocale());
     return html`
       <div class="controls">
         <fieldset class="main-input">
