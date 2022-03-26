@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 import { html, LitElement } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
+import { IFormFieldData } from '../datepicker';
 import {
   addDaysToDate,
   getDaysOfTheWeek,
@@ -30,6 +31,7 @@ import { styles } from './calendar.styles';
  * @attr {string} year-label - label used for year input
  * @attr {string} clear-label - text for clear button
  * @attr {string} today-label - text for today button
+ * @attr {string} disabled-dates - comma separated list of disabled dates
  *
  * @slot prev-month-icon - icon in previous month button
  * @slot next-month-icon - icon in next month button
@@ -67,6 +69,9 @@ export class KsCalendar extends LitElement {
   @property({ attribute: 'today-label', type: String })
   todayLabel = 'Today';
 
+  @property({ attribute: 'disabled-dates', type: String })
+  disabledDates?: string;
+
   @state()
   private _selectedDate?: Date;
 
@@ -89,6 +94,9 @@ export class KsCalendar extends LitElement {
   private _maxDate: Date | null = null;
 
   @state()
+  private _formattedDisabledDates: string[] = [];
+
+  @state()
   private $focusableEls: HTMLElement[] = [];
 
   @query('#calendar_controls tbody')
@@ -107,6 +115,7 @@ export class KsCalendar extends LitElement {
 
   protected firstUpdated(): void {
     this.initSelectedValues();
+    this.setFormattedDisabledDates();
   }
 
   /**
@@ -117,7 +126,7 @@ export class KsCalendar extends LitElement {
 
   private emitFocus() {
     const options = {
-      detail: { value: getShortIsoDate(this._selectedDate as Date) },
+      detail: this.getEmittedData(),
       bubbles: true,
       composed: true,
     };
@@ -125,10 +134,13 @@ export class KsCalendar extends LitElement {
   }
 
   private emitSelected(reset = false) {
+    const fieldData = this.getEmittedData();
+    if(reset) {
+      fieldData.value = undefined;
+    }
+
     const options = {
-      detail: {
-        value: reset ? undefined : getShortIsoDate(this._selectedDate as Date),
-      },
+      detail: fieldData,
       bubbles: true,
       composed: true,
     };
@@ -140,6 +152,22 @@ export class KsCalendar extends LitElement {
    * COMPONENT LOGIC
    *
    */
+
+  private getEmittedData() {
+    const isDateOutOfRange = isOutOfRange(this._selectedDate as Date, this._minDate, this._maxDate);
+    const isDateUnavailable = this._formattedDisabledDates.includes(this._selectedDate?.toLocaleDateString() as string);
+    const fieldData: IFormFieldData = {
+      value: getShortIsoDate(this._selectedDate as Date),
+      isValid: !isDateOutOfRange && !isDateUnavailable,
+      validity: {
+        outOfRange: isDateOutOfRange,
+        valueMissing: false,
+        dateUnavailable: isDateUnavailable
+      }
+    }
+
+    return fieldData;
+  }
 
   private initSelectedValues() {
     const selectedDate = this.value
@@ -236,6 +264,21 @@ export class KsCalendar extends LitElement {
     this.$calendarControls?.classList.remove('show', 'prev', 'next');
     this.$calendarControls?.classList.add('next');
     setTimeout(() => this.$calendarControls?.classList.add('show'));
+  }
+
+  private setFormattedDisabledDates() {
+    this._formattedDisabledDates =
+      this.disabledDates
+        ?.split(',')
+        .map(x => new Date(formatDateString(x.trim())).toLocaleDateString()) ||
+      [];
+  }
+
+  private isDateDisabled(date: Date) {
+    return (
+      this._formattedDisabledDates.includes(date.toLocaleDateString()) ||
+      isOutOfRange(date, this._minDate, this._maxDate)
+    );
   }
 
   /**
@@ -490,7 +533,7 @@ export class KsCalendar extends LitElement {
         aria-label="${getFullDate(day, this.getLocale())}"
         aria-current="${isToday ? 'date' : false}"
         tabindex="${isSelected ? 0 : -1}"
-        aria-disabled="${isOutOfRange(day, this._minDate, this._maxDate)}"
+        aria-disabled="${this.isDateDisabled(day)}"
         onkeydown="return false"
         @click="${() => this.pickDate(day)}"
         @keyup="${(e: KeyboardEvent) => this.dayKeyUpHandler(day, e)}"

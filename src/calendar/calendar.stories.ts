@@ -1,3 +1,4 @@
+import { html } from 'lit';
 import './index';
 
 export default {
@@ -13,6 +14,7 @@ export default {
     ['year-label']: 'Year',
     ['clear-label']: 'Clear',
     ['today-label']: 'Today',
+    ['disabled-dates']: '',
   },
   parameters: {
     actions: {
@@ -22,8 +24,9 @@ export default {
 };
 
 const Template = (args: any) => {
-  return `
+  return html`
         <ks-calendar
+            id="example"
             value="${args.value}"
             lang="${args.lang}"
             min-date="${args['min-date']}"
@@ -33,6 +36,7 @@ const Template = (args: any) => {
             year-label="${args['year-label']}"
             clear-label="${args['clear-label']}"
             today-label="${args['today-label']}"
+            disabled-dates="${args['disabled-dates']}"
         ></ks-calendar>
         <!--<span>some random inline content</span>
         <div>some random block content</div>-->
@@ -51,4 +55,9 @@ export const MinMaxDates: any = Template.bind({});
 MinMaxDates.args = {
   ['min-date']: '2/2/2022',
   ['max-date']: '2-22-22',
+};
+
+export const DisabledDates: any = Template.bind({});
+DisabledDates.args = {
+  ['disabled-dates']: '2/2/2022, 2/4/2022, 2/6/2022'
 };

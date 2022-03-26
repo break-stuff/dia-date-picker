@@ -8,7 +8,6 @@ import '../calendar';
 import { getFocusableElements } from '../utils/domUtils';
 import {
   getShortIsoDate,
-  isOutOfRange,
   getMonthLabel,
   formatDateString,
   getDaysInMonth,
@@ -16,6 +15,19 @@ import {
 
 import { styles } from './datepicker.styles';
 import icon from '../utils/icons';
+
+export interface IFormFieldData {
+  name?: string;
+  value?: string;
+  isValid: boolean;
+  validity: IDatePickerValidation;
+}
+
+export interface IDatePickerValidation {
+  outOfRange?: boolean;
+  valueMissing?: boolean;
+  dateUnavailable?: boolean;
+}
 
 /**
  * @tag ks-datepicker
@@ -32,6 +44,7 @@ import icon from '../utils/icons';
  * @attr {string} year-label - label used for year input
  * @attr {string} clear-label - text for clear button
  * @attr {string} today-label - text for today button
+ * @attr {string} disabled-dates - comma separated list of disabled dates
  *
  * @slot calendar-icon - icon in button toggle for date selector
  * @slot prev-month-icon - icon in previous month button
@@ -51,6 +64,9 @@ export class KsDatepicker extends LitElement {
 
   @property({ type: String })
   label?: string;
+
+  @property({ type: String })
+  name?: string;
 
   @property({ type: Boolean })
   required = false;
@@ -80,7 +96,16 @@ export class KsDatepicker extends LitElement {
   requiredErrorMessage = 'This field is required';
 
   @property({ attribute: 'range-error-message', type: String })
-  rangeErrorMessage = 'The date you have selected is unavailable';
+  rangeErrorMessage = 'The date you have selected is not within the date range';
+
+  @property({ attribute: 'unavailable-error-message', type: String })
+  unavailableErrorMessage = 'The date you have selected is unavailable';
+
+  @property({ attribute: 'disabled-dates', type: String })
+  disabledDates?: string;
+
+  @state()
+  private _formFieldData: IFormFieldData = this.getInitialFormFieldData();
 
   @state()
   private _expanded = false;
@@ -108,12 +133,6 @@ export class KsDatepicker extends LitElement {
 
   @state()
   private _selectedYear: number = this._curDate.getFullYear();
-
-  @state()
-  private _minDate: Date | null = null;
-
-  @state()
-  private _maxDate: Date | null = null;
 
   @state()
   private $calendarFocusableElements?: HTMLElement[];
@@ -198,7 +217,7 @@ export class KsDatepicker extends LitElement {
     this.value = getShortIsoDate(this._selectedDate as Date);
 
     const options = {
-      detail: { value: this.value },
+      detail: { ...this._formFieldData },
       bubbles: true,
       composed: true,
     };
@@ -211,6 +230,38 @@ export class KsDatepicker extends LitElement {
    * COMPONENT LOGIC
    *
    */
+
+  private getName(): string {
+    return this.name ? this.name : this.toCamelCase(this.label || '');
+  }
+
+  private toCamelCase(value: string) {
+    return value
+      .toLowerCase()
+      .replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
+  }
+
+  private getInitialFormFieldData(): IFormFieldData {
+    return {
+      name: this.getName(),
+      value: undefined,
+      isValid: true,
+      validity: {
+        dateUnavailable: false,
+        outOfRange: false,
+        valueMissing: false,
+      },
+    };
+  }
+
+  private setFormFieldData(data: IFormFieldData) {
+    this._formFieldData = {
+      name: this.getName(),
+      value: data.value,
+      isValid: data.isValid,
+      validity: { ...data.validity },
+    };
+  }
 
   private initMainInputValues() {
     const selectedDate = this.value
@@ -382,7 +433,7 @@ export class KsDatepicker extends LitElement {
   }
 
   private validate() {
-    this._isValid = true;
+    this._isValid = this._formFieldData.isValid;
 
     if (
       !this.$firstInput?.checkValidity() ||
@@ -391,16 +442,23 @@ export class KsDatepicker extends LitElement {
     ) {
       this._errorMessage = this.requiredErrorMessage;
       this._isValid = false;
+      this._formFieldData.validity.valueMissing = true;
       return;
     }
 
-    if (
-      isOutOfRange(this._selectedDate as Date, this._minDate, this._maxDate)
-    ) {
+    if (this._formFieldData.validity.outOfRange) {
       this._errorMessage = this.rangeErrorMessage;
       this._isValid = false;
       return;
     }
+
+    if (this._formFieldData.validity.dateUnavailable) {
+      this._errorMessage = this.unavailableErrorMessage;
+      this._isValid = false;
+      return;
+    }
+
+    this._isValid = true;
   }
 
   private setCalendarElementVariables() {
@@ -683,21 +741,23 @@ export class KsDatepicker extends LitElement {
   }
 
   private dateFocusedHandler(e: any) {
-    if (!e.detail.value) {
+    this.setFormFieldData(e.detail);
+    if (!this._formFieldData.value) {
       return;
     }
 
-    const focusDate = new Date(formatDateString(e.detail.value));
+    const focusDate = new Date(formatDateString(this._formFieldData.value));
     this.setSelectedValues(focusDate);
     this.setInputValues();
     setTimeout(() => this.validate());
   }
 
   private dateSelectedHandler(e: any) {
-    if (!e.detail.value) {
+    this.setFormFieldData(e.detail);
+    if (!this._formFieldData.value) {
       this.resetInputValues();
     } else {
-      const focusDate = new Date(formatDateString(e.detail.value));
+      const focusDate = new Date(formatDateString(this._formFieldData.value));
       this.setSelectedValues(focusDate);
       this.setInputValues();
     }
@@ -705,6 +765,7 @@ export class KsDatepicker extends LitElement {
     setTimeout(() => {
       this.hide();
       this.validate();
+      this.emitInput();
     }, 100);
   }
 
@@ -714,14 +775,6 @@ export class KsDatepicker extends LitElement {
 
   private beforeRender() {
     this.getDateFormat();
-    this._minDate = (
-      this.minDate ? new Date(formatDateString(this.minDate)) : null
-    ) as Date;
-
-    this._maxDate = (
-      this.maxDate ? new Date(formatDateString(this.maxDate)) : null
-    ) as Date;
-
     this._selectedDate = this.getSelectedDate();
   }
 
@@ -863,6 +916,7 @@ export class KsDatepicker extends LitElement {
           year-label="${this.yearLabel}"
           clear-label="${this.clearLabel}"
           today-label="${this.todayLabel}"
+          disabled-dates="${this.disabledDates || ''}"
           lang="${this.getLocale()}"
           @date-focused="${this.dateFocusedHandler}"
           @date-selected="${this.dateSelectedHandler}"
