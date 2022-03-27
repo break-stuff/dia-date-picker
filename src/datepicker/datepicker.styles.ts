@@ -4,10 +4,12 @@ export const styles = css`
   :host {
     --primary-color: #293d4e;
     --error-color: #9a0000;
-    --outline: solid 2px #71a5d1;
+    --outline: solid 2px var(--outline-color);
+    --outline-color: #71a5d1;
     --outline-offset: 0.125rem;
-    --border-color: #4f7494;
-    --focus-color: #d7e6ff;
+    --border-color: #596d7f;
+    --day-hover-background-color: #e0e7f3;
+    --day-disabled-color: #ccc;
 
     position: relative;
     display: inline-block;
@@ -31,7 +33,6 @@ export const styles = css`
     margin: 0;
     -webkit-appearance: none;
     border-radius: 0.25rem;
-    border: solid 1px var(--border-color);
     background-color: white;
     color: var(--primary-color);
   }
@@ -44,7 +45,7 @@ export const styles = css`
   button {
     border: 0;
     padding: 0;
-    color: var(--border-color);
+    color: var(--primary-color);
   }
 
   button[disabled] {
@@ -86,11 +87,13 @@ export const styles = css`
 
   .main-input-controls {
     background-color: white;
-    border: solid 2px var(--border-color);
+    border: solid 1px var(--border-color);
     border-radius: 0.25rem;
-    padding: 0.5rem;
+    padding: 0 0.5rem;
     display: inline-flex;
-    align-content: center;
+    align-items: center;
+    height: 3rem;
+    box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   .main-input-controls:focus-within {
@@ -103,11 +106,22 @@ export const styles = css`
     border: 0;
     padding: 0.125rem 0;
     min-width: 2rem;
+    /* margin: 0.25rem 0; */
+  }
+
+  .main-input-controls input::placeholder {
+    color: rgb(89, 109, 127);
+    font-style: italic;
+    opacity: 0.7;
   }
 
   .main-input-controls span {
     font-size: 1.25rem;
     padding: 0.125rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .main-input-controls input:focus {
@@ -127,8 +141,9 @@ export const styles = css`
     background: transparent;
     border: 0;
     font-size: 1.5rem;
-    color: var(--border-color);
+    color: var(--primary-color);
     padding-top: 0.125rem;
+    padding-left: 0.125rem;
     outline-offset: 0;
     display: inline-flex;
     align-items: center;
@@ -169,7 +184,7 @@ export const styles = css`
     margin-top: -0.75rem;
     visibility: hidden;
     opacity: 0;
-    border: solid 1px #e6e6e6;
+    border: solid 1px var(--border-color);
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
     transition: all 0.3s ease-in-out;
     z-index: 1;
@@ -182,7 +197,7 @@ export const styles = css`
     height: 0;
     position: absolute;
     width: 0;
-    border-bottom-color: #e6e6e6;
+    border-bottom-color: var(--border-color);
     bottom: 100%;
     left: 25%;
     -webkit-transform: translateX(-50%);

@@ -51,10 +51,16 @@ export interface IDatePickerValidation {
  * @slot prev-month-icon - icon in previous month button
  * @slot next-month-icon - icon in next month button
  *
- * @cssprop [--font-size=1rem] - Controls the font size for all elements in the component
- * @cssprop [--padding=0.25rem] - Controls the padding for the `input` and `button` elements
+ * @cssprop [--primary-color=#293d4e] - Primary color used in the component
+ * @cssprop [--error-color=#9a0000] - Color used to indicate input has an error
+ * @cssprop [--outline=solid 2px var(--outline-color)] - Default outline style
+ * @cssprop [--outline-color=#71a5d1] - Outline color
+ * @cssprop [--outline-offset=0.125rem] - Outline offset
+ * @cssprop [--border-color=#596d7f] - Default border color
+ * @cssprop [--day-hover-background-color=#e0e7f3] - Background color of days in calendar when hovered
+ * @cssprop [--day-disabled-color=#ccc] - Color of disabled days
  *
- * @event {CustomEvent} ks-change - emits the date as short ISO string when calendar date is selected
+ * @event {CustomEvent} ks-input - emits the date as short ISO string when calendar date is manually entered or selected
  */
 @customElement('ks-datepicker')
 export class KsDatepicker extends LitElement {

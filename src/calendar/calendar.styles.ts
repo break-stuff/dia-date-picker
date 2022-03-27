@@ -2,12 +2,6 @@ import { css } from 'lit';
 
 export const styles = css`
   :host {
-    --primary-color: #293d4e;
-    --outline: solid 2px #71a5d1;
-    --outline-offset: 0.125rem;
-    --border-color: #266194;
-    --focus-color: #d7e6ff;
-
     position: relative;
     display: inline-block;
     line-height: 1;
@@ -146,41 +140,42 @@ export const styles = css`
     text-align: center;
     vertical-align: middle;
     width: 2em;
-    color: #266194;
+    color: var(--primary-color);
   }
 
   .day.other-month {
-    color: #6d6d6d;
+    color: var(--border-color);
+    font-style: italic;
   }
 
   .day:hover,
   .day:focus,
   .day[tabindex='0'] {
-    background-color: #e0e7f3;
+    background-color: var(--day-hover-background-color);
     color: black;
     border-radius: 0.25rem;
   }
 
   .day[aria-current='date'] {
-    border: solid 2px #899ebb;
+    border: solid 2px var(--border-color);
   }
   .day[aria-selected='true'] {
-    background: #0158d1;
+    background: var(--primary-color);
     color: white;
   }
   .day[aria-selected='true']:hover {
-    background: #0158d1;
+    background: var(--primary-color);
     color: white;
   }
 
   .day[aria-disabled='true'] {
     cursor: not-allowed;
-    color: #ccc;
+    color: var(--day-disabled-color);
     background-color: transparent;
   }
 
   .day[aria-disabled='true']:hover {
-    color: #ccc;
+    color: var(--day-disabled-color);
     background-color: transparent;
   }
 
