@@ -22,9 +22,9 @@ export default {
     ['--outline']: 'solid 2px #71a5d1',
     ['--outline-color']: '#71a5d1',
     ['--outline-offset']: '0.125rem',
-    ['--border-color']: 'rgb(197, 209, 218)',  
-    ['--day-hover-background-color']: '#e0e7f3',  
-    ['--day-disabled-color']: '#ccc',  
+    ['--border-color']: 'rgb(197, 209, 218)',
+    ['--day-hover-background-color']: '#e0e7f3',
+    ['--day-disabled-color']: '#ccc',
   },
   parameters: {
     actions: {
@@ -35,23 +35,23 @@ export default {
 
 const Template = (args: any) => {
   return html`
-        <ks-datepicker
-            value="${args.value}"
-            label="${args.label}"
-            ${args.required ? 'required' : ''}
-            lang="${args.lang}"
-            min-date="${args['min-date']}"
-            max-date="${args['max-date']}"
-            day-label="${args['day-label']}"
-            month-label="${args['month-label']}"
-            year-label="${args['year-label']}"
-            clear-label="${args['clear-label']}"
-            today-label="${args['today-label']}"
-            disabled-dates="${args['disabled-dates']}"
-        ></ks-datepicker>
-        <!--<span>some random inline content</span>
-        <div>some random block content</div>-->
-    `;
+    <ks-datepicker
+      value="${args.value}"
+      label="${args.label}"
+      ?required="${args.required}"
+      lang="${args.lang}"
+      min-date="${args['min-date']}"
+      max-date="${args['max-date']}"
+      day-label="${args['day-label']}"
+      month-label="${args['month-label']}"
+      year-label="${args['year-label']}"
+      clear-label="${args['clear-label']}"
+      today-label="${args['today-label']}"
+      disabled-dates="${args['disabled-dates']}"
+    ></ks-datepicker>
+    <!-- <span>some random inline content</span>
+        <div>some random block content</div> -->
+  `;
 };
 
 export const Default: any = Template.bind({});
@@ -70,10 +70,10 @@ MinMaxDates.args = {
 
 export const Validation: any = Template.bind({});
 Validation.args = {
-  required: 'true'
+  required: 'true',
 };
 
 export const DisabledDates: any = Template.bind({});
 DisabledDates.args = {
-  ['disabled-dates']: '2/2/2022, 2/4/2022, 2/6/2022'
+  ['disabled-dates']: '2/2/2022, 2/4/2022, 2/6/2022',
 };
