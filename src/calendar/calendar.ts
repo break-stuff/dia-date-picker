@@ -20,9 +20,9 @@ import { watch } from '../utils/watchDecorator';
 import { styles } from './calendar.styles';
 
 /**
- * @tag ks-datepicker
+ * @tag ks-calendar
  *
- * @summary Custom date picker
+ * @summary Custom calendar element
  *
  * @attr {string} min-date - the minimum selectable date
  * @attr {string} max-date - the maximum selectable date
@@ -45,6 +45,7 @@ import { styles } from './calendar.styles';
  * @cssprop [--day-disabled-color=#ccc] - Color of disabled days
  *
  * @event {CustomEvent} ks-change - emits the date as short ISO string when calendar date is selected
+ * 
  */
 @customElement('ks-calendar')
 export class KsCalendar extends LitElement {

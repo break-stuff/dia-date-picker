@@ -15,6 +15,13 @@ export default {
     ['clear-label']: 'Clear',
     ['today-label']: 'Today',
     ['disabled-dates']: '',
+    ['--primary-color']: '#2c5374',
+    ['--outline']: 'solid 2px #71a5d1',
+    ['--outline-color']: '#71a5d1',
+    ['--outline-offset']: '0.125rem',
+    ['--border-color']: 'rgb(197, 209, 218)',  
+    ['--day-hover-background-color']: '#e0e7f3',  
+    ['--day-disabled-color']: '#ccc',  
   },
   parameters: {
     actions: {

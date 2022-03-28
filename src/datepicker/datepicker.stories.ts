@@ -7,7 +7,7 @@ export default {
   args: {
     value: '',
     label: 'Select Date',
-    required: false,
+    required: 'false',
     lang: 'en-US',
     ['min-date']: '',
     ['max-date']: '',
@@ -17,10 +17,18 @@ export default {
     ['clear-label']: 'Clear',
     ['today-label']: 'Today',
     ['disabled-dates']: '',
+    ['--primary-color']: '#2c5374',
+    ['--error-color']: '#9a0000',
+    ['--outline']: 'solid 2px #71a5d1',
+    ['--outline-color']: '#71a5d1',
+    ['--outline-offset']: '0.125rem',
+    ['--border-color']: 'rgb(197, 209, 218)',  
+    ['--day-hover-background-color']: '#e0e7f3',  
+    ['--day-disabled-color']: '#ccc',  
   },
   parameters: {
     actions: {
-      handles: ['ks-change', 'ks-input'],
+      handles: ['ks-input'],
     },
   },
 };
@@ -62,7 +70,7 @@ MinMaxDates.args = {
 
 export const Validation: any = Template.bind({});
 Validation.args = {
-  required: true
+  required: 'true'
 };
 
 export const DisabledDates: any = Template.bind({});

@@ -37,7 +37,6 @@ export interface IDatePickerValidation {
  *
  * @attr {string} value - the date entered in the main input
  * @attr {string} label - label for main date input
- * @attr {string} locale - manual configuration for setting locale
  * @attr {string} min-date - the minimum selectable date
  * @attr {string} max-date - the maximum selectable date
  * @attr {string} day-label - label used for day input
@@ -66,6 +65,7 @@ export interface IDatePickerValidation {
 export class KsDatepicker extends LitElement {
   static styles = styles;
 
+  /* the date entered in the main input */
   @property({ type: String, reflect: true })
   value?: string;
 
@@ -245,7 +245,7 @@ export class KsDatepicker extends LitElement {
   private toCamelCase(value: string) {
     return value
       .toLowerCase()
-      .replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
+      .replace(/[^a-zA-Z0-9]+(.)/g, (_, chr) => chr.toUpperCase());
   }
 
   private getInitialFormFieldData(): IFormFieldData {

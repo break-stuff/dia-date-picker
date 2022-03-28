@@ -2,6 +2,14 @@ import { css } from 'lit';
 
 export const styles = css`
   :host {
+    --primary-color: #293d4e;
+    --outline: solid 2px var(--outline-color);
+    --outline-color: #71a5d1;
+    --outline-offset: 0.125rem;
+    --border-color: #596d7f;
+    --day-hover-background-color: #e0e7f3;
+    --day-disabled-color: #ccc;
+
     position: relative;
     display: inline-block;
     line-height: 1;
@@ -96,7 +104,7 @@ export const styles = css`
   }
 
   .top-controls .year-selector {
-    width: 3.5rem;
+    width: 4rem;
   }
 
   .top-controls .year-selector::-webkit-inner-spin-button {

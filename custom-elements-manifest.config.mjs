@@ -1,10 +1,10 @@
 export default {
   /** Globs to analyze */
-  globs: ["src/index.ts"],
+  globs: ['src/**/calendar.ts', 'src/**/datepicker.ts'],
   /** Globs to exclude */
   exclude: [],
   /** Directory to output CEM to */
-  outdir: "/",
+  outdir: '/',
   /** Run in dev mode, provides extra logging */
   dev: false,
   /** Run in watch mode, runs on file changes */
@@ -33,7 +33,7 @@ export default {
 
 function removeMembers() {
   return {
-    name: "clean-for-storybook",
+    name: 'clean-for-storybook',
     analyzePhase({ ts, node, moduleDoc, context }) {
       if (!context.dev) {
         return;
@@ -43,7 +43,7 @@ function removeMembers() {
         case ts.SyntaxKind.ClassDeclaration: {
           const className = node.name.getText();
           const classDoc = moduleDoc?.declarations?.find(
-            (declaration) => declaration.name === className
+            declaration => declaration.name === className
           );
           classDoc.members = [];
         }

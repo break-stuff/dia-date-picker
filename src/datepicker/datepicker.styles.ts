@@ -106,7 +106,8 @@ export const styles = css`
     border: 0;
     padding: 0.125rem 0;
     min-width: 2rem;
-    /* margin: 0.25rem 0; */
+    max-width: 3rem;
+    -moz-appearance: textfield;
   }
 
   .main-input-controls input::placeholder {
@@ -128,8 +129,9 @@ export const styles = css`
     outline: 0;
   }
 
-  .main-input-controls .month {
-    min-width: 2rem;
+  .main-input-controls .month,
+  .main-input-controls .day {
+    width: 2rem;
   }
 
   .main-input-controls input::-webkit-inner-spin-button {
@@ -222,5 +224,9 @@ export const styles = css`
     opacity: 1;
     transform: translateY(0rem);
     transition: all 0.3s ease-in-out;
+  }
+
+  ks-calendar:focus {
+    outline: none;
   }
 `;
