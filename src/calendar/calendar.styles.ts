@@ -128,11 +128,11 @@ export const styles = css`
   .calendar .show {
     opacity: 1;
     transform: translateY(0rem);
-    transition: all 0.3s linear;
+    transition: all 0.2s ease-in-out;
   }
 
   .calendar tbody {
-    opacity: 0.125;
+    /* opacity: 0.125; */
   }
 
   .day {

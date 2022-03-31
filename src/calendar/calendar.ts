@@ -45,7 +45,7 @@ import { styles } from './calendar.styles';
  * @cssprop [--day-disabled-color=#ccc] - Color of disabled days
  *
  * @event {CustomEvent} ks-change - emits the date as short ISO string when calendar date is selected
- * 
+ *
  */
 @customElement('ks-calendar')
 export class KsCalendar extends LitElement {
@@ -141,7 +141,7 @@ export class KsCalendar extends LitElement {
 
   private emitSelected(reset = false) {
     const fieldData = this.getEmittedData();
-    if(reset) {
+    if (reset) {
       fieldData.value = undefined;
     }
 
@@ -160,17 +160,23 @@ export class KsCalendar extends LitElement {
    */
 
   private getEmittedData() {
-    const isDateOutOfRange = isOutOfRange(this._selectedDate as Date, this._minDate, this._maxDate);
-    const isDateUnavailable = this._formattedDisabledDates.includes(this._selectedDate?.toLocaleDateString() as string);
+    const isDateOutOfRange = isOutOfRange(
+      this._selectedDate as Date,
+      this._minDate,
+      this._maxDate
+    );
+    const isDateUnavailable = this._formattedDisabledDates.includes(
+      this._selectedDate?.toLocaleDateString() as string
+    );
     const fieldData: IFormFieldData = {
       value: getShortIsoDate(this._selectedDate as Date),
       isValid: !isDateOutOfRange && !isDateUnavailable,
       validity: {
         outOfRange: isDateOutOfRange,
         valueMissing: false,
-        dateUnavailable: isDateUnavailable
-      }
-    }
+        dateUnavailable: isDateUnavailable,
+      },
+    };
 
     return fieldData;
   }
@@ -316,6 +322,8 @@ export class KsCalendar extends LitElement {
         e.preventDefault();
         newDate = this._curDate as Date;
         break;
+      case 'Tab':
+        break;
       default:
         return;
     }
@@ -323,6 +331,12 @@ export class KsCalendar extends LitElement {
     this.setKeyBoardCalendarAnimation(newDate);
     this.selectDate(newDate);
     this.emitFocus();
+  }
+
+  private dayKeyDownHandler(e: KeyboardEvent) {
+    if (e.key !== 'Tab') {
+      e.preventDefault();
+    }
   }
 
   private setKeyBoardCalendarAnimation(date: Date) {
@@ -540,7 +554,7 @@ export class KsCalendar extends LitElement {
         aria-current="${isToday ? 'date' : false}"
         tabindex="${isSelected ? 0 : -1}"
         aria-disabled="${this.isDateDisabled(day)}"
-        onkeydown="return false"
+        @keydown="${(e: KeyboardEvent) => this.dayKeyDownHandler(e)}"
         @click="${() => this.pickDate(day)}"
         @keyup="${(e: KeyboardEvent) => this.dayKeyUpHandler(day, e)}"
       >
