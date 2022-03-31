@@ -202,7 +202,7 @@ function getDays(month: number, year: number): Date[] {
 export function getDateFormat(locale: string) {
   const localeFormat = new Date(1999, 11, 31)
     .toLocaleDateString(locale)
-    .match(/[\d.]+|\D+/g)
+    .match(/[\d]+|\D+/g)
     ?.map(x => {
       if (x === '12') {
         return 'mm';
@@ -214,6 +214,7 @@ export function getDateFormat(locale: string) {
         return x;
       }
     });
-
+  console.log(localeFormat);
+  
   return localeFormat || [];
 }
