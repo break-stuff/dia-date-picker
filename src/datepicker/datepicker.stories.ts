@@ -29,7 +29,7 @@ export default {
   },
   parameters: {
     actions: {
-      handles: ['ks-input'],
+      handles: ['ks-input', 'ks-change'],
     },
   },
 };

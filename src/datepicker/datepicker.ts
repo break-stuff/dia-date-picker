@@ -60,7 +60,8 @@ export interface IDatePickerValidation {
  * @cssprop [--day-hover-background-color=#e0e7f3] - Background color of days in calendar when hovered
  * @cssprop [--day-disabled-color=#ccc] - Color of disabled days
  *
- * @event {CustomEvent} ks-input - emits the date as short ISO string when calendar date is manually entered or selected
+ * @event {CustomEvent} ks-input - emits the date as short ISO string when calendar date is manually entered or focused on in the calendar
+ * @event {CustomEvent} ks-change - emits the date as short ISO string when calendar date is selected
  */
 @customElement('ks-datepicker')
 export class KsDatepicker extends LitElement {
@@ -225,7 +226,6 @@ export class KsDatepicker extends LitElement {
     }
 
     this.updateSelectedDate();
-    this.value = getShortIsoDate(this._selectedDate as Date);
 
     const options = {
       detail: { ...this._formFieldData },
@@ -234,6 +234,16 @@ export class KsDatepicker extends LitElement {
     };
 
     this.dispatchEvent(new CustomEvent('ks-input', options));
+  }
+
+  private emitChange() {
+    const options = {
+      detail: { ...this._formFieldData },
+      bubbles: true,
+      composed: true,
+    };
+
+    this.dispatchEvent(new CustomEvent('ks-change', options));
   }
 
   /**
@@ -740,7 +750,10 @@ export class KsDatepicker extends LitElement {
     const focusDate = new Date(formatDateString(this._formFieldData.value));
     this.setSelectedValues(focusDate);
     this.setInputValues();
-    setTimeout(() => this.validate());
+    setTimeout(() => {
+      this.validate();
+      this.emitInput();
+    });
   }
 
   private dateSelectedHandler(e: any) {
@@ -757,6 +770,7 @@ export class KsDatepicker extends LitElement {
       this.hide();
       this.validate();
       this.emitInput();
+      this.emitChange();
     }, 100);
   }
 

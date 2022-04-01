@@ -87,6 +87,9 @@ export class KsCalendar extends LitElement {
   private _selectedDate?: Date;
 
   @state()
+  private _selectedValue?: Date;
+
+  @state()
   private _curDate: Date = new Date(Date.now());
 
   @state()
@@ -190,6 +193,7 @@ export class KsCalendar extends LitElement {
     const selectedDate = this.value
       ? new Date(formatDateString(this.value))
       : this._curDate;
+    this._selectedValue = selectedDate;
     this.setSelectedValues(selectedDate);
   }
 
@@ -210,6 +214,7 @@ export class KsCalendar extends LitElement {
       return;
     }
     this.value = getShortIsoDate(d);
+    this._selectedValue = d;
     this.selectDate(d);
     this.emitSelected();
   }
@@ -287,7 +292,38 @@ export class KsCalendar extends LitElement {
   }
 
   private updateYearSelector() {
-    (this.$yearSelector as HTMLInputElement).value = this._selectedYear.toString();
+    (this.$yearSelector as HTMLInputElement).value =
+      this._selectedYear.toString();
+  }
+
+  private setMinMaxDates() {
+    this._minDate = (
+      this.minDate ? new Date(formatDateString(this.minDate)) : null
+    ) as Date;
+
+    this._maxDate = (
+      this.maxDate ? new Date(formatDateString(this.maxDate)) : null
+    ) as Date;
+  }
+
+  private setSelectedDateForRange() {
+    if (
+      this.maxDate &&
+      this._selectedDate &&
+      this._selectedDate.valueOf() > (this._maxDate as Date).valueOf()
+    ) {
+      this._selectedDate = this._maxDate as Date;
+    }
+
+    if (
+      this.minDate &&
+      this._selectedDate &&
+      this._selectedDate.valueOf() < (this._minDate as Date).valueOf()
+    ) {
+      this._selectedDate = this._minDate as Date;
+    }
+
+    this.setSelectedValues(this._selectedDate ?? this._curDate);
   }
 
   /**
@@ -317,12 +353,14 @@ export class KsCalendar extends LitElement {
         return;
       case 'Escape':
         e.preventDefault();
-        newDate = this.value
-          ? new Date(formatDateString(this.value))
-          : (this._curDate as Date);
+        newDate = this._selectedValue ?? (this._curDate as Date);
         break;
       default:
         return;
+    }
+
+    if (isOutOfRange(newDate, this._minDate, this._maxDate)) {
+      return;
     }
 
     this.selectDate(newDate);
@@ -331,22 +369,18 @@ export class KsCalendar extends LitElement {
   }
 
   private dayKeyDownHandler(e: KeyboardEvent) {
-    if (e.key !== 'Tab') {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Escape') {
       e.preventDefault();
     }
 
-    const selectedValue = this.value
-      ? new Date(formatDateString(this.value))
-      : (this._curDate as Date);
     if (
       e.key === 'Escape' &&
       this._selectedDate?.toLocaleDateString() !==
-        selectedValue.toLocaleDateString()
+        this._selectedValue?.toLocaleDateString()
     ) {
       e.stopPropagation();
     }
   }
-
 
   private monthChangeHandler(e: Event): void {
     const newMonth = parseInt((e.target as HTMLSelectElement).value);
@@ -391,13 +425,8 @@ export class KsCalendar extends LitElement {
   }
 
   private beforeRender() {
-    this._minDate = (
-      this.minDate ? new Date(formatDateString(this.minDate)) : null
-    ) as Date;
-
-    this._maxDate = (
-      this.maxDate ? new Date(formatDateString(this.maxDate)) : null
-    ) as Date;
+    this.setMinMaxDates();
+    this.setSelectedDateForRange();
   }
 
   /**
@@ -517,7 +546,9 @@ export class KsCalendar extends LitElement {
   private weekTemplate(week: Date[]) {
     return html`
       <tr class="week" role="row">
-        ${this.showWeekNumbers ? html`<th class="week-number">${getWeek(week[0])}</th>` : ''}
+        ${this.showWeekNumbers
+          ? html`<th class="week-number">${getWeek(week[0])}</th>`
+          : ''}
         ${week.map(day => this.dayTemplate(day))}
       </tr>
     `;
