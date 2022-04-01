@@ -220,7 +220,6 @@ export function getDateFormat(locale: string) {
         return x;
       }
     });
-  console.log(localeFormat);
   
   return localeFormat || [];
 }

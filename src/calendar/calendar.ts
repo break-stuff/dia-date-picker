@@ -274,18 +274,6 @@ export class KsCalendar extends LitElement {
     return new Date(this._selectedYear, this._selectedMonth, this._selectedDay);
   }
 
-  private calendarControlsFadeDown() {
-    this.$calendarControls?.classList.remove('show', 'prev', 'next');
-    this.$calendarControls?.classList.add('prev');
-    setTimeout(() => this.$calendarControls?.classList.add('show'));
-  }
-
-  private calendarControlsFadeUp() {
-    this.$calendarControls?.classList.remove('show', 'prev', 'next');
-    this.$calendarControls?.classList.add('next');
-    setTimeout(() => this.$calendarControls?.classList.add('show'));
-  }
-
   private setFormattedDisabledDates() {
     this._formattedDisabledDates =
       this.disabledDates
@@ -336,14 +324,11 @@ export class KsCalendar extends LitElement {
           ? new Date(formatDateString(this.value))
           : (this._curDate as Date);
         break;
-      case 'Tab':
-        break;
       default:
         return;
     }
 
     this.updateYearSelector();
-    this.setKeyBoardCalendarAnimation(newDate);
     this.selectDate(newDate);
     this.emitFocus();
   }
@@ -365,42 +350,21 @@ export class KsCalendar extends LitElement {
     }
   }
 
-  private setKeyBoardCalendarAnimation(date: Date) {
-    if (this._selectedMonth > date.getMonth()) {
-      this.calendarControlsFadeDown();
-    } else if (this._selectedMonth < date.getMonth()) {
-      this.calendarControlsFadeUp();
-    }
-  }
 
   private monthChangeHandler(e: Event): void {
     const newMonth = parseInt((e.target as HTMLSelectElement).value);
-    const isFuture = newMonth > this._selectedMonth;
     this._selectedMonth = newMonth;
     this._selectedDate = this.getFocusDate();
 
     this.emitFocus();
-
-    if (isFuture) {
-      this.calendarControlsFadeUp();
-    } else {
-      this.calendarControlsFadeDown();
-    }
   }
 
   private yearInputHandler(e: InputEvent): void {
     const newYear = parseInt((e.target as HTMLInputElement).value);
-    const isFuture = newYear > this._selectedYear;
     this._selectedYear = newYear;
     this._selectedDate = this.getFocusDate();
 
     this.emitFocus();
-
-    if (isFuture) {
-      this.calendarControlsFadeUp();
-    } else {
-      this.calendarControlsFadeDown();
-    }
   }
 
   private prevMonthClickHandler(): void {
@@ -414,7 +378,6 @@ export class KsCalendar extends LitElement {
 
     this._selectedDate = this.getFocusDate();
     this.emitFocus();
-    this.calendarControlsFadeDown();
   }
 
   private nextMonthClickHandler(): void {
@@ -428,7 +391,6 @@ export class KsCalendar extends LitElement {
 
     this._selectedDate = this.getFocusDate();
     this.emitFocus();
-    this.calendarControlsFadeUp();
   }
 
   private beforeRender() {

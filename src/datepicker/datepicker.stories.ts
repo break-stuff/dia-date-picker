@@ -7,7 +7,7 @@ export default {
   args: {
     value: '',
     label: 'Select Date',
-    required: 'false',
+    required: false,
     lang: 'en-US',
     ['min-date']: '',
     ['max-date']: '',
