@@ -45,6 +45,7 @@ export interface IDatePickerValidation {
  * @attr {string} clear-label - text for clear button
  * @attr {string} today-label - text for today button
  * @attr {string} disabled-dates - comma separated list of disabled dates
+ * @attr {boolean} show-week-numbers - show week numbers at the beginning of each week
  *
  * @slot calendar-icon - icon in button toggle for date selector
  * @slot prev-month-icon - icon in previous month button
@@ -110,6 +111,9 @@ export class KsDatepicker extends LitElement {
 
   @property({ attribute: 'disabled-dates', type: String })
   disabledDates?: string;
+
+  @property({ attribute: 'show-week-numbers', type: Boolean })
+  showWeekNumbers = false;
 
   @state()
   private _formFieldData: IFormFieldData = this.getInitialFormFieldData();
@@ -903,6 +907,7 @@ export class KsDatepicker extends LitElement {
           clear-label="${this.clearLabel}"
           today-label="${this.todayLabel}"
           disabled-dates="${this.disabledDates || ''}"
+          ?show-week-numbers=${this.showWeekNumbers}
           lang="${this.getLocale()}"
           @date-focused="${this.dateFocusedHandler}"
           @date-selected="${this.dateSelectedHandler}"

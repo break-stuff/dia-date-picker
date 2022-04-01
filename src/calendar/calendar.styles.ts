@@ -9,6 +9,7 @@ export const styles = css`
     --border-color: #596d7f;
     --day-hover-background-color: #e0e7f3;
     --day-disabled-color: #ccc;
+    --week-background-color: #f7f7f7;
 
     position: relative;
     display: inline-block;
@@ -118,6 +119,11 @@ export const styles = css`
     width: 100%;
   }
 
+  .calendar th,
+  .calendar td {
+    text-align: center;
+  }
+
   .calendar .prev {
     transform: translateY(-0.75rem);
   }
@@ -131,8 +137,10 @@ export const styles = css`
     transition: all 0.2s ease-in-out;
   }
 
-  .calendar tbody {
-    /* opacity: 0.125; */
+  .week-number {
+    background-color: var(--week-background-color);
+    font-weight: 600;
+    width: 2rem;
   }
 
   .day {
@@ -145,7 +153,6 @@ export const styles = css`
     line-height: 1;
     margin: 0;
     padding: 0;
-    text-align: center;
     vertical-align: middle;
     width: 2em;
     color: var(--primary-color);

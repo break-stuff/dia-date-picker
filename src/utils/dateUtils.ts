@@ -166,10 +166,12 @@ export function getWeeks(month: number, year: number): Date[][] {
  * @returns Date[] - a list of days of the week
  */
 function getDays(month: number, year: number): Date[] {
-  const dates: Date[] = [];
+  const dates = [];
   const firstDayOfMonth = new Date(year, month, 1);
   const lastDayOfMonth = new Date(year, month, getDaysInMonth(month, year));
   dates.unshift(firstDayOfMonth);
+
+  // prev month days
   for (
     let d = addDaysToDate(firstDayOfMonth, -1);
     d.getDay() !== 6;
@@ -177,6 +179,8 @@ function getDays(month: number, year: number): Date[] {
   ) {
     dates.unshift(d);
   }
+
+  // current month days
   for (
     let d = addDaysToDate(firstDayOfMonth, 1);
     d <= lastDayOfMonth;
@@ -184,6 +188,8 @@ function getDays(month: number, year: number): Date[] {
   ) {
     dates.push(d);
   }
+
+  //next month days
   for (
     let d = addDaysToDate(lastDayOfMonth, 1);
     d.getDay() !== 0;
@@ -217,4 +223,10 @@ export function getDateFormat(locale: string) {
   console.log(localeFormat);
   
   return localeFormat || [];
+}
+
+export function getWeek(date: Date) {
+  const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+  const pastDaysOfYear = (date.valueOf() - firstDayOfYear.valueOf()) / 86400000;
+  return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
 }

@@ -17,6 +17,7 @@ export default {
     ['clear-label']: 'Clear',
     ['today-label']: 'Today',
     ['disabled-dates']: '',
+    ['show-week-numbers']: false,
     ['--primary-color']: '#2c5374',
     ['--error-color']: '#9a0000',
     ['--outline']: 'solid 2px #71a5d1',
@@ -48,6 +49,7 @@ const Template = (args: any) => {
       clear-label="${args['clear-label']}"
       today-label="${args['today-label']}"
       disabled-dates="${args['disabled-dates']}"
+      ?show-week-numbers="${args['show-week-numbers']}"
     ></ks-datepicker>
     <!-- <span>some random inline content</span>
         <div>some random block content</div> -->

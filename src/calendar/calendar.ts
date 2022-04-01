@@ -13,6 +13,7 @@ import {
   getFullDate,
   getMonthLabel,
   formatDateString,
+  getWeek,
 } from '../utils/dateUtils';
 import icon from '../utils/icons';
 import { watch } from '../utils/watchDecorator';
@@ -32,6 +33,7 @@ import { styles } from './calendar.styles';
  * @attr {string} clear-label - text for clear button
  * @attr {string} today-label - text for today button
  * @attr {string} disabled-dates - comma separated list of disabled dates
+ * @attr {boolean} show-week-numbers - show week numbers at the beginning of each week
  *
  * @slot prev-month-icon - icon in previous month button
  * @slot next-month-icon - icon in next month button
@@ -78,6 +80,9 @@ export class KsCalendar extends LitElement {
   @property({ attribute: 'disabled-dates', type: String })
   disabledDates?: string;
 
+  @property({ attribute: 'show-week-numbers', type: Boolean })
+  showWeekNumbers = false;
+
   @state()
   private _selectedDate?: Date;
 
@@ -104,6 +109,9 @@ export class KsCalendar extends LitElement {
 
   @state()
   private $focusableEls: HTMLElement[] = [];
+
+  @query('#year_selector')
+  private $yearSelector?: HTMLInputElement;
 
   @query('#calendar_controls tbody')
   private $calendarControls?: HTMLElement;
@@ -293,6 +301,10 @@ export class KsCalendar extends LitElement {
     );
   }
 
+  private updateYearSelector() {
+    (this.$yearSelector as HTMLInputElement).value = this._selectedYear.toString();
+  }
+
   /**
    *
    * EVENT HANDLERS
@@ -320,7 +332,9 @@ export class KsCalendar extends LitElement {
         return;
       case 'Escape':
         e.preventDefault();
-        newDate = this._curDate as Date;
+        newDate = this.value
+          ? new Date(formatDateString(this.value))
+          : (this._curDate as Date);
         break;
       case 'Tab':
         break;
@@ -328,6 +342,7 @@ export class KsCalendar extends LitElement {
         return;
     }
 
+    this.updateYearSelector();
     this.setKeyBoardCalendarAnimation(newDate);
     this.selectDate(newDate);
     this.emitFocus();
@@ -336,6 +351,17 @@ export class KsCalendar extends LitElement {
   private dayKeyDownHandler(e: KeyboardEvent) {
     if (e.key !== 'Tab') {
       e.preventDefault();
+    }
+
+    const selectedValue = this.value
+      ? new Date(formatDateString(this.value))
+      : (this._curDate as Date);
+    if (
+      e.key === 'Escape' &&
+      this._selectedDate?.toLocaleDateString() !==
+        selectedValue.toLocaleDateString()
+    ) {
+      e.stopPropagation();
     }
   }
 
@@ -381,6 +407,7 @@ export class KsCalendar extends LitElement {
     if (this._selectedMonth === 0) {
       this._selectedMonth = 11;
       this._selectedYear--;
+      this.updateYearSelector();
     } else {
       this._selectedMonth--;
     }
@@ -394,6 +421,7 @@ export class KsCalendar extends LitElement {
     if (this._selectedMonth === 11) {
       this._selectedMonth = 0;
       this._selectedYear++;
+      this.updateYearSelector();
     } else {
       this._selectedMonth++;
     }
@@ -411,8 +439,6 @@ export class KsCalendar extends LitElement {
     this._maxDate = (
       this.maxDate ? new Date(formatDateString(this.maxDate)) : null
     ) as Date;
-
-    // this.setSelectedDate();
   }
 
   /**
@@ -506,6 +532,7 @@ export class KsCalendar extends LitElement {
         </caption>
         <thead role="rowgroup">
           <tr class="week-days" role="row">
+            ${this.showWeekNumbers ? html`<th></th>` : ''}
             ${getDaysOfTheWeek(this.getLocale()).map(
               day =>
                 html`<th
@@ -531,6 +558,7 @@ export class KsCalendar extends LitElement {
   private weekTemplate(week: Date[]) {
     return html`
       <tr class="week" role="row">
+        ${this.showWeekNumbers ? html`<th class="week-number">${getWeek(week[0])}</th>` : ''}
         ${week.map(day => this.dayTemplate(day))}
       </tr>
     `;

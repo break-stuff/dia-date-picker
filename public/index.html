@@ -11,7 +11,7 @@
     />
     <script type="module" src="./index.es.js"></script>
   </head>
-  <body class="bg-primary-lighter">
+  <body class="bg-light-light">
     <main class="bg-light-lighter mx-auto p-lg shadow-sm">
       <h1>Kickstand UI Date Picker Component</h1>
 
@@ -90,7 +90,16 @@
 
       <h2>Translations</h2>
 
-      <p>This component is almost entirely translated by the browser. Enter the locale of you favorite language and see how it is translated.</p>
+      <p>
+        This component is almost entirely translated by the browser. 
+        The component will automatically detect the current language, but you can also manually specify a language. 
+        Enter the locale of you favorite language using the <code>lang</code> attribute 
+        and it will translate the component to the appropriate language.
+      </p>
+
+      <p>
+        In the demo below enter a locale into the textbox and see what it can do.
+      </p>
 
       <p>
         Here are some options:
@@ -112,7 +121,28 @@
         <ks-datepicker label="en-US Input" lang="fr-CA"></ks-datepicker>
       </div>
 
-      
+      <p>As you can see not everything gets translated. It will need translations for the following attributes:</p>
+      <ul>
+        <li><b>label</b> - the main input label</li>
+        <li><b>day-label</b> - label for day input field (for screen readers)</li>
+        <li><b>month-label</b> - label for month input field (for screen readers)</li>
+        <li><b>year-label</b> - label for year input field (for screen readers)</li>
+        <li><b>clear-label</b> - text for the "Clear" button in the calendar control</li>
+        <li><b>today-label</b> - text for the "Today" button in the calendar control</li>
+      </ul>
+
+      <h2>Week Numbers</h2>
+
+      <p>You can display week numbers at the beginning of each week in the calendar using the <code>show-week-numbers</code> attribute.</p>
+<pre class="my-xl bg-light-light">
+  <code>
+    &lt;ks-datepicker label="Default" show-week-numbers &gt;&lt;/ks-datepicker&gt;
+  </code>
+</pre>
+
+      <div id="translated_datepicker" class="my-xl">
+        <ks-datepicker label="Show Week Numbers" show-week-numbers></ks-datepicker>
+      </div>
 
       <h2>Road Map</h2>
 
@@ -131,10 +161,10 @@
           <li>[X] Localized input format</li>
           <li>[X] Disable multiple dates</li>
           <li>[X] Add "escape" to reset selected date</li>
+          <li>[X] Week numbers</li>
           <li>[ ] Disabled input</li>
           <li>[ ] Read only input</li>
           <li>[ ] Start date</li>
-          <li>[ ] Week numbers</li>
           <li>[ ] Dynamically position calendar dialog</li>
           <li>[ ] Custom input format</li>
           <li>[ ] Set first day of the week</li>
