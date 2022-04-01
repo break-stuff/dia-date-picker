@@ -105,6 +105,7 @@ export const styles = css`
     text-align: center;
     border: 0;
     padding: 0.125rem 0;
+    margin-top: 0.125rem;
     min-width: 2rem;
     max-width: 3rem;
     -moz-appearance: textfield;
@@ -131,7 +132,11 @@ export const styles = css`
 
   .main-input-controls .month,
   .main-input-controls .day {
-    width: 2rem;
+    width: 1.75rem;
+  }
+
+  .main-input-controls .year {
+    width: 3rem;
   }
 
   .main-input-controls input::-webkit-inner-spin-button {
