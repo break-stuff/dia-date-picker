@@ -328,8 +328,8 @@ export class KsCalendar extends LitElement {
         return;
     }
 
-    this.updateYearSelector();
     this.selectDate(newDate);
+    this.updateYearSelector();
     this.emitFocus();
   }
 
