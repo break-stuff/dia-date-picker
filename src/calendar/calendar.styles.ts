@@ -124,19 +124,6 @@ export const styles = css`
     text-align: center;
   }
 
-  .calendar .prev {
-    transform: translateY(-0.75rem);
-  }
-  .calendar .next {
-    transform: translateY(0.75rem);
-  }
-
-  .calendar .show {
-    opacity: 1;
-    transform: translateY(0rem);
-    transition: all 0.2s ease-in-out;
-  }
-
   .week-number {
     background-color: var(--week-background-color);
     font-weight: 600;

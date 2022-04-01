@@ -113,9 +113,6 @@ export class KsCalendar extends LitElement {
   @query('#year_selector')
   private $yearSelector?: HTMLInputElement;
 
-  @query('#calendar_controls tbody')
-  private $calendarControls?: HTMLElement;
-
   @watch('value', { waitUntilFirstUpdate: true })
   handleValueChange() {
     this.setSelectedDate();
@@ -508,7 +505,7 @@ export class KsCalendar extends LitElement {
             )}
           </tr>
         </thead>
-        <tbody role="rowgroup" class="show">
+        <tbody role="rowgroup">
           ${getWeeks(this._selectedMonth, this._selectedYear).map(week =>
             this.weekTemplate(week)
           )}
