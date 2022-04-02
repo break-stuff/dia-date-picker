@@ -8,6 +8,8 @@ export default {
     value: '',
     label: 'Select Date',
     required: false,
+    disabled: false,
+    readonly: false,
     lang: 'en-US',
     ['min-date']: '',
     ['max-date']: '',
@@ -40,6 +42,8 @@ const Template = (args: any) => {
       value="${args.value}"
       label="${args.label}"
       ?required="${args.required}"
+      ?readonly="${args.readonly}"
+      ?disabled="${args.disabled}"
       lang="${args.lang}"
       min-date="${args['min-date']}"
       max-date="${args['max-date']}"

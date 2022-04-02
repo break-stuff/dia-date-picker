@@ -80,6 +80,12 @@ export class KsDatepicker extends LitElement {
   @property({ type: Boolean })
   required = false;
 
+  @property({ type: Boolean })
+  disabled = false;
+
+  @property({ type: Boolean })
+  readonly = false;
+
   @property({ attribute: 'min-date', type: String })
   minDate?: string;
 
@@ -824,6 +830,7 @@ export class KsDatepicker extends LitElement {
               aria-haspopup="true"
               aria-expanded=${this._expanded}
               aria-controls="calendar-dropdown"
+              ?disabled="${this.disabled || this.readonly}"
               @click="${this.inputControlClickHandler}"
             >
               ${icon('calendar')}
@@ -850,6 +857,8 @@ export class KsDatepicker extends LitElement {
           placeholder="dd"
           formnovalidate
           ?required=${this.required}
+          ?disabled=${this.disabled}
+          ?readonly=${this.readonly}
           @focus="${this.dateInputFocusHandler}"
           @keyup="${(e: KeyboardEvent) => this.mainDayKeyUpHandler(e, index)}"
           @keydown="${this.preventSpaceKeyDownHandler}"
@@ -869,6 +878,8 @@ export class KsDatepicker extends LitElement {
           placeholder="mm"
           formnovalidate
           ?required=${this.required}
+          ?disabled=${this.disabled}
+          ?readonly=${this.readonly}
           @focus="${this.dateInputFocusHandler}"
           @keyup="${(e: KeyboardEvent) => this.mainMonthKeyUpHandler(e, index)}"
           @keydown="${this.preventSpaceKeyDownHandler}"
@@ -888,6 +899,8 @@ export class KsDatepicker extends LitElement {
           placeholder="yyyy"
           formnovalidate
           ?required=${this.required}
+          ?disabled=${this.disabled}
+          ?readonly=${this.readonly}
           @focus="${this.dateInputFocusHandler}"
           @keyup="${(e: KeyboardEvent) => this.mainYearKeyUpHandler(e, index)}"
           @keydown="${this.yearKeyDownHandler}"
