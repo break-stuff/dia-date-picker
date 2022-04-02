@@ -15,6 +15,7 @@ export default {
     ['clear-label']: 'Clear',
     ['today-label']: 'Today',
     ['disabled-dates']: '',
+    ['start-date']: '',
     ['show-week-numbers']: false,
     ['--primary-color']: '#2c5374',
     ['--outline']: 'solid 2px #71a5d1',
@@ -45,6 +46,7 @@ const Template = (args: any) => {
             clear-label="${args['clear-label']}"
             today-label="${args['today-label']}"
             disabled-dates="${args['disabled-dates']}"
+            start-date="${args['start-date']}"
             ?show-week-numbers="${args['show-week-numbers']}"
         ></ks-calendar>
         <!--<span>some random inline content</span>
@@ -69,4 +71,9 @@ MinMaxDates.args = {
 export const DisabledDates: any = Template.bind({});
 DisabledDates.args = {
   ['disabled-dates']: '2/2/2022, 2/4/2022, 2/6/2022'
+};
+
+export const StartDate: any = Template.bind({});
+StartDate.args = {
+  ['start-date']: '5/25/2025'
 };

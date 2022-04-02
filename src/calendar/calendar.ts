@@ -62,6 +62,9 @@ export class KsCalendar extends LitElement {
   @property({ attribute: 'max-date', type: String })
   maxDate?: string;
 
+  @property({ attribute: 'start-date', type: String })
+  startDate?: string;
+
   @property({ attribute: 'day-label', type: String })
   dayLabel = 'Day';
 
@@ -192,6 +195,8 @@ export class KsCalendar extends LitElement {
   private initSelectedValues() {
     const selectedDate = this.value
       ? new Date(formatDateString(this.value))
+      : this.startDate
+      ? new Date(formatDateString(this.startDate))
       : this._curDate;
     this._selectedValue = selectedDate;
     this.setSelectedValues(selectedDate);

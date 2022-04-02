@@ -92,6 +92,9 @@ export class KsDatepicker extends LitElement {
   @property({ attribute: 'max-date', type: String })
   maxDate?: string;
 
+  @property({ attribute: 'start-date', type: String })
+  startDate?: string;
+ 
   @property({ attribute: 'day-label', type: String })
   dayLabel = 'Day';
 
@@ -945,6 +948,7 @@ export class KsDatepicker extends LitElement {
           disabled-dates="${this.disabledDates || ''}"
           ?show-week-numbers=${this.showWeekNumbers}
           lang="${this.getLocale()}"
+          start-date="${this.start}"
           @date-focused="${this.dateFocusedHandler}"
           @date-selected="${this.dateSelectedHandler}"
         ></ks-calendar>
