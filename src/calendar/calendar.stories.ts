@@ -70,7 +70,8 @@ MinMaxDates.args = {
 
 export const DisabledDates: any = Template.bind({});
 DisabledDates.args = {
-  ['disabled-dates']: '2/2/2022, 2/4/2022, 2/6/2022'
+  ['disabled-dates']: '2/2/2022, 2/4/2022, 2/6/2022',
+  ['start-date']: '2/1/2022'
 };
 
 export const StartDate: any = Template.bind({});
