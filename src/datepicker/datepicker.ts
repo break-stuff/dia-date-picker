@@ -852,6 +852,7 @@ export class KsDatepicker extends LitElement {
 
   inputTemplates(input: string, index: number) {
     if (input === 'dd') {
+      const placeholder = this.dayLabel.charAt(0).toLocaleLowerCase().repeat(2);
       return html`
         <label for="day" class="sr-only">${this.dayLabel}</label>
         <input
@@ -860,7 +861,7 @@ export class KsDatepicker extends LitElement {
           type="number"
           min="1"
           max="${getDaysInMonth(this._selectedMonth, this._selectedYear)}"
-          placeholder="dd"
+          placeholder="${placeholder}"
           formnovalidate
           ?required=${this.required}
           ?disabled=${this.disabled}
@@ -873,6 +874,7 @@ export class KsDatepicker extends LitElement {
     }
 
     if (input === 'mm') {
+      const placeholder = this.monthLabel.charAt(0).toLocaleLowerCase().repeat(2);
       return html`
         <label for="month" class="sr-only">${this.monthLabel}</label>
         <input
@@ -881,7 +883,7 @@ export class KsDatepicker extends LitElement {
           type="number"
           min="1"
           max="12"
-          placeholder="mm"
+          placeholder="${placeholder}"
           formnovalidate
           ?required=${this.required}
           ?disabled=${this.disabled}
@@ -894,6 +896,7 @@ export class KsDatepicker extends LitElement {
     }
 
     if (input === 'yyyy') {
+      const placeholder = this.yearLabel.charAt(0).toLocaleLowerCase().repeat(4);
       return html`
         <label for="year" class="sr-only">${this.yearLabel}</label>
         <input
@@ -902,7 +905,7 @@ export class KsDatepicker extends LitElement {
           type="number"
           min="1"
           max="9999"
-          placeholder="yyyy"
+          placeholder="${placeholder}"
           formnovalidate
           ?required=${this.required}
           ?disabled=${this.disabled}

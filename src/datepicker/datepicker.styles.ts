@@ -116,6 +116,7 @@ export const styles = css`
     color: rgb(89, 109, 127);
     font-style: italic;
     opacity: 0.7;
+    letter-spacing: 0.125rem;
   }
 
   .main-input-controls span {
