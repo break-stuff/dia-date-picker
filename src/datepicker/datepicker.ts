@@ -573,7 +573,9 @@ export class KsDatepicker extends LitElement {
         break;
       case ' ':
         e.preventDefault();
-        this.show();
+        if(!this.disabled && !this.readonly) {
+          this.show();
+        }
         return;
       case 'ArrowUp':
       case 'ArrowDown':
@@ -659,7 +661,9 @@ export class KsDatepicker extends LitElement {
         }
         return;
       case ' ':
-        this.show();
+        if(!this.disabled && !this.readonly) {
+          this.show();
+        }
         return;
       default:
         if (!isNaN(e.key as any)) {
@@ -705,7 +709,9 @@ export class KsDatepicker extends LitElement {
         }
         return;
       case ' ':
-        this.show();
+        if(!this.disabled && !this.readonly) {
+          this.show();
+        }
         break;
       default:
         if (!isNaN(e.key as any)) {
