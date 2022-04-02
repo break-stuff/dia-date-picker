@@ -181,6 +181,7 @@ export class KsCalendar extends LitElement {
     );
     const fieldData: IFormFieldData = {
       value: getShortIsoDate(this._selectedDate as Date),
+      valueAsDate: this._selectedDate,
       isValid: !isDateOutOfRange && !isDateUnavailable,
       validity: {
         outOfRange: isDateOutOfRange,

@@ -20,6 +20,7 @@ import icon from '../utils/icons';
 export interface IFormFieldData {
   name?: string;
   value?: string;
+  valueAsDate?: Date;
   isValid: boolean;
   validity: IDatePickerValidation;
 }
@@ -94,7 +95,7 @@ export class KsDatepicker extends LitElement {
 
   @property({ attribute: 'start-date', type: String })
   startDate?: string;
- 
+
   @property({ attribute: 'day-label', type: String })
   dayLabel = 'Day';
 
@@ -275,6 +276,7 @@ export class KsDatepicker extends LitElement {
     return {
       name: this.getName(),
       value: undefined,
+      valueAsDate: undefined,
       isValid: true,
       validity: {
         dateUnavailable: false,
@@ -288,6 +290,7 @@ export class KsDatepicker extends LitElement {
     this._formFieldData = {
       name: this.getName(),
       value: data.value,
+      valueAsDate: data.valueAsDate,
       isValid: data.isValid,
       validity: { ...data.validity },
     };
@@ -576,7 +579,7 @@ export class KsDatepicker extends LitElement {
         break;
       case ' ':
         e.preventDefault();
-        if(!this.disabled && !this.readonly) {
+        if (!this.disabled && !this.readonly) {
           this.show();
         }
         return;
@@ -664,7 +667,7 @@ export class KsDatepicker extends LitElement {
         }
         return;
       case ' ':
-        if(!this.disabled && !this.readonly) {
+        if (!this.disabled && !this.readonly) {
           this.show();
         }
         return;
@@ -712,7 +715,7 @@ export class KsDatepicker extends LitElement {
         }
         return;
       case ' ':
-        if(!this.disabled && !this.readonly) {
+        if (!this.disabled && !this.readonly) {
           this.show();
         }
         break;
@@ -762,8 +765,7 @@ export class KsDatepicker extends LitElement {
       return;
     }
 
-    const focusDate = new Date(formatDateString(this._formFieldData.value));
-    this.setSelectedValues(focusDate);
+    this.setSelectedValues(this._formFieldData.valueAsDate as Date);
     this.setInputValues();
     setTimeout(() => {
       this.validate();
@@ -776,8 +778,7 @@ export class KsDatepicker extends LitElement {
     if (!this._formFieldData.value) {
       this.resetInputValues();
     } else {
-      const focusDate = new Date(formatDateString(this._formFieldData.value));
-      this.setSelectedValues(focusDate);
+      this.setSelectedValues(this._formFieldData.valueAsDate as Date);
       this.setInputValues();
     }
 
@@ -877,7 +878,10 @@ export class KsDatepicker extends LitElement {
     }
 
     if (input === 'mm') {
-      const placeholder = this.monthLabel.charAt(0).toLocaleLowerCase().repeat(2);
+      const placeholder = this.monthLabel
+        .charAt(0)
+        .toLocaleLowerCase()
+        .repeat(2);
       return html`
         <label for="month" class="sr-only">${this.monthLabel}</label>
         <input
@@ -899,7 +903,10 @@ export class KsDatepicker extends LitElement {
     }
 
     if (input === 'yyyy') {
-      const placeholder = this.yearLabel.charAt(0).toLocaleLowerCase().repeat(4);
+      const placeholder = this.yearLabel
+        .charAt(0)
+        .toLocaleLowerCase()
+        .repeat(4);
       return html`
         <label for="year" class="sr-only">${this.yearLabel}</label>
         <input
@@ -948,7 +955,7 @@ export class KsDatepicker extends LitElement {
           disabled-dates="${this.disabledDates || ''}"
           ?show-week-numbers=${this.showWeekNumbers}
           lang="${this.getLocale()}"
-          start-date="${this.start}"
+          start-date="${this.startDate || ''}"
           @date-focused="${this.dateFocusedHandler}"
           @date-selected="${this.dateSelectedHandler}"
         ></ks-calendar>
