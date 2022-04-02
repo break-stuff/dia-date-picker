@@ -9,7 +9,7 @@ export const styles = css`
     --outline-offset: 0.125rem;
     --border-color: #596d7f;
     --day-hover-background-color: #e0e7f3;
-    --day-disabled-color: #ccc;
+    --disabled-color: #8d8d8d;
 
     position: relative;
     display: inline-block;
@@ -48,9 +48,10 @@ export const styles = css`
     color: var(--primary-color);
   }
 
+  input[disabled],
   button[disabled] {
     cursor: not-allowed;
-    color: #ccc;
+    color: var(--disabled-color);
   }
 
   .sr-only {
