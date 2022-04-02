@@ -83,3 +83,15 @@ export const DisabledDates: any = Template.bind({});
 DisabledDates.args = {
   ['disabled-dates']: '2/2/2022, 2/4/2022, 2/6/2022',
 };
+
+export const DisabledInput: any = Template.bind({});
+DisabledInput.args = {
+  value: '12/22/2025',
+  disabled: true
+};
+
+export const ReadonlyInput: any = Template.bind({});
+ReadonlyInput.args = {
+  value: '12/22/2025',
+  readonly: true
+};
