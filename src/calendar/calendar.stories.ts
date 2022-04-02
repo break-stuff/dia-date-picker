@@ -27,7 +27,7 @@ export default {
   },
   parameters: {
     actions: {
-      handles: ['date-focused', 'date-selected'],
+      handles: ['ks-focus', 'ks-select'],
     },
   },
 };

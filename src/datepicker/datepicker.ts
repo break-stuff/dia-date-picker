@@ -38,13 +38,21 @@ export interface IDatePickerValidation {
  *
  * @attr {string} value - the date entered in the main input
  * @attr {string} label - label for main date input
+ * @attr {string} name - name used to identify the input
+ * @attr {boolean} required - adds required validation to the input
+ * @attr {boolean} disabled - disables input and calendar drop-down
+ * @attr {boolean} readonly - makes input readonly and disables drop-down
  * @attr {string} min-date - the minimum selectable date
  * @attr {string} max-date - the maximum selectable date
+ * @attr {string} focus-date - the initial focus date if no value is set
  * @attr {string} day-label - label used for day input
  * @attr {string} month-label - label used for month input
  * @attr {string} year-label - label used for year input
  * @attr {string} clear-label - text for clear button
  * @attr {string} today-label - text for today button
+ * @attr {string} required-error-message - message displayed when required validation fails
+ * @attr {string} range-error-message - message displayed when selected date is out of range
+ * @attr {string} unavailable-error-message - message displayed when disabled date is selected
  * @attr {string} disabled-dates - comma separated list of disabled dates
  * @attr {boolean} show-week-numbers - show week numbers at the beginning of each week
  *
@@ -956,8 +964,8 @@ export class KsDatepicker extends LitElement {
           ?show-week-numbers=${this.showWeekNumbers}
           lang="${this.getLocale()}"
           focus-date="${this.focusDate || ''}"
-          @date-focused="${this.dateFocusedHandler}"
-          @date-selected="${this.dateSelectedHandler}"
+          @ks-focus="${this.dateFocusedHandler}"
+          @ks-select="${this.dateSelectedHandler}"
         ></ks-calendar>
       </div>
     `;

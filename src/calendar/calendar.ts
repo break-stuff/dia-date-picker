@@ -28,6 +28,7 @@ import { styles } from './calendar.styles';
  * @attr {string} value - selected value
  * @attr {string} min-date - the minimum selectable date
  * @attr {string} max-date - the maximum selectable date
+ * @attr {string} focus-date - the initial focus date if no value is set
  * @attr {string} day-label - label used for day input
  * @attr {string} month-label - label used for month input
  * @attr {string} year-label - label used for year input
@@ -47,7 +48,8 @@ import { styles } from './calendar.styles';
  * @cssprop [--day-hover-background-color=#e0e7f3] - Background color of days in calendar when hovered
  * @cssprop [--day-disabled-color=#ccc] - Color of disabled days
  *
- * @event {CustomEvent} ks-change - emits the date as short ISO string when calendar date is selected
+ * @event {CustomEvent} ks-focus - emits the date as short ISO string when calendar date is selected
+ * @event {CustomEvent} ks-select - emits the date as short ISO string when calendar date is selected
  *
  */
 @customElement('ks-calendar')
@@ -148,7 +150,7 @@ export class KsCalendar extends LitElement {
       bubbles: true,
       composed: true,
     };
-    this.dispatchEvent(new CustomEvent('date-focused', options));
+    this.dispatchEvent(new CustomEvent('ks-focus', options));
   }
 
   private emitSelected(reset = false) {
@@ -162,7 +164,7 @@ export class KsCalendar extends LitElement {
       bubbles: true,
       composed: true,
     };
-    this.dispatchEvent(new CustomEvent('date-selected', options));
+    this.dispatchEvent(new CustomEvent('ks-select', options));
   }
 
   /**
