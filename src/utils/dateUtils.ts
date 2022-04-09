@@ -39,7 +39,7 @@ export function getFullDate(date: Date, locale: string): string {
  */
 export function getShortIsoDate(date: Date) {
   const pad = (value: number) => value < 10 ? '0' + value : value;
-  return `${date.getFullYear()}-${pad(date.getMonth())}-${pad(date.getDate())}`;
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 }
 
 /**
