@@ -38,7 +38,8 @@ export function getFullDate(date: Date, locale: string): string {
  * @returns returns short date in ISO format - 2022-02-22
  */
 export function getShortIsoDate(date: Date) {
-  return date.toISOString().split('T')[0];
+  const pad = (value: number) => value < 10 ? '0' + value : value;
+  return `${date.getFullYear()}-${pad(date.getMonth())}-${pad(date.getDate())}`;
 }
 
 /**
