@@ -76,7 +76,6 @@ export interface IDatePickerValidation {
 export class KsDatepicker extends LitElement {
   static styles = styles;
 
-  /* the date entered in the main input */
   @property({ type: String, reflect: true })
   value?: string;
 
@@ -133,6 +132,9 @@ export class KsDatepicker extends LitElement {
 
   @property({ attribute: 'show-week-numbers', type: Boolean })
   showWeekNumbers = false;
+
+  @property({ attribute: 'disabled-week-days', type: String })
+  disabledWeekDays?: string;
 
   @state()
   private _formFieldData: IFormFieldData = this.getInitialFormFieldData();
@@ -961,6 +963,7 @@ export class KsDatepicker extends LitElement {
           clear-label="${this.clearLabel}"
           today-label="${this.todayLabel}"
           disabled-dates="${this.disabledDates || ''}"
+          disabled-week-days="${this.disabledWeekDays || ''}"
           ?show-week-numbers=${this.showWeekNumbers}
           lang="${this.getLocale()}"
           focus-date="${this.focusDate || ''}"

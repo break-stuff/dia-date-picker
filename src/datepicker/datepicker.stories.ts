@@ -19,6 +19,7 @@ export default {
     ['clear-label']: 'Clear',
     ['today-label']: 'Today',
     ['disabled-dates']: '',
+    ['disabled-week-days']: '',
     ['focus-date']: '',
     ['show-week-numbers']: false,
     ['--primary-color']: '#2c5374',
@@ -54,6 +55,7 @@ const Template = (args: any) => {
       clear-label="${args['clear-label']}"
       today-label="${args['today-label']}"
       disabled-dates="${args['disabled-dates']}"
+      disabled-week-days="${args['disabled-week-days']}"
       focus-date="${args['focus-date']}"
       ?show-week-numbers="${args['show-week-numbers']}"
     ></ks-datepicker>
@@ -96,4 +98,10 @@ export const ReadonlyInput: any = Template.bind({});
 ReadonlyInput.args = {
   value: '12/22/2025',
   readonly: true
+};
+
+
+export const DisabledWeekDays: any = Template.bind({});
+DisabledWeekDays.args = {
+  ['disabled-week-days']: '1, 6'
 };

@@ -15,6 +15,7 @@ export default {
     ['clear-label']: 'Clear',
     ['today-label']: 'Today',
     ['disabled-dates']: '',
+    ['disabled-week-days']: '',
     ['focus-date']: '',
     ['show-week-numbers']: false,
     ['--primary-color']: '#2c5374',
@@ -46,6 +47,7 @@ const Template = (args: any) => {
             clear-label="${args['clear-label']}"
             today-label="${args['today-label']}"
             disabled-dates="${args['disabled-dates']}"
+            disabled-week-days="${args['disabled-week-days']}"
             focus-date="${args['focus-date']}"
             ?show-week-numbers="${args['show-week-numbers']}"
         ></ks-calendar>
@@ -74,7 +76,12 @@ DisabledDates.args = {
   ['focus-date']: '2/1/2022'
 };
 
-export const StartDate: any = Template.bind({});
-StartDate.args = {
+export const FocusDate: any = Template.bind({});
+FocusDate.args = {
   ['focus-date']: '5/25/2025'
+};
+
+export const DisabledWeekDays: any = Template.bind({});
+DisabledWeekDays.args = {
+  ['disabled-week-days']: '3, 5'
 };

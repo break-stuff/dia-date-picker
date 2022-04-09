@@ -36,6 +36,7 @@ import { styles } from './calendar.styles';
  * @attr {string} today-label - text for today button
  * @attr {string} disabled-dates - comma separated list of disabled dates
  * @attr {boolean} show-week-numbers - show week numbers at the beginning of each week
+ * @attr {boolean} disabled-week-days - days of the week that are disabled (1-7)
  *
  * @slot prev-month-icon - icon in previous month button
  * @slot next-month-icon - icon in next month button
@@ -89,6 +90,9 @@ export class KsCalendar extends LitElement {
   @property({ attribute: 'show-week-numbers', type: Boolean })
   showWeekNumbers = false;
 
+  @property({ attribute: 'disabled-week-days', type: String })
+  disabledWeekDays?: string;
+
   @state()
   private _selectedDate?: Date;
 
@@ -117,6 +121,9 @@ export class KsCalendar extends LitElement {
   private _formattedDisabledDates: string[] = [];
 
   @state()
+  private _disabledWeekDaysList: number[] = [];
+
+  @state()
   private $focusableEls: HTMLElement[] = [];
 
   @query('#year_selector')
@@ -136,6 +143,7 @@ export class KsCalendar extends LitElement {
   protected firstUpdated(): void {
     this.initSelectedValues();
     this.setFormattedDisabledDates();
+    this.setDisabledWeekDaysList();
   }
 
   /**
@@ -293,10 +301,19 @@ export class KsCalendar extends LitElement {
       [];
   }
 
+  private setDisabledWeekDaysList() {
+    this._disabledWeekDaysList =
+      this.disabledWeekDays
+        ?.split(',')
+        .map(x => Number(x.trim())) ||
+      [];
+  }
+
   private isDateDisabled(date: Date) {
     return (
       this._formattedDisabledDates.includes(date.toLocaleDateString()) ||
-      isOutOfRange(date, this._minDate, this._maxDate)
+      isOutOfRange(date, this._minDate, this._maxDate) ||
+      this._disabledWeekDaysList.includes(date.getDay() + 1)
     );
   }
 

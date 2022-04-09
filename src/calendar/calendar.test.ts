@@ -1,4 +1,10 @@
-import { fixture, assert } from '@open-wc/testing';
+import {
+  fixture,
+  assert,
+  expect,
+  elementUpdated,
+  nextFrame,
+} from '@open-wc/testing';
 import { getShortIsoDate } from '../utils/dateUtils';
 import { KsCalendar } from './index';
 
@@ -45,16 +51,22 @@ describe('calendar default date', () => {
 
   it('check that current date is selected in calendar', async () => {
     // Arrange
-    const { $selectedElement } = await element('');
-    const currentDate = new Date();
-    const isoDate = getShortIsoDate(currentDate);
+    const $el = await fixture<KsCalendar>(`<${tag}></${tag}>`);
+    const today = getShortIsoDate(new Date());
+    console.log('TODAY', today);
+    
+    const $selectedDate = $el.shadowRoot?.querySelector(
+      `[id="${today}"]`
+    ) as HTMLElement;
+
     // Act
+    console.log($selectedDate);
+    
 
     // Assert
-    await assert.equal($selectedElement?.getAttribute('id'), isoDate);
-    await assert.equal($selectedElement?.getAttribute('tabindex'), '0');
-    await assert.equal($selectedElement?.getAttribute('aria-current'), 'date');
-    await assert.equal($selectedElement?.getAttribute('aria-selected'), 'true');
+    await assert.equal($selectedDate?.getAttribute('tabindex'), '0');
+    await assert.equal($selectedDate?.getAttribute('aria-current'), 'date');
+    await assert.equal($selectedDate?.getAttribute('aria-selected'), 'true');
   });
 
   it('check that current day and year have correct values', async () => {
@@ -79,26 +91,36 @@ describe('calendar default date', () => {
   });
 });
 
-// describe('calendar keyboard funtionality tests', () => {
-//   it('test up arrow', async () => {
-//     // Arrange
-//     const { $el } = await element();
+describe('calendar disabled dates', () => {
+  it('should have 8 inactive days when the focus date is set to "2/1/2026" and the 2nd and 5th days of the week are disabled', async () => {
+    // Arrange
+    const $el = await fixture<KsCalendar>(
+      `<${tag} focus-date="2/1/2026" disabled-week-days="2, 5"></${tag}>`
+    );
 
-//     // Act
+    // Act
+    const disabledDays = [
+      ...$el.shadowRoot.querySelectorAll('[aria-disabled="true"]'),
+    ];
 
-//     // Assert
-//     await assert.isAccessible($el);
-//   });
+    // Assert
+    await expect(disabledDays.length).to.equal(8);
+  });
+});
 
-//   it('check that current date is selected', async () => {
-//     // Arrange
-//     const { $selectedElement } = await element();
+describe('calendar disabled dates', () => {
+  it('should have 8 inactive days when the focus date is set to "2/1/2026" and the 2nd and 5th days of the week are disabled', async () => {
+    // Arrange
+    const $el = await fixture<KsCalendar>(
+      `<${tag} focus-date="2/1/2026" disabled-week-days="2, 5"></${tag}>`
+    );
 
-//     // Act
+    // Act
+    const disabledDays = [
+      ...$el.shadowRoot.querySelectorAll('[aria-disabled="true"]'),
+    ];
 
-//     // Assert
-//     await assert.equal($selectedElement?.getAttribute('tabindex'), '0');
-//     await assert.equal($selectedElement?.getAttribute('aria-current'), 'date');
-//     await assert.equal($selectedElement?.parentElement?.getAttribute('aria-selected'), 'true');
-//   });
-// });
+    // Assert
+    await expect(disabledDays.length).to.equal(8);
+  });
+});
