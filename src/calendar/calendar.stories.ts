@@ -18,6 +18,7 @@ export default {
     ['disabled-week-days']: '',
     ['focus-date']: '',
     ['show-week-numbers']: false,
+    ['first-day-of-week']: 0,
     ['--primary-color']: '#2c5374',
     ['--outline']: 'solid 2px #71a5d1',
     ['--outline-color']: '#71a5d1',
@@ -50,6 +51,7 @@ const Template = (args: any) => {
             disabled-week-days="${args['disabled-week-days']}"
             focus-date="${args['focus-date']}"
             ?show-week-numbers="${args['show-week-numbers']}"
+            first-day-of-week="${args['first-day-of-week']}"
         ></ks-calendar>
         <!--<span>some random inline content</span>
         <div>some random block content</div>-->

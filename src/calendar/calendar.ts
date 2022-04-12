@@ -93,6 +93,9 @@ export class KsCalendar extends LitElement {
   @property({ attribute: 'disabled-week-days', type: String })
   disabledWeekDays?: string;
 
+  @property({ attribute: 'first-day-of-week', type: Number })
+  firstDayOfWeek?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
   @state()
   private _selectedDate?: Date;
 
@@ -303,10 +306,7 @@ export class KsCalendar extends LitElement {
 
   private setDisabledWeekDaysList() {
     this._disabledWeekDaysList =
-      this.disabledWeekDays
-        ?.split(',')
-        .map(x => Number(x.trim())) ||
-      [];
+      this.disabledWeekDays?.split(',').map(x => Number(x.trim())) || [];
   }
 
   private isDateDisabled(date: Date) {
@@ -547,7 +547,7 @@ export class KsCalendar extends LitElement {
         <thead role="rowgroup">
           <tr class="week-days" role="row">
             ${this.showWeekNumbers ? html`<th></th>` : ''}
-            ${getDaysOfTheWeek(this.getLocale()).map(
+            ${getDaysOfTheWeek(this.getLocale(), this.firstDayOfWeek).map(
               day =>
                 html`<th
                   scope="col"
@@ -561,7 +561,7 @@ export class KsCalendar extends LitElement {
           </tr>
         </thead>
         <tbody role="rowgroup">
-          ${getWeeks(this._selectedMonth, this._selectedYear).map(week =>
+          ${getWeeks(this._selectedMonth, this._selectedYear, this.firstDayOfWeek).map(week =>
             this.weekTemplate(week)
           )}
         </tbody>

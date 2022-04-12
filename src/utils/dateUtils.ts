@@ -38,8 +38,10 @@ export function getFullDate(date: Date, locale: string): string {
  * @returns returns short date in ISO format - 2022-02-22
  */
 export function getShortIsoDate(date: Date) {
-  const pad = (value: number) => value < 10 ? '0' + value : value;
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+  const pad = (value: number) => (value < 10 ? '0' + value : value);
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
+    date.getDate()
+  )}`;
 }
 
 /**
@@ -85,9 +87,7 @@ export function getSelectableDateInScope(
  */
 export function getMonths(locale: string): string[] {
   const { format } = new Intl.DateTimeFormat(locale, { month: 'long' });
-  return [...Array(12).keys()].map(m =>
-    format(new Date(2021, m, 1))
-  );
+  return [...Array(12).keys()].map(m => format(new Date(2021, m, 1)));
 }
 
 export function getMonthLabel(
@@ -107,14 +107,18 @@ export function getMonthLabel(
  * @param locale country language locale
  * @returns IWeekDay[] - list of week day abbreviations and full names
  */
-export function getDaysOfTheWeek(locale: string): IWeekDay[] {
+export function getDaysOfTheWeek(
+  locale: string,
+  firstDayOfWeek = 0
+): IWeekDay[] {
+  firstDayOfWeek = firstDayOfWeek < 0 || firstDayOfWeek > 6 ? 0 : firstDayOfWeek;
   const abbrFormat = new Intl.DateTimeFormat(locale, { weekday: 'narrow' })
     .format;
   const fullFormat = new Intl.DateTimeFormat(locale, { weekday: 'long' })
     .format;
 
   return [...Array(7).keys()].map(day => {
-    const date = new Date(Date.UTC(2021, 5, day));
+    const date = new Date(Date.UTC(2021, 5, day + firstDayOfWeek));
     return {
       abbr: abbrFormat(date),
       fullDay: fullFormat(date),
@@ -150,14 +154,22 @@ export function getDaysInMonth(month: number, year: number) {
  * @param year the year you are building the calendar for
  * @returns An array (weeks) of dates (days)
  */
-export function getWeeks(month: number, year: number): Date[][] {
-  return getDays(month, year).reduce((p: Date[][], c, i) => {
-    if (i % 7 === 0) {
-      p[p.length] = [];
-    }
-    p[p.length - 1].push(c);
-    return p;
-  }, []);
+export function getWeeks(
+  month: number,
+  year: number,
+  firstDayOfWeek = 0
+): Date[][] {
+  firstDayOfWeek = firstDayOfWeek < 0 || firstDayOfWeek > 6 ? 0 : firstDayOfWeek;
+  return getDays(month, year, firstDayOfWeek).reduce(
+    (weeks: Date[][], day, i) => {
+      if (i % 7 === 0) {
+        weeks[weeks.length] = [];
+      }
+      weeks[weeks.length - 1].push(day);
+      return weeks;
+    },
+    []
+  );
 }
 
 /**
@@ -166,44 +178,45 @@ export function getWeeks(month: number, year: number): Date[][] {
  * @param year the year you are building the calendar for
  * @returns Date[] - a list of days of the week
  */
-function getDays(month: number, year: number): Date[] {
+function getDays(month: number, year: number, firstDayOfWeek = 0): Date[] {
   const dates = [];
   const firstDayOfMonth = new Date(year, month, 1);
   const lastDayOfMonth = new Date(year, month, getDaysInMonth(month, year));
   dates.unshift(firstDayOfMonth);
+  const firstDays = [6, 0, 1, 2, 3, 4, 5];
 
   // prev month days
   for (
-    let d = addDaysToDate(firstDayOfMonth, -1);
-    d.getDay() !== 6;
-    d = addDaysToDate(d, -1)
+    let day = addDaysToDate(firstDayOfMonth, -1);
+    day.getDay() !== 6 - (6 - firstDays[firstDayOfWeek]);
+    day = addDaysToDate(day, -1)
   ) {
-    dates.unshift(d);
+    dates.unshift(day);
   }
 
   // current month days
   for (
-    let d = addDaysToDate(firstDayOfMonth, 1);
-    d <= lastDayOfMonth;
-    d = addDaysToDate(d, 1)
+    let day = addDaysToDate(firstDayOfMonth, 1);
+    day <= lastDayOfMonth;
+    day = addDaysToDate(day, 1)
   ) {
-    dates.push(d);
+    dates.push(day);
   }
 
   //next month days
   for (
-    let d = addDaysToDate(lastDayOfMonth, 1);
-    d.getDay() !== 0;
-    d = addDaysToDate(d, 1)
+    let day = addDaysToDate(lastDayOfMonth, 1);
+    day.getDay() !== 0;
+    day = addDaysToDate(day, 1)
   ) {
-    dates.push(d);
+    dates.push(day);
   }
   return dates;
 }
 
 /**
- * 
- * @param locale 
+ *
+ * @param locale
  * @returns string array of the month, day, and year along with its separators in the correct order based on locale
  */
 export function getDateFormat(locale: string) {
@@ -221,7 +234,7 @@ export function getDateFormat(locale: string) {
         return x;
       }
     });
-  
+
   return localeFormat || [];
 }
 
