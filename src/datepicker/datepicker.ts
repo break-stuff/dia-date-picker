@@ -200,6 +200,12 @@ export class KsDatepicker extends LitElement {
   @query('ks-calendar')
   private $calendar?: HTMLElement;
 
+  get valueAsDate() {
+    console.log(this.value);
+    
+    return this.value ? new Date(formatDateString(this.value)) : undefined;
+  }
+
   /**
    *
    * LIFECYCLE HOOKS
@@ -250,7 +256,7 @@ export class KsDatepicker extends LitElement {
     }
 
     this.updateSelectedDate();
-
+    this.value = getShortIsoDate(this._selectedDate as Date);
     const options = {
       detail: { ...this._formFieldData },
       bubbles: true,
@@ -261,6 +267,7 @@ export class KsDatepicker extends LitElement {
   }
 
   private emitChange() {
+    this.value = getShortIsoDate(this._selectedDate as Date);
     const options = {
       detail: { ...this._formFieldData },
       bubbles: true,
