@@ -6,8 +6,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: 'src/index.ts',
-      name: 'MyLib',
-      fileName: format => `index.${format}.js`,
+      name: 'DatePicker'
     },
     minify: true,
     sourcemap: true,

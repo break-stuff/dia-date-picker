@@ -36,7 +36,8 @@ import { styles } from './calendar.styles';
  * @attr {string} today-label - text for today button
  * @attr {string} disabled-dates - comma separated list of disabled dates
  * @attr {boolean} show-week-numbers - show week numbers at the beginning of each week
- * @attr {boolean} disabled-week-days - days of the week that are disabled (1-7)
+ * @attr {string} disabled-week-days - days of the week that are disabled (1-7)
+ * @attr {string} first-day-of-week - the day of the week the calendar will start with (0-6)
  *
  * @slot prev-month-icon - icon in previous month button
  * @slot next-month-icon - icon in next month button

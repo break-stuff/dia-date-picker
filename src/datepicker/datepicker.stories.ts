@@ -22,6 +22,7 @@ export default {
     ['disabled-week-days']: '',
     ['focus-date']: '',
     ['show-week-numbers']: false,
+    ['first-day-of-week']: 0,
     ['--primary-color']: '#2c5374',
     ['--error-color']: '#9a0000',
     ['--outline']: 'solid 2px #71a5d1',
@@ -38,7 +39,7 @@ export default {
   },
 };
 
-const Template = (args: any) => {
+const DefaultTemplate = (args: any) => {
   return html`
     <ks-datepicker
       value="${args.value}"
@@ -58,50 +59,51 @@ const Template = (args: any) => {
       disabled-week-days="${args['disabled-week-days']}"
       focus-date="${args['focus-date']}"
       ?show-week-numbers="${args['show-week-numbers']}"
+      first-day-of-week="${args['first-day-of-week']}"
     ></ks-datepicker>
     <!-- <span>some random inline content</span>
         <div>some random block content</div> -->
   `;
 };
 
-export const Default: any = Template.bind({});
+export const Default: any = DefaultTemplate.bind({});
 Default.args = {};
 
-export const PresetValue: any = Template.bind({});
+export const PresetValue: any = DefaultTemplate.bind({});
 PresetValue.args = {
   value: '12/2/2020',
 };
 
-export const MinMaxDates: any = Template.bind({});
+export const MinMaxDates: any = DefaultTemplate.bind({});
 MinMaxDates.args = {
   ['min-date']: '2/2/2022',
   ['max-date']: '2-22-22',
 };
 
-export const Validation: any = Template.bind({});
+export const Validation: any = DefaultTemplate.bind({});
 Validation.args = {
   required: 'true',
 };
 
-export const DisabledDates: any = Template.bind({});
+export const DisabledDates: any = DefaultTemplate.bind({});
 DisabledDates.args = {
   ['disabled-dates']: '2/2/2022, 2/4/2022, 2/6/2022',
 };
 
-export const DisabledInput: any = Template.bind({});
+export const DisabledInput: any = DefaultTemplate.bind({});
 DisabledInput.args = {
   value: '12/22/2025',
   disabled: true
 };
 
-export const ReadonlyInput: any = Template.bind({});
+export const ReadonlyInput: any = DefaultTemplate.bind({});
 ReadonlyInput.args = {
   value: '12/22/2025',
   readonly: true
 };
 
 
-export const DisabledWeekDays: any = Template.bind({});
+export const DisabledWeekDays: any = DefaultTemplate.bind({});
 DisabledWeekDays.args = {
   ['disabled-week-days']: '1, 6'
 };

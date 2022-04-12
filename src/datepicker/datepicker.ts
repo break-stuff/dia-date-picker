@@ -55,6 +55,7 @@ export interface IDatePickerValidation {
  * @attr {string} unavailable-error-message - message displayed when disabled date is selected
  * @attr {string} disabled-dates - comma separated list of disabled dates
  * @attr {boolean} show-week-numbers - show week numbers at the beginning of each week
+ * @attr {string} first-day-of-week - the day of the week the calendar will start with (0-6)
  *
  * @slot calendar-icon - icon in button toggle for date selector
  * @slot prev-month-icon - icon in previous month button
@@ -135,6 +136,9 @@ export class KsDatepicker extends LitElement {
 
   @property({ attribute: 'disabled-week-days', type: String })
   disabledWeekDays?: string;
+
+  @property({ attribute: 'first-day-of-week', type: Number })
+  firstDayOfWeek?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
   @state()
   private _formFieldData: IFormFieldData = this.getInitialFormFieldData();
@@ -965,6 +969,7 @@ export class KsDatepicker extends LitElement {
           disabled-dates="${this.disabledDates || ''}"
           disabled-week-days="${this.disabledWeekDays || ''}"
           ?show-week-numbers=${this.showWeekNumbers}
+          first-day-of-week="${this.firstDayOfWeek || ''}"
           lang="${this.getLocale()}"
           focus-date="${this.focusDate || ''}"
           @ks-focus="${this.dateFocusedHandler}"

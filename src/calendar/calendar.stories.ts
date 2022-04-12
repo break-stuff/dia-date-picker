@@ -34,7 +34,7 @@ export default {
   },
 };
 
-const Template = (args: any) => {
+const DefaultTemplate = (args: any) => {
   return html`
         <ks-calendar
             id="example"
@@ -58,32 +58,32 @@ const Template = (args: any) => {
     `;
 };
 
-export const Default: any = Template.bind({});
+export const Default: any = DefaultTemplate.bind({});
 Default.args = {};
 
-export const PresetValue: any = Template.bind({});
+export const PresetValue: any = DefaultTemplate.bind({});
 PresetValue.args = {
   value: '12/2/2020',
 };
 
-export const MinMaxDates: any = Template.bind({});
+export const MinMaxDates: any = DefaultTemplate.bind({});
 MinMaxDates.args = {
   ['min-date']: '2/2/2022',
   ['max-date']: '2-22-22',
 };
 
-export const DisabledDates: any = Template.bind({});
+export const DisabledDates: any = DefaultTemplate.bind({});
 DisabledDates.args = {
   ['disabled-dates']: '2/2/2022, 2/4/2022, 2/6/2022',
   ['focus-date']: '2/1/2022'
 };
 
-export const FocusDate: any = Template.bind({});
+export const FocusDate: any = DefaultTemplate.bind({});
 FocusDate.args = {
   ['focus-date']: '5/25/2025'
 };
 
-export const DisabledWeekDays: any = Template.bind({});
+export const DisabledWeekDays: any = DefaultTemplate.bind({});
 DisabledWeekDays.args = {
   ['disabled-week-days']: '3, 5'
 };
