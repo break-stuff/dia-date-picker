@@ -14,6 +14,7 @@ import {
   getMonthLabel,
   formatDateString,
   getWeek,
+  getDaysInMonth,
 } from '../utils/dateUtils';
 import icon from '../utils/icons';
 import { watch } from '../utils/watchDecorator';
@@ -426,28 +427,51 @@ export class KsCalendar extends LitElement {
   }
 
   private prevMonthClickHandler(): void {
-    if (this._selectedMonth === 0) {
-      this._selectedMonth = 11;
-      this._selectedYear--;
-      this.updateYearSelector();
-    } else {
-      this._selectedMonth--;
+    let nextDate =
+      this._selectedMonth === 0
+        ? this.getSelectedMonthsDate(11, this._selectedYear - 1)
+        : this.getSelectedMonthsDate(
+            this._selectedYear,
+            this._selectedMonth - 1
+          );
+
+    if (this.minDate) {
+      nextDate = isOutOfRange(nextDate, this._minDate, this._maxDate)
+        ? (this._minDate as Date)
+        : nextDate;
     }
 
-    this._selectedDate = this.getFocusDate();
+    this.setSelectedValues(nextDate);
+    this.updateYearSelector();
     this.emitFocus();
   }
 
-  private nextMonthClickHandler(): void {
-    if (this._selectedMonth === 11) {
-      this._selectedMonth = 0;
-      this._selectedYear++;
-      this.updateYearSelector();
-    } else {
-      this._selectedMonth++;
-    }
+  private getSelectedMonthsDate(year: number, month: number) {
+    const daysInSelectedMonth = getDaysInMonth(month, year);
+    const nextDay =
+      daysInSelectedMonth < this._selectedDay
+        ? daysInSelectedMonth
+        : this._selectedDay;
+    return new Date(year, month, nextDay);
+  }
 
-    this._selectedDate = this.getFocusDate();
+  private nextMonthClickHandler(): void {
+    let nextDate =
+      this._selectedMonth === 11
+        ? this.getSelectedMonthsDate(0, this._selectedYear + 1)
+        : this.getSelectedMonthsDate(
+            this._selectedYear,
+            this._selectedMonth + 1
+          );
+
+    if (this.maxDate) {
+      nextDate = isOutOfRange(nextDate, this._minDate, this._maxDate)
+        ? (this._maxDate as Date)
+        : nextDate;
+    }
+    
+    this.setSelectedValues(nextDate);
+    this.updateYearSelector();
     this.emitFocus();
   }
 
@@ -562,9 +586,11 @@ export class KsCalendar extends LitElement {
           </tr>
         </thead>
         <tbody role="rowgroup">
-          ${getWeeks(this._selectedMonth, this._selectedYear, this.firstDayOfWeek).map(week =>
-            this.weekTemplate(week)
-          )}
+          ${getWeeks(
+            this._selectedMonth,
+            this._selectedYear,
+            this.firstDayOfWeek
+          ).map(week => this.weekTemplate(week))}
         </tbody>
       </table>
     `;
