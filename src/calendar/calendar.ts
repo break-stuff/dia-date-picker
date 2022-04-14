@@ -429,7 +429,7 @@ export class KsCalendar extends LitElement {
   private prevMonthClickHandler(): void {
     let nextDate =
       this._selectedMonth === 0
-        ? this.getSelectedMonthsDate(11, this._selectedYear - 1)
+        ? this.getSelectedMonthsDate(this._selectedYear - 1, 11)
         : this.getSelectedMonthsDate(
             this._selectedYear,
             this._selectedMonth - 1
@@ -458,7 +458,7 @@ export class KsCalendar extends LitElement {
   private nextMonthClickHandler(): void {
     let nextDate =
       this._selectedMonth === 11
-        ? this.getSelectedMonthsDate(0, this._selectedYear + 1)
+        ? this.getSelectedMonthsDate(this._selectedYear + 1, 0)
         : this.getSelectedMonthsDate(
             this._selectedYear,
             this._selectedMonth + 1
