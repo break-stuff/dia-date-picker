@@ -446,15 +446,6 @@ export class KsCalendar extends LitElement {
     this.emitFocus();
   }
 
-  private getSelectedMonthsDate(year: number, month: number) {
-    const daysInSelectedMonth = getDaysInMonth(month, year);
-    const nextDay =
-      daysInSelectedMonth < this._selectedDay
-        ? daysInSelectedMonth
-        : this._selectedDay;
-    return new Date(year, month, nextDay);
-  }
-
   private nextMonthClickHandler(): void {
     let nextDate =
       this._selectedMonth === 11
@@ -473,6 +464,15 @@ export class KsCalendar extends LitElement {
     this.setSelectedValues(nextDate);
     this.updateYearSelector();
     this.emitFocus();
+  }
+
+  private getSelectedMonthsDate(year: number, month: number) {
+    const daysInSelectedMonth = getDaysInMonth(month, year);
+    const nextDay =
+      daysInSelectedMonth < this._selectedDay
+        ? daysInSelectedMonth
+        : this._selectedDay;
+    return new Date(year, month, nextDay);
   }
 
   private beforeRender() {
