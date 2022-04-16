@@ -3,11 +3,15 @@
 # abort on errors
 set -e
 
-# build
+# build project
+npm run build
+
+# build docs
+cd docs
 npm run build
 
 # navigate into the build output directory
-cd dist
+cd src/.vuepress/dist
 
 # if you are deploying to a custom domain
 # echo 'www.example.com' > CNAME
@@ -23,4 +27,4 @@ git commit -m 'deploy'
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
 git push -f git@github.com:break-stuff/ks-datepicker.git main:gh-pages
 
-cd -
+cd ../../../..
