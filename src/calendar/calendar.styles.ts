@@ -1,70 +1,11 @@
 import { css } from 'lit';
+import sharedStyles from "../shared-styles";
 
 export const styles = css`
+  ${sharedStyles}
+
   :host {
-    --primary-color: #293d4e;
-    --outline: solid 2px var(--outline-color);
-    --outline-color: #71a5d1;
-    --outline-offset: 0.125rem;
-    --border-color: #596d7f;
-    --day-hover-background-color: #e0e7f3;
-    --day-disabled-color: #ccc;
-    --week-background-color: #f7f7f7;
-
-    position: relative;
-    display: inline-block;
-    line-height: 1;
-    font-family: sans-serif;
-    color: var(--primary-color);
     min-width: 16rem;
-  }
-
-  *:focus {
-    outline: var(--outline);
-    outline-offset: var(--outline-offset);
-  }
-
-  /* RESETS */
-  button,
-  input,
-  select {
-    font-size: 1rem;
-    padding: 0.25rem;
-    line-height: 1.2;
-    margin: 0;
-    -webkit-appearance: none;
-    border-radius: 0.25rem;
-    border: 0;
-    background-color: white;
-    color: var(--primary-color);
-  }
-
-  label:hover,
-  button:hover {
-    cursor: pointer;
-  }
-
-  button {
-    border: 0;
-    padding: 0;
-    color: var(--border-color);
-  }
-
-  .sr-only {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    padding: 0 !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    clip: rect(0, 0, 0, 0) !important;
-    white-space: nowrap !important;
-    border: 0 !important;
-  }
-
-  .icon {
-    width: 1em;
-    height: 1em;
   }
 
   /* TOP CONTROLS */
