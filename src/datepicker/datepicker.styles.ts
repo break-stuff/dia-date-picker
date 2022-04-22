@@ -196,10 +196,10 @@ export const styles = css`
     border: solid 1px var(--border-color);
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
     transition: all 0.3s ease-in-out;
-    z-index: 1;
+    z-index: 10;
     transform: translateY(-0.25rem);
   }
-  .calendar-dropdown:before {
+  /* .calendar-dropdown:before {
     border: 10px solid transparent;
     content: '';
     display: block;
@@ -225,7 +225,7 @@ export const styles = css`
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     transition: all 0.3s ease-in-out;
-  }
+  } */
   .calendar-dropdown.open {
     visibility: visible;
     opacity: 1;

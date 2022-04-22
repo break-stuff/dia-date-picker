@@ -1,7 +1,7 @@
 {
   "name": "ks-datepicker",
   "version": "0.0.1",
-  "description": "",
+  "description": "Kickstand UI date picker is a light-weight and accessible date picker built with web components",
   "main": "index.js",
   "authors": {
     "name": "",
