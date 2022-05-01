@@ -57,3 +57,6 @@ As you can see not everything gets translated. It will need translations for the
 ## Week Numbers
 
 <ks-datepicker label="Show Week Numbers" show-week-numbers></ks-datepicker>
+
+
+<component-docs tag="ks-datepicker" />
