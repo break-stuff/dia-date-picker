@@ -74,6 +74,22 @@ export class KsCalendar extends LitElement {
   @property({ attribute: 'focus-date', type: String })
   focusDate?: string;
 
+  /** comma separated list of disabled dates */
+  @property({ attribute: 'disabled-dates', type: String })
+  disabledDates?: string;
+
+  /** show week numbers at the beginning of each week */
+  @property({ attribute: 'show-week-numbers', type: Boolean })
+  showWeekNumbers = false;
+
+  /** comma separated list of week days to be disabled (1-7) */
+  @property({ attribute: 'disabled-week-days', type: String })
+  disabledWeekDays?: string;
+
+  /** the day of the week the calendar will start with (0-6) */
+  @property({ attribute: 'first-day-of-week', type: Number })
+  firstDayOfWeek?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
   /** label used for day input */
   @property({ attribute: 'day-label', type: String })
   dayLabel = 'Day';
@@ -93,22 +109,6 @@ export class KsCalendar extends LitElement {
   /** text for "Today" button */
   @property({ attribute: 'today-label', type: String })
   todayLabel = 'Today';
-
-  /** comma separated list of disabled dates */
-  @property({ attribute: 'disabled-dates', type: String })
-  disabledDates?: string;
-
-  /** show week numbers at the beginning of each week */
-  @property({ attribute: 'show-week-numbers', type: Boolean })
-  showWeekNumbers = false;
-
-  /** comma separated list of week days to be disabled (1-7) */
-  @property({ attribute: 'disabled-week-days', type: String })
-  disabledWeekDays?: string;
-
-  /** the day of the week the calendar will start with (0-6) */
-  @property({ attribute: 'first-day-of-week', type: Number })
-  firstDayOfWeek?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
   @state()
   private _selectedDate?: Date;
