@@ -4,12 +4,12 @@ export default css`
   :host {
     display: inline-block;
     line-height: 1;
-    color: var(--primary-color);
+    color: var(--ks-primary-color);
   }
   
-  *:focus {
-    outline: var(--outline);
-    outline-offset: var(--outline-offset);
+  *:focus-visible {
+    outline: var(--ks-outline);
+    outline-offset: var(--ks-outline-offset);
   }
 
   /* RESETS */
@@ -21,12 +21,19 @@ export default css`
     line-height: 1.2;
     margin: 0;
     -webkit-appearance: none;
-    border-radius: 0.25rem;
+    border-radius: var(--ks-border-radius);
     border: 0;
-    background-color: white;
-    color: var(--primary-color);
+    background-color: transparent;
+    color: rgb(var(--ks-primary-color));
   }
 
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible {
+    outline: var(--ks-outline);
+    outline-offset: var(--ks-outline-offset);
+  }
+  
   label:hover,
   button:hover {
     cursor: pointer;
@@ -35,7 +42,8 @@ export default css`
   button {
     border: 0;
     padding: 0;
-    color: var(--border-color);
+    background-color: var(--button-background-color);
+    color: var(--button-color);
   }
 
   .icon {

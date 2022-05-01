@@ -1,5 +1,5 @@
 import { css } from 'lit';
-import sharedStyles from "../shared-styles";
+import sharedStyles from '../shared-styles';
 
 export const styles = css`
   ${sharedStyles}
@@ -30,8 +30,8 @@ export const styles = css`
 
   .main-input-controls {
     background-color: white;
-    border: solid 1px var(--border-color);
-    border-radius: 0.25rem;
+    border: solid 1px var(--ks-border-color);
+    border-radius: var(--ks-border-radius);
     padding: 0 0.5rem;
     display: inline-flex;
     align-items: center;
@@ -39,9 +39,16 @@ export const styles = css`
     box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.1);
   }
 
+  .main-input-controls[aria-disabled='true'],
+  .main-input-controls[aria-disabled='true'] input,
+  .main-input-controls[aria-disabled='true'] button {
+    background-color: var(--ks-disabled-color);
+    cursor: not-allowed;
+  }
+
   .main-input-controls:focus-within {
-    outline: var(--outline);
-    outline-offset: var(--outline-offset);
+    outline: var(--ks-outline);
+    outline-offset: var(--ks-outline-offset);
   }
 
   .main-input-controls input {
@@ -70,13 +77,13 @@ export const styles = css`
     justify-content: center;
   }
 
-  .main-input-controls input:focus {
+  .main-input-controls input:focus-visible {
     outline: 0;
   }
 
   .main-input-controls .month,
   .main-input-controls .day {
-    width: 1.75rem;
+    min-width: 1.75rem;
   }
 
   .main-input-controls .year {
@@ -92,7 +99,7 @@ export const styles = css`
     background: transparent;
     border: 0;
     font-size: 1.5rem;
-    color: var(--primary-color);
+    color: var(--ks-primary-color);
     padding-top: 0.125rem;
     padding-left: 0.125rem;
     outline-offset: 0;
@@ -113,7 +120,7 @@ export const styles = css`
   .error-message {
     visibility: hidden;
     margin-top: 0.25rem;
-    color: var(--error-color);
+    color: var(--ks-error-color);
     font-size: 0.9rem;
   }
 
@@ -122,7 +129,7 @@ export const styles = css`
   }
 
   [aria-invalid='true'] {
-    border-color: var(--error-color);
+    border-color: var(--ks-error-color);
   }
 
   /* CALENDAR DROPDOWN */
@@ -135,7 +142,7 @@ export const styles = css`
     margin-top: -0.75rem;
     visibility: hidden;
     opacity: 0;
-    border: solid 1px var(--border-color);
+    border: solid 1px var(--ks-border-color);
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
     transition: all 0.3s ease-in-out;
     z-index: 10;
@@ -148,7 +155,7 @@ export const styles = css`
     height: 0;
     position: absolute;
     width: 0;
-    border-bottom-color: var(--border-color);
+    border-bottom-color: var(--ks-border-color);
     bottom: 100%;
     left: 25%;
     -webkit-transform: translateX(-50%);
@@ -175,7 +182,17 @@ export const styles = css`
     transition: all 0.3s ease-in-out;
   }
 
-  ks-calendar:focus {
+  .calendar-control {
+    --ks-border-color: var(--ks-border-color);
+    --ks-border-radius: var(--ks-border-radius);
+    --ks-disabled-color: var(--ks-disabled-color);
+    --ks-error-color: var(--ks-error-color);
+    --ks-outline: var(--ks-outline);
+    --ks-outline-offset: var(--ks-outline-offset);
+    --ks-primary-color: var(--ks-primary-color);
+  }
+
+  .calendar-control:focus {
     outline: none;
   }
 `;

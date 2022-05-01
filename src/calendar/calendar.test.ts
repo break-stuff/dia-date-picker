@@ -2,8 +2,6 @@ import {
   fixture,
   assert,
   expect,
-  elementUpdated,
-  nextFrame,
 } from '@open-wc/testing';
 import { getShortIsoDate } from '../utils/dateUtils';
 import { KsCalendar } from './index';

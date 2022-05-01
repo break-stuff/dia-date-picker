@@ -43,14 +43,27 @@ import { styles } from './calendar.styles';
  * @slot prev-month-icon - icon in previous month button
  * @slot next-month-icon - icon in next month button
  *
- * @cssprop [--primary-color=#293d4e] - Primary color used in the component
- * @cssprop [--outline=solid 2px var(--outline-color)] - Default outline style
- * @cssprop [--outline-color=#71a5d1] - Outline color
- * @cssprop [--outline-offset=0.125rem] - Outline offset
- * @cssprop [--border-color=#596d7f] - Default border color
- * @cssprop [--day-hover-background-color=#e0e7f3] - Background color of days in calendar when hovered
- * @cssprop [--day-disabled-color=#ccc] - Color of disabled days
+ * @cssprop [--ks-border-color=rgb(var(--ks-color-light-base))] - Default border color
+ * @cssprop [--ks-border-radius=0.25rem] - Default border radius
+ * @cssprop [--ks-disabled-color=#8d8d8d] - Color of disabled days
+ * @cssprop [--ks-error-color=rgb(var(--ks-color-danger-base))] - Color used to communicate error in the component
+ * @cssprop [--ks-outline=var(--ks-default-outline)] - Default focus outline style
+ * @cssprop [--ks-outline-offset=0.125rem] - Outline offset
+ * @cssprop [--ks-primary-color=rgb(var(--ks-color-light-dark))] - Primary color used in the component
  *
+ * @csspart input - Controls styles of calendar inputs (month and year)
+ * @csspart button - Controls styles of buttons
+ * @csspart prev-month - Controls styles of previous month button
+ * @csspart next-month - Controls styles of next month button
+ * @csspart week-number - Controls styles of week numbers
+ * @csspart day - Controls styles of day controls in the calendar
+ * @csspart alt-month - Controls styles of days of previous and next month
+ * @csspart day-today - Controls styles of current day
+ * @csspart selected - Controls styles of selected day
+ * @csspart day-label - Controls styles of day number label
+ * @csspart clear - Controls style of "Clear" button
+ * @csspart today - Controls style of "Today" button
+ * 
  * @event {CustomEvent} ks-focus - emits the date as short ISO string when calendar date is selected
  * @event {CustomEvent} ks-select - emits the date as short ISO string when calendar date is selected
  *
@@ -460,7 +473,7 @@ export class KsCalendar extends LitElement {
         ? (this._maxDate as Date)
         : nextDate;
     }
-    
+
     this.setSelectedValues(nextDate);
     this.updateYearSelector();
     this.emitFocus();
@@ -504,6 +517,7 @@ export class KsCalendar extends LitElement {
             <select
               id="month_selector"
               class="month-selector"
+              part="input"
               @change="${this.monthChangeHandler}"
             >
               ${getMonths(this.getLocale()).map(
@@ -520,6 +534,7 @@ export class KsCalendar extends LitElement {
           <input
             id="year_selector"
             class="year-selector"
+            part="input"
             type="number"
             value="${this._selectedYear}"
             @input="${this.yearInputHandler}"
@@ -528,6 +543,7 @@ export class KsCalendar extends LitElement {
         <span class="right-controls">
           <button
             class="arrow prev"
+            part="button prev-month"
             @click="${this.prevMonthClickHandler}"
             aria-label="${getMonthLabel(
               this._selectedMonth - 1,
@@ -539,6 +555,7 @@ export class KsCalendar extends LitElement {
           </button>
           <button
             class="arrow next"
+            part="button next-month"
             @click="${this.nextMonthClickHandler}"
             aria-label="${getMonthLabel(
               this._selectedMonth + 1,
@@ -600,7 +617,7 @@ export class KsCalendar extends LitElement {
     return html`
       <tr class="week" role="row">
         ${this.showWeekNumbers
-          ? html`<th class="week-number">${getWeek(week[0])}</th>`
+          ? html`<th class="week-number" part="week-number">${getWeek(week[0])}</th>`
           : ''}
         ${week.map(day => this.dayTemplate(day))}
       </tr>
@@ -618,9 +635,11 @@ export class KsCalendar extends LitElement {
         id="${getShortIsoDate(day)}"
         role="gridcell"
         aria-selected="${isSelected}"
-        class="day ${day.getMonth() !== this._selectedMonth
-          ? 'other-month'
-          : ''}"
+        class="day ${day.getMonth() !== this._selectedMonth ? 'alt-month' : ''}"
+        part="day 
+          ${day.getMonth() !== this._selectedMonth ? 'alt-month' : ''} 
+          ${isToday ? 'day-today' : ''} 
+          ${isSelected ? 'selected' : ''}"
         aria-label="${getFullDate(day, this.getLocale())}"
         aria-current="${isToday ? 'date' : false}"
         tabindex="${isSelected ? 0 : -1}"
@@ -629,7 +648,7 @@ export class KsCalendar extends LitElement {
         @click="${() => this.pickDate(day)}"
         @keyup="${(e: KeyboardEvent) => this.dayKeyUpHandler(day, e)}"
       >
-        <span aria-hidden="true">${day.getDate()}</span>
+        <span aria-hidden="true" part="day-label">${day.getDate()}</span>
       </td>
     `;
   }
@@ -637,10 +656,14 @@ export class KsCalendar extends LitElement {
   private bottomControlsTemplate() {
     return html`
       <div class="bottom-controls">
-        <button class="clear" @click="${this.clearInput}">
+        <button class="clear" part="button clear" @click="${this.clearInput}">
           ${this.clearLabel}
         </button>
-        <button class="today" @click="${this.setDateForToday}">
+        <button
+          class="today"
+          part="button today"
+          @click="${this.setDateForToday}"
+        >
           ${this.todayLabel}
         </button>
       </div>

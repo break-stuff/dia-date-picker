@@ -58,7 +58,6 @@ describe('datepicker format', () => {
 
     // Act
     const $inputs = [...$el.shadowRoot.querySelectorAll('input')];
-    const $dividers = $el.shadowRoot.querySelectorAll('span');
 
     // Assert
     await assert.equal($inputs[0].placeholder, 'mm');

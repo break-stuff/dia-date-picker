@@ -61,15 +61,30 @@ export interface IDatePickerValidation {
  * @slot prev-month-icon - icon in previous month button
  * @slot next-month-icon - icon in next month button
  *
- * @cssprop [--primary-color=#293d4e] - Primary color used in the component
- * @cssprop [--error-color=#9a0000] - Color used to indicate input has an error
- * @cssprop [--outline=solid 2px var(--outline-color)] - Default outline style
- * @cssprop [--outline-color=#71a5d1] - Outline color
- * @cssprop [--outline-offset=0.125rem] - Outline offset
- * @cssprop [--border-color=#596d7f] - Default border color
- * @cssprop [--day-hover-background-color=#e0e7f3] - Background color of days in calendar when hovered
- * @cssprop [--day-disabled-color=#ccc] - Color of disabled days
+ * @cssprop [--ks-border-color=rgb(var(--ks-color-light-base))] - Default border color
+ * @cssprop [--ks-border-radius=0.25rem] - Default border radius
+ * @cssprop [--ks-disabled-color=#8d8d8d] - Color of disabled days
+ * @cssprop [--ks-error-color=rgb(var(--ks-color-danger-base))] - Color used to communicate error in the component
+ * @cssprop [--ks-outline=var(--ks-default-outline)] - Default focus outline style
+ * @cssprop [--ks-outline-offset=0.125rem] - Outline offset
+ * @cssprop [--ks-primary-color=rgb(var(--ks-color-light-dark))] - Primary color used in the component
  *
+ * @csspart dropdown - controls styles for the dropdown panel that contains the calendar
+ * @csspart main-input - controls styles for the main input for day, month, and year
+ * @csspart calendar-control - controls styles for the toggle button to show and hide the calendar
+ * @csspart input - Controls styles of calendar inputs (month and year)
+ * @csspart button - Controls styles of buttons
+ * @csspart prev-month - Controls styles of previous month button
+ * @csspart next-month - Controls styles of next month button
+ * @csspart week-number - Controls styles of week numbers
+ * @csspart day - Controls styles of day controls in the calendar
+ * @csspart alt-month - Controls styles of days of previous and next month
+ * @csspart day-today - Controls styles of current day
+ * @csspart selected - Controls styles of selected day
+ * @csspart day-label - Controls styles of day number label
+ * @csspart clear - Controls style of "Clear" button
+ * @csspart today - Controls style of "Today" button
+ * 
  * @event {CustomEvent} ks-input - emits the date as short ISO string when calendar date is manually entered or focused on in the calendar
  * @event {CustomEvent} ks-change - emits the date as short ISO string when calendar date is selected
  */
@@ -846,10 +861,12 @@ export class KsDatepicker extends LitElement {
           <div
             class="main-input-controls"
             role="textbox"
+            part="main-input"
             aria-labelledby="main_label"
             aria-required="${this.required}"
             aria-invalid="${!this._isValid}"
             aria-errormessage="error_message"
+            aria-disabled="${this.disabled}"
           >
             ${this.inputTemplates(dateFormat[0], 0)}
             <span aria-hidden="true">${dateFormat[1]}</span>
@@ -858,6 +875,7 @@ export class KsDatepicker extends LitElement {
             ${this.inputTemplates(dateFormat[4], 4)}
             <button
               class="calendar-toggle"
+              part="calendar-control"
               aria-haspopup="true"
               aria-expanded=${this._expanded}
               aria-controls="calendar-dropdown"
@@ -957,6 +975,7 @@ export class KsDatepicker extends LitElement {
         id="calendar-dropdown"
         class="${classMap({ 'calendar-dropdown': true, open: this._expanded })}"
         role="dialog"
+        part="dropdown"
         aria-label="${getMonthLabel(
           this._selectedMonth,
           this._selectedYear,
@@ -965,6 +984,7 @@ export class KsDatepicker extends LitElement {
         @keydown="${this.dropdownKeyDownHandler}"
       >
         <ks-calendar
+          class="calendar-control"
           .value=${getShortIsoDate(this._selectedDate as Date)}
           min-date="${this.minDate || ''}"
           max-date="${this.maxDate || ''}"

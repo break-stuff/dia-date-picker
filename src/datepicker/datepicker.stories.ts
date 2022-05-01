@@ -23,14 +23,13 @@ export default {
     ['focus-date']: '',
     ['show-week-numbers']: false,
     ['first-day-of-week']: 0,
-    ['--primary-color']: '#2c5374',
-    ['--error-color']: '#9a0000',
-    ['--outline']: 'solid 2px #71a5d1',
-    ['--outline-color']: '#71a5d1',
-    ['--outline-offset']: '0.125rem',
-    ['--border-color']: 'rgb(197, 209, 218)',
-    ['--day-hover-background-color']: '#e0e7f3',
-    ['--day-disabled-color']: '#ccc',
+    ['--ks-border-color']: 'rgb(var(--ks-color-light-base))',
+    ['--ks-border-radius']: '0.25rem',
+    ['--ks-disabled-color']: 'rgb(var(--ks-color-light-dark))',
+    ['--ks-error-color']: 'rgb(var(--ks-color-danger-base))',
+    ['--ks-outline']: 'var(--ks-default-outline)',
+    ['--ks-outline-offset']: '0.125rem',
+    ['--ks-primary-color']: 'rgb(var(--ks-color-primary-base))',
   },
   parameters: {
     actions: {
@@ -41,6 +40,17 @@ export default {
 
 const DefaultTemplate = (args: any) => {
   return html`
+    <style>
+      ks-datepicker {
+        --ks-border-color: ${args['--ks-border-color']};
+        --ks-border-radius: ${args['--ks-border-radius']};
+        --ks-disabled-color: ${args['--ks-disabled-color']};
+        --ks-error-color: ${args['--ks-error-color']};
+        --ks-outline: ${args['--ks-outline']};
+        --ks-outline-offset: ${args['--ks-outline-offset']};
+        --ks-primary-color: ${args['--ks-primary-color']};
+      }
+    </style>
     <ks-datepicker
       value="${args.value}"
       label="${args.label}"
@@ -93,17 +103,16 @@ DisabledDates.args = {
 export const DisabledInput: any = DefaultTemplate.bind({});
 DisabledInput.args = {
   value: '12/22/2025',
-  disabled: true
+  disabled: true,
 };
 
 export const ReadonlyInput: any = DefaultTemplate.bind({});
 ReadonlyInput.args = {
   value: '12/22/2025',
-  readonly: true
+  readonly: true,
 };
-
 
 export const DisabledWeekDays: any = DefaultTemplate.bind({});
 DisabledWeekDays.args = {
-  ['disabled-week-days']: '1, 6'
+  ['disabled-week-days']: '1, 6',
 };
