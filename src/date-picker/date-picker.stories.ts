@@ -3,7 +3,7 @@ import './index';
 
 export default {
   title: 'Components/Date Picker',
-  component: 'ks-datepicker',
+  component: 'ks-date-picker',
   args: {
     value: '',
     label: 'Select Date',
@@ -41,7 +41,7 @@ export default {
 const DefaultTemplate = (args: any) => {
   return html`
     <style>
-      ks-datepicker {
+      ks-date-picker {
         --ks-border-color: ${args['--ks-border-color']};
         --ks-border-radius: ${args['--ks-border-radius']};
         --ks-disabled-color: ${args['--ks-disabled-color']};
@@ -51,7 +51,7 @@ const DefaultTemplate = (args: any) => {
         --ks-primary-color: ${args['--ks-primary-color']};
       }
     </style>
-    <ks-datepicker
+    <ks-date-picker
       value="${args.value}"
       label="${args.label}"
       ?required="${args.required}"
@@ -70,7 +70,7 @@ const DefaultTemplate = (args: any) => {
       focus-date="${args['focus-date']}"
       ?show-week-numbers="${args['show-week-numbers']}"
       first-day-of-week="${args['first-day-of-week']}"
-    ></ks-datepicker>
+    ></ks-date-picker>
     <!-- <span>some random inline content</span>
         <div>some random block content</div> -->
   `;

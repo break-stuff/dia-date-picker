@@ -14,7 +14,7 @@ import {
   getDateFormat,
 } from '../utils/dateUtils';
 
-import { styles } from './datepicker.styles';
+import { styles } from './date-picker.styles';
 import icon from '../utils/icons';
 
 export interface IFormFieldData {
@@ -32,7 +32,7 @@ export interface IDatePickerValidation {
 }
 
 /**
- * @tag ks-datepicker
+ * @tag ks-date-picker
  *
  * @summary Custom date picker
  *
@@ -67,8 +67,8 @@ export interface IDatePickerValidation {
  * @event {CustomEvent} ks-input - emits the date as short ISO string when calendar date is manually entered or focused on in the calendar
  * @event {CustomEvent} ks-change - emits the date as short ISO string when calendar date is selected
  */
-@customElement('ks-datepicker')
-export class KsDatepicker extends LitElement {
+@customElement('ks-date-picker')
+export class KsDatePicker extends LitElement {
   static styles = styles;
 
   /** the date entered in the main input */
@@ -1009,6 +1009,6 @@ export class KsDatepicker extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'ks-datepicker': KsDatepicker;
+    'ks-date-picker': KsDatePicker;
   }
 }

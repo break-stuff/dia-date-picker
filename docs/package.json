@@ -1,5 +1,5 @@
 {
-  "name": "ks-datepicker",
+  "name": "ks-date-picker",
   "version": "0.0.1",
   "description": "Kickstand UI date picker is a light-weight and accessible date picker built with web components",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "name": "",
     "email": ""
   },
-  "repository": "/ks-datepicker",
+  "repository": "/ks-date-picker",
   "scripts": {
     "dev": "vuepress dev src",
     "build": "vuepress build src"

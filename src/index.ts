@@ -1,2 +1,2 @@
-export * from './datepicker/datepicker';
+export * from './date-picker/date-picker';
 export * from './calendar/calendar';

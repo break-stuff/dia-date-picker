@@ -1,12 +1,12 @@
 import { fixture, assert } from '@open-wc/testing';
-import { KsDatepicker } from './index';
+import { KsDatePicker } from './index';
 
-const tag = new KsDatepicker().tagName;
+const tag = new KsDatePicker().tagName;
 
-describe('datepicker accessibility', () => {
+describe('date picker accessibility', () => {
   it('test basic element accessibility', async () => {
     // Arrange
-    const $el = await fixture<KsDatepicker>(
+    const $el = await fixture<KsDatePicker>(
       `<${tag} label="Select Date"></${tag}>`
     );
 
@@ -18,7 +18,7 @@ describe('datepicker accessibility', () => {
 
   it('check accessibility when menu is open', async () => {
     // Arrange
-    const $el = await fixture<KsDatepicker>(
+    const $el = await fixture<KsDatePicker>(
       `<${tag} label="Select Date"></${tag}>`
     );
     const $calendarToggle = $el.shadowRoot?.querySelector(
@@ -34,7 +34,7 @@ describe('datepicker accessibility', () => {
 
   it('decreases the count on button click', async () => {
     // Arrange
-    const $el = await fixture<KsDatepicker>(`<${tag}></${tag}>`);
+    const $el = await fixture<KsDatePicker>(`<${tag}></${tag}>`);
     const $calendarToggle = $el.shadowRoot?.querySelector(
       '.calendar-toggle'
     ) as HTMLButtonElement;
@@ -49,10 +49,10 @@ describe('datepicker accessibility', () => {
   });
 });
 
-describe('datepicker format', () => {
+describe('date picker format', () => {
   it('should have "mm/dd/yyyy" format when "lang" is "en-US"', async () => {
     // Arrange
-    const $el = await fixture<KsDatepicker>(
+    const $el = await fixture<KsDatePicker>(
       `<${tag} label="Select Date" lang="en-US"></${tag}>`
     );
 

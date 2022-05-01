@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 import { html, LitElement } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
-import { IFormFieldData } from '../datepicker';
+import { IFormFieldData } from '../date-picker';
 import {
   addDaysToDate,
   getDaysOfTheWeek,

@@ -3,12 +3,12 @@
 ## Usage
 
 ```html
-<ks-datepicker label="Default"></ks-datepicker>
+<ks-date-picker label="Default"></ks-date-picker>
 ```
 
-<ks-datepicker label="Default"></ks-datepicker>
+<ks-date-picker label="Default"></ks-date-picker>
 
-The default datepicker component will provide you with an input field and the calendar dialog. The dialog can be activated by clicking calendar icon on the right side of the input.
+The default date picker component will provide you with an input field and the calendar dialog. The dialog can be activated by clicking calendar icon on the right side of the input.
 
 ## Keyboard Navigation
 
@@ -21,19 +21,19 @@ Once the calendar dialog is open you can navigate the days in the calendar using
 You can provide a range of available date using the `min-date` and `max-date` attributes.
 
 ```html
-<ks-datepicker label="Date Range" min-date="3/5/2022" max-date="3/20/2022"></ks-datepicker>
+<ks-date-picker label="Date Range" min-date="3/5/2022" max-date="3/20/2022"></ks-date-picker>
 ```
-<ks-datepicker label="Date Range" min-date="3/5/2022" max-date="3/20/2022"></ks-datepicker>
+<ks-date-picker label="Date Range" min-date="3/5/2022" max-date="3/20/2022"></ks-date-picker>
 
 ## Validation
 
 Beside setting the date range on the component, you can also indicate if it is required using the <code>required</code> attribute.
 
 ```html
-<ks-datepicker label="Required Date" required></ks-datepicker>
+<ks-date-picker label="Required Date" required></ks-date-picker>
 ```
 
-<ks-datepicker label="Required Date" required></ks-datepicker>
+<ks-date-picker label="Required Date" required></ks-date-picker>
 
 ## Translations
 
@@ -56,7 +56,21 @@ As you can see not everything gets translated. It will need translations for the
 
 ## Week Numbers
 
-<ks-datepicker label="Show Week Numbers" show-week-numbers></ks-datepicker>
+<ks-date-picker label="Show Week Numbers" show-week-numbers></ks-date-picker>
 
 
-<component-docs tag="ks-datepicker" />
+## Attributes / Properties
+
+<attribute-docs tag="ks-date-picker" />
+
+## CSS Properties
+
+<css-prop-docs tag="ks-date-picker" />
+
+## CSS Parts
+
+<css-parts-docs tag="ks-date-picker" />
+
+## Events
+
+<events-docs tag="ks-date-picker" />

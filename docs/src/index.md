@@ -15,5 +15,5 @@ sidebar: true
 # footer: Made with ❤️ by @stuffbreaker
 ---
 
-<ks-datepicker label="Default"></ks-datepicker>
+<ks-date-picker label="Default"></ks-date-picker>
 <ks-icon icon="help"></ks-icon>

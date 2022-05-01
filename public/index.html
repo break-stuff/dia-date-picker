@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kickstand Datepicker</title>
+    <title>Kickstand Date Picker</title>
     <link
       rel="stylesheet"
       href="https://unpkg.com/kickstand-ui/dist/kickstand-ui/kickstand-ui.css"
@@ -36,14 +36,14 @@
 
 <pre class="my-xl bg-light-light">
   <code>
-    &lt;ks-datepicker label="Default"&gt;&lt;/ks-datepicker&gt;
+    &lt;ks-date-picker label="Default"&gt;&lt;/ks-date-picker&gt;
   </code>
 </pre>
 
-      <ks-datepicker label="Default"></ks-datepicker>
+      <ks-date-picker label="Default"></ks-date-picker>
 
       <p>
-        The default datepicker component will provide you with an input field
+        The default date picker component will provide you with an input field
         and the calendar dialog. The dialog can be activated by clicking
         calendar icon on the right side of the input.
       </p>
@@ -63,15 +63,15 @@
 
 <pre class="my-xl bg-light-light">
   <code>
-    &lt;ks-datepicker 
+    &lt;ks-date-picker 
       label="Date Range" 
       min-date="3/5/2022" 
       max-date="3/20/2022"&gt;
-    &lt;/ks-datepicker&gt;
+    &lt;/ks-date-picker&gt;
   </code>
 </pre>
 
-      <ks-datepicker label="Date Range" min-date="3/5/2022" max-date="3/20/2022"></ks-datepicker>
+      <ks-date-picker label="Date Range" min-date="3/5/2022" max-date="3/20/2022"></ks-date-picker>
 
       <h2>Validation</h2>
 
@@ -79,14 +79,14 @@
 
 <pre class="my-xl bg-light-light">
   <code>
-    &lt;ks-datepicker 
+    &lt;ks-date-picker 
       label="Required Date" 
       required&gt;
-    &lt;/ks-datepicker&gt;
+    &lt;/ks-date-picker&gt;
   </code>
 </pre>
 
-      <ks-datepicker label="Required Date" required></ks-datepicker>
+      <ks-date-picker label="Required Date" required></ks-date-picker>
 
       <h2>Translations</h2>
 
@@ -118,7 +118,7 @@
       <input type="text" id="locale_input" value="fr-CA" />
 
       <div id="translated_datepicker" class="my-xl">
-        <ks-datepicker label="en-US Input" lang="fr-CA"></ks-datepicker>
+        <ks-date-picker label="en-US Input" lang="fr-CA"></ks-date-picker>
       </div>
 
       <p>As you can see not everything gets translated. It will need translations for the following attributes:</p>
@@ -136,12 +136,12 @@
       <p>You can display week numbers at the beginning of each week in the calendar using the <code>show-week-numbers</code> attribute.</p>
 <pre class="my-xl bg-light-light">
   <code>
-    &lt;ks-datepicker label="Default" show-week-numbers &gt;&lt;/ks-datepicker&gt;
+    &lt;ks-date-picker label="Default" show-week-numbers &gt;&lt;/ks-date-picker&gt;
   </code>
 </pre>
 
       <div id="translated_datepicker" class="my-xl">
-        <ks-datepicker label="Show Week Numbers" show-week-numbers></ks-datepicker>
+        <ks-date-picker label="Show Week Numbers" show-week-numbers></ks-date-picker>
       </div>
 
       <h2>Road Map</h2>
@@ -182,7 +182,7 @@
       const $langInput = document.querySelector('#locale_input');
       const $wrapper = document.querySelector('#translated_datepicker');
       $langInput.addEventListener('input', e => {
-        $wrapper.innerHTML = `<ks-datepicker label="${e.target.value} Input" lang="${e.target.value}"></ks-datepicker>`
+        $wrapper.innerHTML = `<ks-date-picker label="${e.target.value} Input" lang="${e.target.value}"></ks-date-picker>`
       });
     </script>
   </body>
