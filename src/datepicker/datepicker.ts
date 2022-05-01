@@ -36,27 +36,6 @@ export interface IDatePickerValidation {
  *
  * @summary Custom date picker
  *
- * @attr {string} value - the date entered in the main input
- * @attr {string} label - label for main date input
- * @attr {string} name - name used to identify the input
- * @attr {boolean} required - adds required validation to the input
- * @attr {boolean} disabled - disables input and calendar drop-down
- * @attr {boolean} readonly - makes input readonly and disables drop-down
- * @attr {string} min-date - the minimum selectable date
- * @attr {string} max-date - the maximum selectable date
- * @attr {string} focus-date - the initial focus date if no value is set
- * @attr {string} day-label - label used for day input
- * @attr {string} month-label - label used for month input
- * @attr {string} year-label - label used for year input
- * @attr {string} clear-label - text for clear button
- * @attr {string} today-label - text for today button
- * @attr {string} required-error-message - message displayed when required validation fails
- * @attr {string} range-error-message - message displayed when selected date is out of range
- * @attr {string} unavailable-error-message - message displayed when disabled date is selected
- * @attr {string} disabled-dates - comma separated list of disabled dates
- * @attr {boolean} show-week-numbers - show week numbers at the beginning of each week
- * @attr {string} first-day-of-week - the day of the week the calendar will start with (0-6)
- *
  * @slot calendar-icon - icon in button toggle for date selector
  * @slot prev-month-icon - icon in previous month button
  * @slot next-month-icon - icon in next month button
@@ -84,7 +63,7 @@ export interface IDatePickerValidation {
  * @csspart day-label - Controls styles of day number label
  * @csspart clear - Controls style of "Clear" button
  * @csspart today - Controls style of "Today" button
- * 
+ *
  * @event {CustomEvent} ks-input - emits the date as short ISO string when calendar date is manually entered or focused on in the calendar
  * @event {CustomEvent} ks-change - emits the date as short ISO string when calendar date is selected
  */
@@ -92,66 +71,87 @@ export interface IDatePickerValidation {
 export class KsDatepicker extends LitElement {
   static styles = styles;
 
+  /** the date entered in the main input */
   @property({ type: String, reflect: true })
   value?: string;
 
+  /** label for main date input */
   @property({ type: String })
   label?: string;
 
+  /** name used to identify the input */
   @property({ type: String })
   name?: string;
 
+  /** adds required validation to the input */
   @property({ type: Boolean })
   required = false;
 
+  /** disables input and calendar drop-down */
   @property({ type: Boolean })
   disabled = false;
 
+  /** makes input readonly and disables drop-down */
   @property({ type: Boolean })
   readonly = false;
 
+  /** the minimum selectable date */
   @property({ attribute: 'min-date', type: String })
   minDate?: string;
 
+  /** the maximum selectable date */
   @property({ attribute: 'max-date', type: String })
   maxDate?: string;
 
+  /** the initial focus date if no value is set */
   @property({ attribute: 'focus-date', type: String })
   focusDate?: string;
 
+  /** label used for day input */
   @property({ attribute: 'day-label', type: String })
   dayLabel = 'Day';
 
+  /** label used for month input */
   @property({ attribute: 'month-label', type: String })
   monthLabel = 'Month';
 
+  /** label used for year input */
   @property({ attribute: 'year-label', type: String })
   yearLabel = 'Year';
 
+  /** text for "Clear" button */
   @property({ attribute: 'clear-label', type: String })
   clearLabel = 'Clear';
 
+  /** text for "Today" button */
   @property({ attribute: 'today-label', type: String })
   todayLabel = 'Today';
 
+  /** message displayed when required validation fails */
   @property({ attribute: 'required-error-message', type: String })
   requiredErrorMessage = 'This field is required';
 
+  /** message displayed when selected date is out of range */
   @property({ attribute: 'range-error-message', type: String })
   rangeErrorMessage = 'The date you have selected is not within the date range';
 
+  /** message displayed when disabled date is selected */
   @property({ attribute: 'unavailable-error-message', type: String })
   unavailableErrorMessage = 'The date you have selected is unavailable';
 
+  /** comma separated list of disabled dates */
   @property({ attribute: 'disabled-dates', type: String })
   disabledDates?: string;
 
+  /** show week numbers at the beginning of each week */
   @property({ attribute: 'show-week-numbers', type: Boolean })
   showWeekNumbers = false;
 
+  /** comma separated list of week days to be disabled (1-7) */
   @property({ attribute: 'disabled-week-days', type: String })
   disabledWeekDays?: string;
 
+  /** the day of the week the calendar will start with (0-6) */
   @property({ attribute: 'first-day-of-week', type: Number })
   firstDayOfWeek?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -217,7 +217,7 @@ export class KsDatepicker extends LitElement {
 
   get valueAsDate() {
     console.log(this.value);
-    
+
     return this.value ? new Date(formatDateString(this.value)) : undefined;
   }
 

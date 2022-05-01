@@ -26,20 +26,6 @@ import { styles } from './calendar.styles';
  *
  * @summary Custom calendar element
  *
- * @attr {string} value - selected value
- * @attr {string} min-date - the minimum selectable date
- * @attr {string} max-date - the maximum selectable date
- * @attr {string} focus-date - the initial focus date if no value is set
- * @attr {string} day-label - label used for day input
- * @attr {string} month-label - label used for month input
- * @attr {string} year-label - label used for year input
- * @attr {string} clear-label - text for clear button
- * @attr {string} today-label - text for today button
- * @attr {string} disabled-dates - comma separated list of disabled dates
- * @attr {boolean} show-week-numbers - show week numbers at the beginning of each week
- * @attr {string} disabled-week-days - days of the week that are disabled (1-7)
- * @attr {string} first-day-of-week - the day of the week the calendar will start with (0-6)
- *
  * @slot prev-month-icon - icon in previous month button
  * @slot next-month-icon - icon in next month button
  *
@@ -72,42 +58,55 @@ import { styles } from './calendar.styles';
 export class KsCalendar extends LitElement {
   static styles = styles;
 
+  /** selected value */
   @property({ type: String, reflect: true })
   value?: string;
 
+  /** the minimum selectable date */
   @property({ attribute: 'min-date', type: String })
   minDate?: string;
 
+  /** the maximum selectable date */
   @property({ attribute: 'max-date', type: String })
   maxDate?: string;
 
+  /** the initial focus date if no value is set */
   @property({ attribute: 'focus-date', type: String })
   focusDate?: string;
 
+  /** label used for day input */
   @property({ attribute: 'day-label', type: String })
   dayLabel = 'Day';
 
+  /** label used for month input */
   @property({ attribute: 'month-label', type: String })
   monthLabel = 'Month';
 
+  /** label used for year input */
   @property({ attribute: 'year-label', type: String })
   yearLabel = 'Year';
 
+  /** text for "Clear" button */
   @property({ attribute: 'clear-label', type: String })
   clearLabel = 'Clear';
 
+  /** text for "Today" button */
   @property({ attribute: 'today-label', type: String })
   todayLabel = 'Today';
 
+  /** comma separated list of disabled dates */
   @property({ attribute: 'disabled-dates', type: String })
   disabledDates?: string;
 
+  /** show week numbers at the beginning of each week */
   @property({ attribute: 'show-week-numbers', type: Boolean })
   showWeekNumbers = false;
 
+  /** comma separated list of week days to be disabled (1-7) */
   @property({ attribute: 'disabled-week-days', type: String })
   disabledWeekDays?: string;
 
+  /** the day of the week the calendar will start with (0-6) */
   @property({ attribute: 'first-day-of-week', type: Number })
   firstDayOfWeek?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
