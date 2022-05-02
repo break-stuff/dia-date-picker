@@ -2,13 +2,13 @@ import { css } from 'lit';
 
 export default css`
   :host {
-    --ks-border-color: rgb(var(--ks-color-light-base));
+    --ks-border-color: #c5d1da;
     --ks-border-radius: 0.25rem;
-    --ks-disabled-color: rgb(var(--ks-color-light-dark));
-    --ks-error-color: rgb(var(--ks-color-danger-base));
-    --ks-outline: var(--ks-default-outline);
+    --ks-disabled-color: #acbdca;
+    --ks-error-color: #b32e2e;
+    --ks-outline: dashed 0.0625rem #37444F;
     --ks-outline-offset: 0.125rem;
-    --ks-primary-color: rgb(var(--ks-color-primary-base));
+    --ks-primary-color: #2c5374;
 
     /* OUTLINE */
     --ks-default-outline: dashed 0.0625rem rgba(var(--ks-color-dark-base), 1);

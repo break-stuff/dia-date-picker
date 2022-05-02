@@ -183,13 +183,13 @@ export const styles = css`
   }
 
   .calendar-control {
-    --ks-border-color: var(--ks-border-color);
-    --ks-border-radius: var(--ks-border-radius);
-    --ks-disabled-color: var(--ks-disabled-color);
-    --ks-error-color: var(--ks-error-color);
-    --ks-outline: var(--ks-outline);
-    --ks-outline-offset: var(--ks-outline-offset);
-    --ks-primary-color: var(--ks-primary-color);
+    --ks-border-color: inherit;
+    --ks-border-radius: inherit;
+    --ks-disabled-color: inherit;
+    --ks-error-color: inherit;
+    --ks-outline: inherit;
+    --ks-outline-offset: inherit;
+    --ks-primary-color: inherit;
   }
 
   .calendar-control:focus {
