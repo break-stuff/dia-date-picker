@@ -80,6 +80,7 @@ PresetValue.args = {
 
 export const MinMaxDates: any = DefaultTemplate.bind({});
 MinMaxDates.args = {
+  ['focus-date']: '2/10/2022',
   ['min-date']: '2/2/2022',
   ['max-date']: '2-22-22',
 };
