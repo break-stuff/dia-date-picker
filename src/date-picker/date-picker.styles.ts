@@ -54,10 +54,9 @@ export const styles = css`
   .main-input-controls input {
     text-align: center;
     border: 0;
-    padding: 0.125rem 0;
+    padding: 0.125rem;
     margin-top: 0.125rem;
     min-width: 2rem;
-    max-width: 3rem;
     -moz-appearance: textfield;
   }
 
@@ -79,11 +78,6 @@ export const styles = css`
 
   .main-input-controls input:focus-visible {
     outline: 0;
-  }
-
-  .main-input-controls .month,
-  .main-input-controls .day {
-    min-width: 1.75rem;
   }
 
   .main-input-controls .year {

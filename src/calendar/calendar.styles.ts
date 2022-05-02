@@ -123,6 +123,11 @@ export const styles = css`
     background-color: transparent;
   }
 
+  .day-label {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
   /* BOTTOM CONTROLS */
   .bottom-controls {
     display: flex;
