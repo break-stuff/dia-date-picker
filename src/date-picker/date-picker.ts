@@ -16,6 +16,7 @@ import {
 
 import { styles } from './date-picker.styles';
 import icon from '../utils/icons';
+import { watch } from '../utils/watchDecorator';
 
 export interface IFormFieldData {
   name?: string;
@@ -215,9 +216,17 @@ export class KsDatePicker extends LitElement {
   @query('ks-calendar')
   private $calendar?: HTMLElement;
 
-  get valueAsDate() {
-    console.log(this.value);
+  @watch('value', { waitUntilFirstUpdate: true })
+  handleValueChange() {
+    if (!this.value) {
+      return;
+    }
 
+    this.setSelectedValues(new Date(formatDateString(this.value as string)));
+    this.setInputValues();
+  }
+
+  get valueAsDate() {
     return this.value ? new Date(formatDateString(this.value)) : undefined;
   }
 
@@ -228,7 +237,7 @@ export class KsDatePicker extends LitElement {
    */
 
   protected firstUpdated(): void {
-    this.onComponentBlur();
+    this.onComponentBlur();    
     this.initMainInputValues();
     setTimeout(() => this.setCalendarElementVariables());
   }
