@@ -247,6 +247,7 @@ export class KsCalendar extends LitElement {
     if (isOutOfRange(d, this._minDate, this._maxDate)) {
       return;
     }
+
     this.value = getShortIsoDate(d);
     this._selectedValue = d;
     this.selectDate(d);
@@ -647,7 +648,7 @@ export class KsCalendar extends LitElement {
         @click="${() => this.pickDate(day)}"
         @keyup="${(e: KeyboardEvent) => this.dayKeyUpHandler(day, e)}"
       >
-        <span aria-hidden="true" part="day-label">${day.getDate()}</span>
+        <span class="day-label" aria-hidden="true" part="day-label">${day.getDate()}</span>
       </td>
     `;
   }
