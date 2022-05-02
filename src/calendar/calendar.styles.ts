@@ -104,11 +104,11 @@ export const styles = css`
     border: solid 2px var(--ks-border-color);
   }
   .day[aria-selected='true'] {
-    background: var(--ks-primary-color);
+    background-color: var(--ks-primary-color);
     color: white;
   }
   .day[aria-selected='true']:hover {
-    background: var(--ks-primary-color);
+    background-color: var(--ks-primary-color);
     color: white;
   }
 
