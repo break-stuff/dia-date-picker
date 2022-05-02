@@ -1,6 +1,6 @@
 export default {
   /** Globs to analyze */
-  globs: ['src/**/calendar.ts', 'src/**/datepicker.ts'],
+  globs: ['src/**/calendar.ts', 'src/**/date-picker.ts'],
   /** Globs to exclude */
   exclude: [],
   /** Directory to output CEM to */
