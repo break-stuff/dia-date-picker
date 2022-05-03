@@ -12,17 +12,6 @@ The Kickstand UI date picker component is an open source input element that allo
 
 The default date picker component will provide you with an input field and the calendar dialog. The dialog can be activated by clicking calendar icon on the right side of the input.
 
-## Min/Max Dates
-
-You can provide a range of available date using the `min-date` and `max-date` attributes.
-
-<ks-date-picker label="Date Range" min-date="3/5/2022" max-date="3/20/2022"></ks-date-picker>
-
-
-```html
-<ks-date-picker label="Date Range" min-date="3/5/2022" max-date="3/20/2022"></ks-date-picker>
-```
-
 ## Required
 
 Beside setting the date range on the component, you can also indicate if it is required using the <code>required</code> attribute.
@@ -37,20 +26,20 @@ Beside setting the date range on the component, you can also indicate if it is r
 
 Adding the `disabled` attribute will prevent to control from being updated or focused on.
 
-<ks-date-picker label="Disabled Date" disabled></ks-date-picker>
+<ks-date-picker label="Disabled Date" value="2/22/2022" disabled></ks-date-picker>
 
 ```html
-<ks-date-picker label="Disabled Date" disabled></ks-date-picker>
+<ks-date-picker label="Disabled Date" value="2/22/2022" disabled></ks-date-picker>
 ```
 
 ## Readonly
 
 Adding the `readonly` attribute will allow the input to be focused on, but the date cannot be modified and the calendar control cannot be expanded.
 
-<ks-date-picker label="Readonly Date" readonly></ks-date-picker>
+<ks-date-picker label="Readonly Date" value="2/22/2022" readonly></ks-date-picker>
 
 ```html
-<ks-date-picker label="Readonly Date" readonly></ks-date-picker>
+<ks-date-picker label="Readonly Date" value="2/22/2022" readonly></ks-date-picker>
 ```
 
 ## Focus Date
@@ -66,6 +55,17 @@ If you don't want to set the value, but you want the calendar to be focused on a
 ::: warning
 This currently has a bug in the Date Picker and is being looked into. 
 :::
+
+## Min/Max Dates
+
+You can provide a range of available date using the `min-date` and `max-date` attributes.
+
+<ks-date-picker label="Date Range" min-date="3/5/2022" max-date="3/20/2022"></ks-date-picker>
+
+
+```html
+<ks-date-picker label="Date Range" min-date="3/5/2022" max-date="3/20/2022"></ks-date-picker>
+```
 
 ## Disabled Dates
 
