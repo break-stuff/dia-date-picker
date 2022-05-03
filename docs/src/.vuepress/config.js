@@ -9,7 +9,7 @@ module.exports = {
    * Ref：https://v1.vuepress.vuejs.org/config/#description
    */
   description: description,
-  base: '/ks-date-picker/',
+  base: '/ks-datepicker/',
   /**
    * Extra tags to be injected to the page HTML `<head>`
    *
