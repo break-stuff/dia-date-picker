@@ -55,7 +55,7 @@ export const styles = css`
     text-align: center;
     border: 0;
     padding: 0.125rem;
-    margin-top: 0.125rem;
+    margin-top: 0.25rem;
     min-width: 2rem;
     -moz-appearance: textfield;
   }
@@ -94,7 +94,7 @@ export const styles = css`
     border: 0;
     font-size: 1.5rem;
     color: var(--ks-primary-color);
-    padding-top: 0.125rem;
+    padding-top: 0.25rem;
     padding-left: 0.125rem;
     outline-offset: 0;
     display: inline-flex;
