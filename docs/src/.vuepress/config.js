@@ -38,7 +38,7 @@ module.exports = {
     nav: [
       {
         text: 'GitHub',
-        link: 'https://github.com/break-stuff/ks-date-picker',
+        link: 'https://github.com/break-stuff/ks-datepicker',
       },
       {
         text: 'NPM',
