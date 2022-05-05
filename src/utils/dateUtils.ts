@@ -206,7 +206,7 @@ function getDays(month: number, year: number, firstDayOfWeek = 0): Date[] {
   //next month days
   for (
     let day = addDaysToDate(lastDayOfMonth, 1);
-    day.getDay() !== 0;
+    day.getDay() !== firstDayOfWeek;
     day = addDaysToDate(day, 1)
   ) {
     dates.push(day);
