@@ -423,7 +423,7 @@ export class KsDatePicker extends LitElement {
     this._selectedYear = date.getFullYear();
   }
 
-  setInputValues() {
+  private setInputValues() {
     if (!this.$firstInput) {
       return;
     }
@@ -433,7 +433,7 @@ export class KsDatePicker extends LitElement {
     this.setMainYearInput();
   }
 
-  resetInputValues() {
+  private resetInputValues() {
     if (!this.$firstInput) {
       return;
     }
@@ -567,35 +567,35 @@ export class KsDatePicker extends LitElement {
    *
    */
 
-  private inputControlClickHandler() {
+  private handleInputControlClick() {
     this.toggleCalendar();
   }
 
-  private dropdownKeyDownHandler(e: KeyboardEvent): void {
+  private handleDropdownKeyDown(e: KeyboardEvent): void {
     switch (e.key) {
       case 'Tab':
-        this.dropdownTabHandler(e);
+        this.handleDropdownTab(e);
         break;
       case 'Escape':
-        this.dropdownEscKeyHandler();
+        this.handleDropdownEscKey();
         break;
       default:
         break;
     }
   }
 
-  private dropdownTabHandler(e: KeyboardEvent): void {
+  private handleDropdownTab(e: KeyboardEvent): void {
     const $focusedElement = (e.target as HTMLElement).shadowRoot
       ?.activeElement as HTMLElement;
 
     if (e.shiftKey) {
-      this.dropdownBackwardTabHandler($focusedElement, e);
+      this.handleDropdownBackwardTab($focusedElement, e);
     } else {
-      this.dropdownForwardTabHandler($focusedElement, e);
+      this.handleDropdownForwardTab($focusedElement, e);
     }
   }
 
-  private dropdownBackwardTabHandler(
+  private handleDropdownBackwardTab(
     $focusedElement: Element,
     e: KeyboardEvent
   ): void {
@@ -605,7 +605,7 @@ export class KsDatePicker extends LitElement {
     }
   }
 
-  private dropdownForwardTabHandler(
+  private handleDropdownForwardTab(
     $focusedElement: Element,
     e: KeyboardEvent
   ): void {
@@ -615,15 +615,15 @@ export class KsDatePicker extends LitElement {
     }
   }
 
-  private dropdownEscKeyHandler(): void {
+  private handleDropdownEscKey(): void {
     this.hide();
   }
 
-  private labelClickHandler() {
+  private handleLabelClick() {
     this.$firstInput?.select();
   }
 
-  private mainMonthKeyUpHandler(e: KeyboardEvent, index: number) {
+  private handleMainMonthKeyUp(e: KeyboardEvent, index: number) {
     const month = (e.target as HTMLInputElement)?.value;
 
     switch (e.key) {
@@ -649,13 +649,13 @@ export class KsDatePicker extends LitElement {
         return;
       default:
         if (!isNaN(e.key as any)) {
-          this.mainMonthInputHandler(e, index);
+          this.handleMainMonthInput(e, index);
         }
         return;
     }
   }
 
-  private preventSpaceKeyDownHandler(e: KeyboardEvent) {
+  private handleInputKeyDown(e: KeyboardEvent) {
     if (e.key === ' ') {
       e.preventDefault();
       return false;
@@ -664,7 +664,7 @@ export class KsDatePicker extends LitElement {
     return true;
   }
 
-  private yearKeyDownHandler(e: KeyboardEvent) {
+  private handleYearKeyDown(e: KeyboardEvent) {
     const value = (e.target as HTMLInputElement).value;
 
     switch (e.key) {
@@ -684,10 +684,10 @@ export class KsDatePicker extends LitElement {
         break;
     }
 
-    this.preventSpaceKeyDownHandler(e);
+    this.handleInputKeyDown(e);
   }
 
-  private mainMonthInputHandler(e: KeyboardEvent, index: number) {
+  private handleMainMonthInput(e: KeyboardEvent, index: number) {
     const value = (e.target as HTMLInputElement).value;
 
     if (!value) {
@@ -704,7 +704,7 @@ export class KsDatePicker extends LitElement {
     this.emitInput();
   }
 
-  private mainDayKeyUpHandler(e: KeyboardEvent, index: number) {
+  private handleMainDayKeyUp(e: KeyboardEvent, index: number) {
     const day = (e.target as HTMLInputElement).value;
 
     switch (e.key) {
@@ -729,13 +729,13 @@ export class KsDatePicker extends LitElement {
         return;
       default:
         if (!isNaN(e.key as any)) {
-          this.mainDayInputHandler(e, index);
+          this.handleMainDayInput(e, index);
         }
         break;
     }
   }
 
-  private mainDayInputHandler(e: KeyboardEvent, index: number) {
+  private handleMainDayInput(e: KeyboardEvent, index: number) {
     const value = (e.target as HTMLInputElement).value;
 
     if (!value) {
@@ -752,7 +752,7 @@ export class KsDatePicker extends LitElement {
     this.emitInput();
   }
 
-  private mainYearKeyUpHandler(e: KeyboardEvent, index: number) {
+  private handleMainYearKeyUp(e: KeyboardEvent, index: number) {
     const year = (e.target as HTMLInputElement).value;
 
     switch (e.key) {
@@ -777,7 +777,7 @@ export class KsDatePicker extends LitElement {
         break;
       default:
         if (!isNaN(e.key as any)) {
-          this.mainYearInputHandler(e);
+          this.handleMainYearInput(e);
         }
         return;
     }
@@ -803,7 +803,7 @@ export class KsDatePicker extends LitElement {
     }
   }
 
-  private mainYearInputHandler(e: KeyboardEvent) {
+  private handleMainYearInput(e: KeyboardEvent) {
     const value = (e.target as HTMLInputElement).value;
 
     if (!value) {
@@ -815,7 +815,7 @@ export class KsDatePicker extends LitElement {
     this.emitInput();
   }
 
-  private dateFocusedHandler(e: any) {
+  private handleDateFocused(e: any) {
     this.setFormFieldData(e.detail);
     if (!this._formFieldData.value) {
       return;
@@ -829,7 +829,7 @@ export class KsDatePicker extends LitElement {
     });
   }
 
-  private dateSelectedHandler(e: any) {
+  private handleDateSelected(e: any) {
     this.setFormFieldData(e.detail);
     if (!this._formFieldData.value) {
       this.resetInputValues();
@@ -846,7 +846,7 @@ export class KsDatePicker extends LitElement {
     }, 100);
   }
 
-  private dateInputFocusHandler() {
+  private handleDateInputFocus() {
     this._hadFocus = true;
   }
 
@@ -874,7 +874,7 @@ export class KsDatePicker extends LitElement {
           <legend
             id="main_label"
             class="main-input-label"
-            @click="${this.labelClickHandler}"
+            @click="${this.handleLabelClick}"
           >
             ${this.label}
           </legend>
@@ -900,7 +900,7 @@ export class KsDatePicker extends LitElement {
               aria-expanded=${this._expanded}
               aria-controls="calendar-dropdown"
               ?disabled="${this.disabled || this.readonly}"
-              @click="${this.inputControlClickHandler}"
+              @click="${this.handleInputControlClick}"
             >
               ${icon('calendar')}
             </button>
@@ -929,9 +929,9 @@ export class KsDatePicker extends LitElement {
           ?required=${this.required}
           ?disabled=${this.disabled}
           ?readonly=${this.readonly}
-          @focus="${this.dateInputFocusHandler}"
-          @keyup="${(e: KeyboardEvent) => this.mainDayKeyUpHandler(e, index)}"
-          @keydown="${this.preventSpaceKeyDownHandler}"
+          @focus="${this.handleDateInputFocus}"
+          @keyup="${(e: KeyboardEvent) => this.handleMainDayKeyUp(e, index)}"
+          @keydown="${this.handleInputKeyDown}"
         />
       `;
     }
@@ -954,9 +954,9 @@ export class KsDatePicker extends LitElement {
           ?required=${this.required}
           ?disabled=${this.disabled}
           ?readonly=${this.readonly}
-          @focus="${this.dateInputFocusHandler}"
-          @keyup="${(e: KeyboardEvent) => this.mainMonthKeyUpHandler(e, index)}"
-          @keydown="${this.preventSpaceKeyDownHandler}"
+          @focus="${this.handleDateInputFocus}"
+          @keyup="${(e: KeyboardEvent) => this.handleMainMonthKeyUp(e, index)}"
+          @keydown="${this.handleInputKeyDown}"
         />
       `;
     }
@@ -979,9 +979,9 @@ export class KsDatePicker extends LitElement {
           ?required=${this.required}
           ?disabled=${this.disabled}
           ?readonly=${this.readonly}
-          @focus="${this.dateInputFocusHandler}"
-          @keyup="${(e: KeyboardEvent) => this.mainYearKeyUpHandler(e, index)}"
-          @keydown="${this.yearKeyDownHandler}"
+          @focus="${this.handleDateInputFocus}"
+          @keyup="${(e: KeyboardEvent) => this.handleMainYearKeyUp(e, index)}"
+          @keydown="${this.handleYearKeyDown}"
         />
       `;
     }
@@ -1001,7 +1001,7 @@ export class KsDatePicker extends LitElement {
           this._selectedYear,
           this.getLocale()
         )}"
-        @keydown="${this.dropdownKeyDownHandler}"
+        @keydown="${this.handleDropdownKeyDown}"
       >
         <ks-calendar
           class="calendar-control"
@@ -1019,8 +1019,8 @@ export class KsDatePicker extends LitElement {
           first-day-of-week="${this.firstDayOfWeek || ''}"
           lang="${this.getLocale()}"
           focus-date="${this.focusDate || ''}"
-          @ks-focus="${this.dateFocusedHandler}"
-          @ks-select="${this.dateSelectedHandler}"
+          @ks-focus="${this.handleDateFocused}"
+          @ks-select="${this.handleDateSelected}"
         ></ks-calendar>
       </div>
     `;

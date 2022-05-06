@@ -366,13 +366,23 @@ export class KsCalendar extends LitElement {
     this.setSelectedValues(this._selectedDate ?? this._curDate);
   }
 
+  private getSelectedMonthsDate(year: number, month: number) {
+    const daysInSelectedMonth = getDaysInMonth(month, year);
+    const nextDay =
+      daysInSelectedMonth < this._selectedDay
+        ? daysInSelectedMonth
+        : this._selectedDay;
+        
+    return new Date(year, month, nextDay);
+  }
+
   /**
    *
    * EVENT HANDLERS
    *
    */
 
-  private dayKeyUpHandler(day: Date, e: KeyboardEvent) {
+  private handleDayKeyUp(day: Date, e: KeyboardEvent) {
     let newDate: Date = new Date();
 
     switch (e.key) {
@@ -408,7 +418,7 @@ export class KsCalendar extends LitElement {
     this.emitFocus();
   }
 
-  private dayKeyDownHandler(e: KeyboardEvent) {
+  private handleDayKeyDown(e: KeyboardEvent) {
     if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Escape') {
       e.preventDefault();
     }
@@ -422,7 +432,7 @@ export class KsCalendar extends LitElement {
     }
   }
 
-  private monthChangeHandler(e: Event): void {
+  private handleMonthChange(e: Event): void {
     const newMonth = parseInt((e.target as HTMLSelectElement).value);
     this._selectedMonth = newMonth;
     this._selectedDate = this.getFocusDate();
@@ -430,7 +440,7 @@ export class KsCalendar extends LitElement {
     this.emitFocus();
   }
 
-  private yearInputHandler(e: InputEvent): void {
+  private handleYearInput(e: InputEvent): void {
     const newYear = parseInt((e.target as HTMLInputElement).value);
     this._selectedYear = newYear;
     this._selectedDate = this.getFocusDate();
@@ -438,7 +448,7 @@ export class KsCalendar extends LitElement {
     this.emitFocus();
   }
 
-  private prevMonthClickHandler(): void {
+  private handlePrevMonthClick(): void {
     let nextDate =
       this._selectedMonth === 0
         ? this.getSelectedMonthsDate(this._selectedYear - 1, 11)
@@ -458,7 +468,7 @@ export class KsCalendar extends LitElement {
     this.emitFocus();
   }
 
-  private nextMonthClickHandler(): void {
+  private handleNextMonthClick(): void {
     let nextDate =
       this._selectedMonth === 11
         ? this.getSelectedMonthsDate(this._selectedYear + 1, 0)
@@ -476,15 +486,6 @@ export class KsCalendar extends LitElement {
     this.setSelectedValues(nextDate);
     this.updateYearSelector();
     this.emitFocus();
-  }
-
-  private getSelectedMonthsDate(year: number, month: number) {
-    const daysInSelectedMonth = getDaysInMonth(month, year);
-    const nextDay =
-      daysInSelectedMonth < this._selectedDay
-        ? daysInSelectedMonth
-        : this._selectedDay;
-    return new Date(year, month, nextDay);
   }
 
   private beforeRender() {
@@ -517,7 +518,7 @@ export class KsCalendar extends LitElement {
               id="month_selector"
               class="month-selector"
               part="input"
-              @change="${this.monthChangeHandler}"
+              @change="${this.handleMonthChange}"
             >
               ${getMonths(this.getLocale()).map(
                 (month, i) => html`
@@ -536,14 +537,14 @@ export class KsCalendar extends LitElement {
             part="input"
             type="number"
             value="${this._selectedYear}"
-            @input="${this.yearInputHandler}"
+            @input="${this.handleYearInput}"
           />
         </span>
         <span class="right-controls">
           <button
             class="arrow prev"
             part="button prev-month"
-            @click="${this.prevMonthClickHandler}"
+            @click="${this.handlePrevMonthClick}"
             aria-label="${getMonthLabel(
               this._selectedMonth - 1,
               this._selectedYear,
@@ -555,7 +556,7 @@ export class KsCalendar extends LitElement {
           <button
             class="arrow next"
             part="button next-month"
-            @click="${this.nextMonthClickHandler}"
+            @click="${this.handleNextMonthClick}"
             aria-label="${getMonthLabel(
               this._selectedMonth + 1,
               this._selectedYear,
@@ -645,9 +646,9 @@ export class KsCalendar extends LitElement {
         aria-current="${isToday ? 'date' : false}"
         tabindex="${isSelected ? 0 : -1}"
         aria-disabled="${this.isDateDisabled(day)}"
-        @keydown="${(e: KeyboardEvent) => this.dayKeyDownHandler(e)}"
+        @keydown="${(e: KeyboardEvent) => this.handleDayKeyDown(e)}"
         @click="${() => this.pickDate(day)}"
-        @keyup="${(e: KeyboardEvent) => this.dayKeyUpHandler(day, e)}"
+        @keyup="${(e: KeyboardEvent) => this.handleDayKeyUp(day, e)}"
       >
         <span class="day-label" aria-hidden="true" part="day-label"
           >${day.getDate()}</span
