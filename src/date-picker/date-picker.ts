@@ -18,15 +18,15 @@ import { styles } from './date-picker.styles';
 import icon from '../utils/icons';
 import { watch } from '../utils/watchDecorator';
 
-export interface IFormFieldData {
+export interface FormFieldData {
   name?: string;
   value?: string;
   valueAsDate?: Date;
   isValid: boolean;
-  validity: IDatePickerValidation;
+  validity: DatePickerValidation;
 }
 
-export interface IDatePickerValidation {
+export interface DatePickerValidation {
   outOfRange?: boolean;
   valueMissing?: boolean;
   dateUnavailable?: boolean;
@@ -157,7 +157,7 @@ export class KsDatePicker extends LitElement {
   unavailableErrorMessage = 'The date you have selected is unavailable';
 
   @state()
-  private _formFieldData: IFormFieldData = this.getInitialFormFieldData();
+  private _formFieldData: FormFieldData = this.getInitialFormFieldData();
 
   @state()
   private _expanded = false;
@@ -228,6 +228,11 @@ export class KsDatePicker extends LitElement {
 
   get valueAsDate() {
     return this.value ? new Date(formatDateString(this.value)) : undefined;
+  }
+
+  get validate() {
+    this.validateInput();
+    return this._formFieldData;
   }
 
   /**
@@ -317,7 +322,7 @@ export class KsDatePicker extends LitElement {
       .replace(/[^a-zA-Z0-9]+(.)/g, (_, chr) => chr.toUpperCase());
   }
 
-  private getInitialFormFieldData(): IFormFieldData {
+  private getInitialFormFieldData(): FormFieldData {
     return {
       name: this.getName(),
       value: undefined,
@@ -331,7 +336,7 @@ export class KsDatePicker extends LitElement {
     };
   }
 
-  private setFormFieldData(data: IFormFieldData) {
+  private setFormFieldData(data: FormFieldData) {
     this._formFieldData = {
       name: this.getName(),
       value: data.value,
@@ -378,7 +383,7 @@ export class KsDatePicker extends LitElement {
       this._expanded = false;
 
       if (this._hadFocus) {
-        this.validate();
+        this.validateInput();
       }
     });
   }
@@ -510,8 +515,8 @@ export class KsDatePicker extends LitElement {
     return year;
   }
 
-  private validate() {
-    this._isValid = this._formFieldData.isValid;
+  private validateInput() {
+    this._isValid = true;
 
     if (
       !this.$firstInput?.checkValidity() ||
@@ -520,23 +525,29 @@ export class KsDatePicker extends LitElement {
     ) {
       this._errorMessage = this.requiredErrorMessage;
       this._isValid = false;
-      this._formFieldData.validity.valueMissing = true;
+      this._formFieldData.isValid = false;
       return;
     }
 
     if (this._formFieldData.validity.outOfRange) {
       this._errorMessage = this.rangeErrorMessage;
       this._isValid = false;
+      this._formFieldData.isValid = false;
       return;
     }
 
     if (this._formFieldData.validity.dateUnavailable) {
       this._errorMessage = this.unavailableErrorMessage;
       this._isValid = false;
+      this._formFieldData.isValid = false;
       return;
     }
 
     this._isValid = true;
+    this._formFieldData.isValid = true;
+    this._formFieldData.validity.valueMissing = false;
+    this._formFieldData.validity.outOfRange = false;
+    this._formFieldData.validity.dateUnavailable = false;
   }
 
   private setCalendarElementVariables() {
@@ -813,7 +824,7 @@ export class KsDatePicker extends LitElement {
     this.setSelectedValues(this._formFieldData.valueAsDate as Date);
     this.setInputValues();
     setTimeout(() => {
-      this.validate();
+      this.validateInput();
       this.emitInput();
     });
   }
@@ -829,7 +840,7 @@ export class KsDatePicker extends LitElement {
 
     setTimeout(() => {
       this.hide();
-      this.validate();
+      this.validateInput();
       this.emitInput();
       this.emitChange();
     }, 100);

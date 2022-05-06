@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 import { html, LitElement } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
-import { IFormFieldData } from '../date-picker';
+import { FormFieldData } from '../date-picker';
 import {
   addDaysToDate,
   getDaysOfTheWeek,
@@ -207,7 +207,7 @@ export class KsCalendar extends LitElement {
     const isDateUnavailable = this._formattedDisabledDates.includes(
       this._selectedDate?.toLocaleDateString() as string
     );
-    const fieldData: IFormFieldData = {
+    const fieldData: FormFieldData = {
       value: getShortIsoDate(this._selectedDate as Date),
       valueAsDate: this._selectedDate,
       isValid: !isDateOutOfRange && !isDateUnavailable,
