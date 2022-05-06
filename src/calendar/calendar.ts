@@ -49,7 +49,7 @@ import { styles } from './calendar.styles';
  * @csspart day-label - Controls styles of day number label
  * @csspart clear - Controls style of "Clear" button
  * @csspart today - Controls style of "Today" button
- * 
+ *
  * @event {CustomEvent} ks-focus - emits the date as short ISO string when calendar date is selected
  * @event {CustomEvent} ks-select - emits the date as short ISO string when calendar date is selected
  *
@@ -149,6 +149,7 @@ export class KsCalendar extends LitElement {
   @watch('value', { waitUntilFirstUpdate: true })
   handleValueChange() {
     this.setSelectedDate();
+    this.emitSelected(this.value === undefined);
   }
 
   /**
@@ -199,11 +200,9 @@ export class KsCalendar extends LitElement {
    */
 
   private getEmittedData() {
-    const isDateOutOfRange = isOutOfRange(
-      this._selectedDate as Date,
-      this._minDate,
-      this._maxDate
-    );
+    const isDateOutOfRange = this.value
+      ? isOutOfRange(this._selectedDate as Date, this._minDate, this._maxDate)
+      : false;
     const isDateUnavailable = this._formattedDisabledDates.includes(
       this._selectedDate?.toLocaleDateString() as string
     );
@@ -617,7 +616,9 @@ export class KsCalendar extends LitElement {
     return html`
       <tr class="week" role="row">
         ${this.showWeekNumbers
-          ? html`<th class="week-number" part="week-number">${getWeek(week[0])}</th>`
+          ? html`<th class="week-number" part="week-number">
+              ${getWeek(week[0])}
+            </th>`
           : ''}
         ${week.map(day => this.dayTemplate(day))}
       </tr>
@@ -648,7 +649,9 @@ export class KsCalendar extends LitElement {
         @click="${() => this.pickDate(day)}"
         @keyup="${(e: KeyboardEvent) => this.dayKeyUpHandler(day, e)}"
       >
-        <span class="day-label" aria-hidden="true" part="day-label">${day.getDate()}</span>
+        <span class="day-label" aria-hidden="true" part="day-label"
+          >${day.getDate()}</span
+        >
       </td>
     `;
   }
