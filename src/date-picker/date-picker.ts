@@ -187,6 +187,12 @@ export class KsDatePicker extends LitElement {
   private _selectedYear: number = this._curDate.getFullYear();
 
   @state()
+  private _minDate?: Date;
+
+  @state()
+  private _maxDate?: Date;
+
+  @state()
   private $calendarFocusableElements?: HTMLElement[];
 
   @state()
@@ -246,6 +252,7 @@ export class KsDatePicker extends LitElement {
   protected firstUpdated(): void {
     this.onComponentBlur();
     this.initInputValues();
+    this.setMinMaxDates();
     setTimeout(() => this.setCalendarElementVariables());
   }
 
@@ -371,6 +378,16 @@ export class KsDatePicker extends LitElement {
     }
 
     this.setSelectedValues(valueDate);
+  }
+
+  private setMinMaxDates() {
+    this._minDate = (
+      this.minDate ? new Date(formatDateString(this.minDate)) : null
+    ) as Date;
+
+    this._maxDate = (
+      this.maxDate ? new Date(formatDateString(this.maxDate)) : null
+    ) as Date;
   }
 
   private onComponentBlur() {
@@ -620,8 +637,29 @@ export class KsDatePicker extends LitElement {
     this.$firstInput?.select();
   }
 
-  private handleMonthKeyUp(e: KeyboardEvent, index: number) {
-    const month = (e.target as HTMLInputElement)?.value;
+  private handleInputKeyDown(e: KeyboardEvent) {
+    if (e.key === ' ') {
+      e.preventDefault();
+      return false;
+    }
+
+    return true;
+  }
+
+  private handleYearInput(e: KeyboardEvent, index: number) {
+    const value = (e.target as HTMLInputElement).value;
+
+    this._selectedYear = this.getValidYear(value);
+
+    if (value.length === 4) {
+      this.setYearInput();
+      this.goToNextInput(index);
+      this.emitInput();
+    }
+  }
+
+  private handleYearKeyUp(e: KeyboardEvent, index: number) {
+    const year = (e.target as HTMLInputElement).value;
 
     switch (e.key) {
       case 'ArrowLeft':
@@ -630,35 +668,25 @@ export class KsDatePicker extends LitElement {
       case 'ArrowRight':
         this.goToNextInput(index);
         break;
-      case ' ':
-        e.preventDefault();
-        if (!this.disabled && !this.readonly) {
-          this.show();
-        }
-        return;
       case 'ArrowUp':
       case 'ArrowDown':
-        if (month) {
-          this._selectedMonth = Number(month) - 1;
+        if (year) {
+          this._selectedYear = Number(year);
           this.updateSelectedDate();
           this.emitInput();
         }
-        return;
+        break;
+      case ' ':
+        if (!this.disabled && !this.readonly) {
+          this.show();
+        }
+        break;
       default:
         if (!isNaN(e.key as any)) {
-          this.handleMonthInput(e, index);
+          this.handleYearInput(e, index);
         }
         return;
     }
-  }
-
-  private handleInputKeyDown(e: KeyboardEvent) {
-    if (e.key === ' ') {
-      e.preventDefault();
-      return false;
-    }
-
-    return true;
   }
 
   private handleYearKeyDown(e: KeyboardEvent) {
@@ -670,13 +698,13 @@ export class KsDatePicker extends LitElement {
           this._selectedYear = this._curDate.getFullYear() - 1;
           this.setYearInput(this._selectedYear);
         }
-        return;
+        break;
       case 'ArrowDown':
         if (!value) {
           this._selectedYear = this._curDate.getFullYear() + 1;
           this.setYearInput(this._selectedYear);
         }
-        return;
+        break;
       default:
         break;
     }
@@ -699,6 +727,38 @@ export class KsDatePicker extends LitElement {
     }
 
     this.emitInput();
+  }
+
+  private handleMonthKeyUp(e: KeyboardEvent, index: number) {
+    const month = (e.target as HTMLInputElement)?.value;
+
+    switch (e.key) {
+      case 'ArrowLeft':
+        this.goToPrevInput(index);
+        break;
+      case 'ArrowRight':
+        this.goToNextInput(index);
+        break;
+      case ' ':
+        e.preventDefault();
+        if (!this.disabled && !this.readonly) {
+          this.show();
+        }
+        break;
+      case 'ArrowUp':
+      case 'ArrowDown':
+        if (month) {
+          this._selectedMonth = Number(month) - 1;
+          this.updateSelectedDate();
+          this.emitInput();
+        }
+        break;
+      default:
+        if (!isNaN(e.key as any)) {
+          this.handleMonthInput(e, index);
+        }
+        break;
+    }
   }
 
   private handleDayKeyUp(e: KeyboardEvent, index: number) {
@@ -749,37 +809,6 @@ export class KsDatePicker extends LitElement {
     this.emitInput();
   }
 
-  private handleYearKeyUp(e: KeyboardEvent, index: number) {
-    const year = (e.target as HTMLInputElement).value;
-
-    switch (e.key) {
-      case 'ArrowLeft':
-        this.goToPrevInput(index);
-        break;
-      case 'ArrowRight':
-        this.goToNextInput(index);
-        break;
-      case 'ArrowUp':
-      case 'ArrowDown':
-        if (year) {
-          this._selectedYear = Number(year);
-          this.updateSelectedDate();
-          this.emitInput();
-        }
-        return;
-      case ' ':
-        if (!this.disabled && !this.readonly) {
-          this.show();
-        }
-        break;
-      default:
-        if (!isNaN(e.key as any)) {
-          this.handleYearInput(e, index);
-        }
-        return;
-    }
-  }
-
   private goToNextInput(index: number) {
     if (index === 0) {
       this.$secondInput?.select();
@@ -797,18 +826,6 @@ export class KsDatePicker extends LitElement {
 
     if (index === 2) {
       this.$firstInput?.select();
-    }
-  }
-
-  private handleYearInput(e: KeyboardEvent, index: number) {
-    const value = (e.target as HTMLInputElement).value;
-
-    this._selectedYear = this.getValidYear(value);
-
-    if (value.length === 4) {
-      this.setYearInput();
-      this.goToNextInput(index);
-      this.emitInput();
     }
   }
 
