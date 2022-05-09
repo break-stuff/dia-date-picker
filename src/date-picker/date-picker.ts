@@ -72,7 +72,7 @@ export interface DatePickerValidation {
 export class KsDatePicker extends LitElement {
   static styles = styles;
 
-  /** the date entered in the main input */
+  /** selected value in input */
   @property({ type: String, reflect: true })
   value?: string;
 
@@ -218,11 +218,13 @@ export class KsDatePicker extends LitElement {
 
   @watch('value', { waitUntilFirstUpdate: true })
   handleValueChange() {
-    if (!this.value) {
-      return;
-    }
+    const focusDate = this.value
+      ? new Date(formatDateString(this.value as string))
+      : this.focusDate
+      ? new Date(formatDateString(this.focusDate as string))
+      : this._curDate;
 
-    this.setSelectedValues(new Date(formatDateString(this.value as string)));
+    this.setSelectedValues(focusDate);
     this.setInputValues();
   }
 
@@ -242,14 +244,15 @@ export class KsDatePicker extends LitElement {
    */
 
   protected firstUpdated(): void {
-    this.onComponentBlur();    
-    this.initMainInputValues();
+    this.onComponentBlur();
+    this.initInputValues();
     setTimeout(() => this.setCalendarElementVariables());
   }
 
   protected async performUpdate() {
     // update selected values when value changes
-    setTimeout(() => this.updateMainInputValues());
+    this._selectedDate = this.getSelectedDate();
+    setTimeout(() => this.updateInputValues());
     return super.performUpdate();
   }
 
@@ -276,11 +279,7 @@ export class KsDatePicker extends LitElement {
    */
 
   private emitInput() {
-    if (
-      !this.$firstInput?.value ||
-      !this.$secondInput?.value ||
-      !this.$thirdInput?.value
-    ) {
+    if (!this.hasCompletedAllFields()) {
       return;
     }
 
@@ -346,7 +345,7 @@ export class KsDatePicker extends LitElement {
     };
   }
 
-  private initMainInputValues() {
+  private initInputValues() {
     const selectedDate = this.value
       ? new Date(formatDateString(this.value))
       : this._curDate;
@@ -357,7 +356,7 @@ export class KsDatePicker extends LitElement {
     }
   }
 
-  private updateMainInputValues() {
+  private updateInputValues() {
     if (!this.value) {
       return;
     }
@@ -428,9 +427,9 @@ export class KsDatePicker extends LitElement {
       return;
     }
 
-    this.setMainDayInput();
-    this.setMainMonthInput();
-    this.setMainYearInput();
+    this.setDayInput();
+    this.setMonthInput();
+    this.setYearInput();
   }
 
   private resetInputValues() {
@@ -438,9 +437,9 @@ export class KsDatePicker extends LitElement {
       return;
     }
 
-    this.setMainDayInput('');
-    this.setMainMonthInput('');
-    this.setMainYearInput('');
+    this.setDayInput('');
+    this.setMonthInput('');
+    this.setYearInput('');
   }
 
   private toggleCalendar() {
@@ -457,17 +456,17 @@ export class KsDatePicker extends LitElement {
       : navigator.language || (navigator.languages || ['en'])[0];
   }
 
-  private setMainDayInput(day: number | string = this._selectedDay) {
+  private setDayInput(day: number | string = this._selectedDay) {
     (this.$dayInput as HTMLInputElement).value =
       day < 10 && day !== '' ? '0' + day : day.toString();
   }
 
-  private setMainMonthInput(month: number | string = this._selectedMonth + 1) {
+  private setMonthInput(month: number | string = this._selectedMonth + 1) {
     (this.$monthInput as HTMLInputElement).value =
       month < 10 && month !== '' ? '0' + month : month.toString();
   }
 
-  private setMainYearInput(year: number | string = this._selectedYear) {
+  private setYearInput(year: number | string = this._selectedYear) {
     (this.$yearInput as HTMLInputElement).value = year.toString();
   }
 
@@ -475,12 +474,10 @@ export class KsDatePicker extends LitElement {
     let month = Number(value);
     if (month > 12) {
       month = 12;
-      this.setMainMonthInput(month);
     }
 
     if (month < 0) {
       month = 1;
-      this.setMainMonthInput(month);
     }
     return month - 1;
   }
@@ -490,12 +487,10 @@ export class KsDatePicker extends LitElement {
     const maxDays = getDaysInMonth(this._selectedMonth, this._selectedYear);
     if (day > maxDays) {
       day = maxDays;
-      this.setMainDayInput(maxDays);
     }
 
     if (day < 0) {
       day = 1;
-      this.setMainDayInput(day);
     }
     return day;
   }
@@ -504,12 +499,10 @@ export class KsDatePicker extends LitElement {
     let year = Number(value);
     if (year > 9999) {
       year = 9999;
-      this.setMainYearInput(year);
     }
 
     if (year < 1) {
       year = 1;
-      this.setMainYearInput(year);
     }
 
     return year;
@@ -518,11 +511,7 @@ export class KsDatePicker extends LitElement {
   private validateInput() {
     this._isValid = true;
 
-    if (
-      !this.$firstInput?.checkValidity() ||
-      !this.$secondInput?.checkValidity() ||
-      !this.$thirdInput?.checkValidity()
-    ) {
+    if (!this.hasCompletedAllFields()) {
       this._errorMessage = this.requiredErrorMessage;
       this._isValid = false;
       this._formFieldData.isValid = false;
@@ -559,6 +548,14 @@ export class KsDatePicker extends LitElement {
       this.$calendarFocusableElements[
         this.$calendarFocusableElements.length - 1
       ];
+  }
+
+  private hasCompletedAllFields() {
+    return (
+      this.$firstInput?.value &&
+      this.$secondInput?.value &&
+      this.$thirdInput?.value
+    );
   }
 
   /**
@@ -623,7 +620,7 @@ export class KsDatePicker extends LitElement {
     this.$firstInput?.select();
   }
 
-  private handleMainMonthKeyUp(e: KeyboardEvent, index: number) {
+  private handleMonthKeyUp(e: KeyboardEvent, index: number) {
     const month = (e.target as HTMLInputElement)?.value;
 
     switch (e.key) {
@@ -649,7 +646,7 @@ export class KsDatePicker extends LitElement {
         return;
       default:
         if (!isNaN(e.key as any)) {
-          this.handleMainMonthInput(e, index);
+          this.handleMonthInput(e, index);
         }
         return;
     }
@@ -671,13 +668,13 @@ export class KsDatePicker extends LitElement {
       case 'ArrowUp':
         if (!value) {
           this._selectedYear = this._curDate.getFullYear() - 1;
-          this.setMainYearInput(this._selectedYear);
+          this.setYearInput(this._selectedYear);
         }
         return;
       case 'ArrowDown':
         if (!value) {
           this._selectedYear = this._curDate.getFullYear() + 1;
-          this.setMainYearInput(this._selectedYear);
+          this.setYearInput(this._selectedYear);
         }
         return;
       default:
@@ -687,7 +684,7 @@ export class KsDatePicker extends LitElement {
     this.handleInputKeyDown(e);
   }
 
-  private handleMainMonthInput(e: KeyboardEvent, index: number) {
+  private handleMonthInput(e: KeyboardEvent, index: number) {
     const value = (e.target as HTMLInputElement).value;
 
     if (!value) {
@@ -695,16 +692,16 @@ export class KsDatePicker extends LitElement {
     }
 
     this._selectedMonth = this.getValidMonth(value);
-    this.updateSelectedDate();
 
-    if (value.length > 1 || this._selectedMonth > 1) {
+    if (value.length > 1 || this._selectedMonth > 0) {
+      this.setMonthInput();
       this.goToNextInput(index);
     }
 
     this.emitInput();
   }
 
-  private handleMainDayKeyUp(e: KeyboardEvent, index: number) {
+  private handleDayKeyUp(e: KeyboardEvent, index: number) {
     const day = (e.target as HTMLInputElement).value;
 
     switch (e.key) {
@@ -729,13 +726,13 @@ export class KsDatePicker extends LitElement {
         return;
       default:
         if (!isNaN(e.key as any)) {
-          this.handleMainDayInput(e, index);
+          this.handleDayInput(e, index);
         }
         break;
     }
   }
 
-  private handleMainDayInput(e: KeyboardEvent, index: number) {
+  private handleDayInput(e: KeyboardEvent, index: number) {
     const value = (e.target as HTMLInputElement).value;
 
     if (!value) {
@@ -743,16 +740,16 @@ export class KsDatePicker extends LitElement {
     }
 
     this._selectedDay = this.getValidDay(value);
-    this.updateSelectedDate();
 
     if (value.length > 1 || this._selectedDay > 3) {
+      this.setDayInput();
       this.goToNextInput(index);
     }
 
     this.emitInput();
   }
 
-  private handleMainYearKeyUp(e: KeyboardEvent, index: number) {
+  private handleYearKeyUp(e: KeyboardEvent, index: number) {
     const year = (e.target as HTMLInputElement).value;
 
     switch (e.key) {
@@ -777,7 +774,7 @@ export class KsDatePicker extends LitElement {
         break;
       default:
         if (!isNaN(e.key as any)) {
-          this.handleMainYearInput(e);
+          this.handleYearInput(e, index);
         }
         return;
     }
@@ -803,16 +800,16 @@ export class KsDatePicker extends LitElement {
     }
   }
 
-  private handleMainYearInput(e: KeyboardEvent) {
+  private handleYearInput(e: KeyboardEvent, index: number) {
     const value = (e.target as HTMLInputElement).value;
 
-    if (!value) {
-      return;
-    }
-
     this._selectedYear = this.getValidYear(value);
-    this.updateSelectedDate();
-    this.emitInput();
+
+    if (value.length === 4) {
+      this.setYearInput();
+      this.goToNextInput(index);
+      this.emitInput();
+    }
   }
 
   private handleDateFocused(e: any) {
@@ -850,10 +847,6 @@ export class KsDatePicker extends LitElement {
     this._hadFocus = true;
   }
 
-  private beforeRender() {
-    this._selectedDate = this.getSelectedDate();
-  }
-
   /**
    *
    * TEMPLATES AND RENDERING
@@ -861,8 +854,6 @@ export class KsDatePicker extends LitElement {
    */
 
   render() {
-    this.beforeRender();
-
     return html` ${this.mainInputTemplate()} ${this.dropdownTemplate()} `;
   }
 
@@ -930,7 +921,7 @@ export class KsDatePicker extends LitElement {
           ?disabled=${this.disabled}
           ?readonly=${this.readonly}
           @focus="${this.handleDateInputFocus}"
-          @keyup="${(e: KeyboardEvent) => this.handleMainDayKeyUp(e, index)}"
+          @keyup="${(e: KeyboardEvent) => this.handleDayKeyUp(e, index)}"
           @keydown="${this.handleInputKeyDown}"
         />
       `;
@@ -955,7 +946,7 @@ export class KsDatePicker extends LitElement {
           ?disabled=${this.disabled}
           ?readonly=${this.readonly}
           @focus="${this.handleDateInputFocus}"
-          @keyup="${(e: KeyboardEvent) => this.handleMainMonthKeyUp(e, index)}"
+          @keyup="${(e: KeyboardEvent) => this.handleMonthKeyUp(e, index)}"
           @keydown="${this.handleInputKeyDown}"
         />
       `;
@@ -980,7 +971,7 @@ export class KsDatePicker extends LitElement {
           ?disabled=${this.disabled}
           ?readonly=${this.readonly}
           @focus="${this.handleDateInputFocus}"
-          @keyup="${(e: KeyboardEvent) => this.handleMainYearKeyUp(e, index)}"
+          @keyup="${(e: KeyboardEvent) => this.handleYearKeyUp(e, index)}"
           @keydown="${this.handleYearKeyDown}"
         />
       `;
