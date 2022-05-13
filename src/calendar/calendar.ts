@@ -213,9 +213,14 @@ export class KsCalendar extends LitElement {
     const isDateOutOfRange = this.value
       ? isOutOfRange(this._selectedDate as Date, this._minDate, this._maxDate)
       : false;
-    const isDateUnavailable = this._formattedDisabledDates.includes(
-      this._selectedDate?.toLocaleDateString() as string
-    );
+    const isDateUnavailable =
+      this._formattedDisabledDates.includes(
+        this._selectedDate?.toLocaleDateString() as string
+      ) ||
+      this._disabledWeekDaysList.includes(
+        (this._selectedDate?.getDay() as number) + 1
+      );
+
     const fieldData: FormFieldData = {
       value: getShortIsoDate(this._selectedDate as Date),
       valueAsDate: this._selectedDate,
