@@ -159,9 +159,13 @@ export class KsCalendar extends LitElement {
    */
 
   protected willUpdate(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    this.initSelectedValues();
+    if(_changedProperties.has('focusDate')) {
+      this.initSelectedValues();
+    }
+
     this.setMinMaxDates();
     this.setSelectedDateForRange();
+
   }
 
   protected firstUpdated(): void {
@@ -492,6 +496,11 @@ export class KsCalendar extends LitElement {
     this.emitFocus();
   }
 
+  private beforeRender() {
+    // this.setMinMaxDates();
+    // this.setSelectedDateForRange();
+  }
+
   /**
    *
    * TEMPLATES AND RENDERING
@@ -499,6 +508,8 @@ export class KsCalendar extends LitElement {
    */
 
   render() {
+    this.beforeRender();
+
     return html`
       ${this.topControlsTemplate()} ${this.calendarTemplate()}
       ${this.bottomControlsTemplate()}
