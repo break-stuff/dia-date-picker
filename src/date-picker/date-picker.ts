@@ -249,7 +249,7 @@ export class KsDatePicker extends LitElement {
    */
 
   protected firstUpdated(): void {
-    this.onComponentBlur();
+    this.handleComponentBlur();
     this.initInputValues();
     setTimeout(() => this.setCalendarElementVariables());
   }
@@ -378,21 +378,6 @@ export class KsDatePicker extends LitElement {
     }
 
     this.setSelectedValues(valueDate);
-  }
-
-  private onComponentBlur() {
-    window.addEventListener('click', (e: MouseEvent) => {
-      if (this.contains(e.target as HTMLElement)) {
-        return;
-      }
-
-      this._expanded = false;
-
-      if (this._isFocused) {
-        this.validateInput();
-        this._isFocused = false;
-      }
-    });
   }
 
   private setDayFocus() {
@@ -558,6 +543,21 @@ export class KsDatePicker extends LitElement {
    * EVENT HANDLERS
    *
    */
+
+   private handleComponentBlur() {
+    window.addEventListener('click', (e: MouseEvent) => {
+      if (this.contains(e.target as HTMLElement)) {
+        return;
+      }
+
+      this._expanded = false;
+
+      if (this._isFocused) {
+        this.validateInput();
+        this._isFocused = false;
+      }
+    });
+  }
 
   private handleInputControlClick() {
     this.toggleCalendar();
