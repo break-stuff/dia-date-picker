@@ -149,7 +149,7 @@ export class KsCalendar extends LitElement {
   @watch('value', { waitUntilFirstUpdate: true })
   handleValueChange() {
     this.setSelectedDate();
-    this.emitSelected(this.value === undefined);
+    this.requestUpdate();
   }
 
   /**
