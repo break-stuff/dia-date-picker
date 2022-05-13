@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-console */
-import { html, LitElement } from 'lit';
+import { html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { FormFieldData } from '../date-picker';
 import {
@@ -158,8 +158,13 @@ export class KsCalendar extends LitElement {
    *
    */
 
-  protected firstUpdated(): void {
+  protected willUpdate(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     this.initSelectedValues();
+    this.setMinMaxDates();
+    this.setSelectedDateForRange();
+  }
+
+  protected firstUpdated(): void {
     this.setFormattedDisabledDates();
     this.setDisabledWeekDaysList();
   }
@@ -221,13 +226,12 @@ export class KsCalendar extends LitElement {
   }
 
   private initSelectedValues() {
-    const selectedDate = this.value
+    this._selectedValue = this.value
       ? new Date(formatDateString(this.value))
       : this.focusDate
       ? new Date(formatDateString(this.focusDate))
       : this._curDate;
-    this._selectedValue = selectedDate;
-    this.setSelectedValues(selectedDate);
+    this.setSelectedValues(this._selectedValue);
   }
 
   private setSelectedDate() {
@@ -488,11 +492,6 @@ export class KsCalendar extends LitElement {
     this.emitFocus();
   }
 
-  private beforeRender() {
-    this.setMinMaxDates();
-    this.setSelectedDateForRange();
-  }
-
   /**
    *
    * TEMPLATES AND RENDERING
@@ -500,8 +499,6 @@ export class KsCalendar extends LitElement {
    */
 
   render() {
-    this.beforeRender();
-
     return html`
       ${this.topControlsTemplate()} ${this.calendarTemplate()}
       ${this.bottomControlsTemplate()}
