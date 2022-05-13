@@ -229,8 +229,6 @@ export class KsDatePicker extends LitElement {
       this.setSelectedValues(focusDate);
       this.setInputValues();
     }
-
-
   }
 
   get valueAsDate() {
@@ -298,7 +296,9 @@ export class KsDatePicker extends LitElement {
     };
 
     this.dispatchEvent(new CustomEvent('ks-input', options));
-    (this.$calendar as KsCalendar).value = getShortIsoDate(this._selectedDate as Date);
+    (this.$calendar as KsCalendar).value = getShortIsoDate(
+      this._selectedDate as Date
+    );
   }
 
   private emitChange() {
@@ -491,7 +491,7 @@ export class KsDatePicker extends LitElement {
   private validateInput() {
     this._isValid = true;
 
-    if (!this.hasCompletedAllFields()) {
+    if (this.required && !this.hasCompletedAllFields()) {
       this._errorMessage = this.requiredErrorMessage;
       this._isValid = false;
       this._formFieldData.isValid = false;
@@ -544,7 +544,7 @@ export class KsDatePicker extends LitElement {
    *
    */
 
-   private handleComponentBlur() {
+  private handleComponentBlur() {
     window.addEventListener('click', (e: MouseEvent) => {
       if (this.contains(e.target as HTMLElement)) {
         return;
@@ -862,7 +862,7 @@ export class KsDatePicker extends LitElement {
               @blur="${this.handleDateInputBlur}"
               @click="${this.handleInputControlClick}"
             >
-              ${icon('calendar')}
+              <slot name="calendar-icon"> ${icon('calendar')} </slot>
             </button>
           </div>
           <div id="error_message" class="error-message" aria-live="assertive">
@@ -981,7 +981,10 @@ export class KsDatePicker extends LitElement {
           focus-date="${this.focusDate || ''}"
           @ks-focus="${this.handleDateFocused}"
           @ks-select="${this.handleDateSelected}"
-        ></ks-calendar>
+        >
+          <slot slot="prev-month-icon" name="prev-month-icon"> </slot>
+          <slot></slot>
+        </ks-calendar>
       </div>
     `;
   }

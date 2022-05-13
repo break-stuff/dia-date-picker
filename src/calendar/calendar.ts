@@ -158,14 +158,15 @@ export class KsCalendar extends LitElement {
    *
    */
 
-  protected willUpdate(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    if(_changedProperties.has('focusDate')) {
+  protected willUpdate(
+    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
+  ): void {
+    if (_changedProperties.has('focusDate')) {
       this.initSelectedValues();
     }
 
     this.setMinMaxDates();
     this.setSelectedDateForRange();
-
   }
 
   protected firstUpdated(): void {
@@ -380,7 +381,7 @@ export class KsCalendar extends LitElement {
       daysInSelectedMonth < this._selectedDay
         ? daysInSelectedMonth
         : this._selectedDay;
-        
+
     return new Date(year, month, nextDay);
   }
 
@@ -559,7 +560,7 @@ export class KsCalendar extends LitElement {
               this.getLocale()
             )}"
           >
-            ${icon('arrow_up')}
+            <slot name="prev-month-icon"> ${icon('arrow_up')} </slot>
           </button>
           <button
             class="arrow next"
@@ -571,7 +572,7 @@ export class KsCalendar extends LitElement {
               this.getLocale()
             )}"
           >
-            ${icon('arrow_down')}
+            <slot name="prev-month-icon"> ${icon('arrow_down')} </slot>
           </button>
         </span>
       </div>
@@ -658,9 +659,10 @@ export class KsCalendar extends LitElement {
         @click="${() => this.pickDate(day)}"
         @keyup="${(e: KeyboardEvent) => this.handleDayKeyUp(day, e)}"
       >
-        <span class="day-label" aria-hidden="true" part="day-label"
-          >${day.getDate()}</span
-        >
+        <span class="day-label" aria-hidden="true" part="day-label">
+          ${day.getDate()}
+        </span>
+        <slot name="${getShortIsoDate(day)}"></slot>
       </td>
     `;
   }
