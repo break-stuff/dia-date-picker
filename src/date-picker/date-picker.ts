@@ -219,11 +219,7 @@ export class KsDatePicker extends LitElement {
 
   @watch('value', { waitUntilFirstUpdate: true })
   handleValueChange() {
-    const focusDate = this.value
-      ? new Date(formatDateString(this.value as string))
-      : this.focusDate
-      ? new Date(formatDateString(this.focusDate as string))
-      : this._curDate;
+    const focusDate = this.getDefaultDate();
 
     if (!this._isFocused) {
       this.setSelectedValues(focusDate);
@@ -317,6 +313,14 @@ export class KsDatePicker extends LitElement {
    * COMPONENT LOGIC
    *
    */
+
+  private getDefaultDate() {
+    return this.value
+      ? new Date(formatDateString(this.value as string))
+      : this.focusDate
+      ? new Date(formatDateString(this.focusDate as string))
+      : this._curDate;
+  }
 
   private getName(): string {
     return this.name ? this.name : this.toCamelCase(this.label || '');
@@ -426,10 +430,8 @@ export class KsDatePicker extends LitElement {
   }
 
   private resetInputValues() {
-    if (!this.$firstInput) {
-      return;
-    }
-
+    this.value = undefined;
+    this.setSelectedValues(this.getDefaultDate());
     this.setDayInput('');
     this.setMonthInput('');
     this.setYearInput('');
@@ -536,6 +538,18 @@ export class KsDatePicker extends LitElement {
       this.$secondInput?.value &&
       this.$thirdInput?.value
     );
+  }
+
+  private selectDate(date: Date) {
+    this.setSelectedValues(date);
+    this.setInputValues();
+
+    setTimeout(() => {
+      this.hide();
+      this.validateInput();
+      this.emitInput();
+      this.emitChange();
+    }, 100);
   }
 
   /**
@@ -791,19 +805,7 @@ export class KsDatePicker extends LitElement {
 
   private handleDateSelected(e: any) {
     this.setFormFieldData(e.detail);
-    if (!this._formFieldData.value) {
-      this.resetInputValues();
-    } else {
-      this.setSelectedValues(this._formFieldData.valueAsDate as Date);
-      this.setInputValues();
-    }
-
-    setTimeout(() => {
-      this.hide();
-      this.validateInput();
-      this.emitInput();
-      this.emitChange();
-    }, 100);
+    this.selectDate(this._formFieldData.valueAsDate as Date);
   }
 
   private handleDateInputFocus() {
@@ -812,6 +814,15 @@ export class KsDatePicker extends LitElement {
 
   private handleDateInputBlur() {
     setTimeout(() => (this._isFocused = this === document.activeElement));
+  }
+
+  private handleTodayClick(): void {
+    this.selectDate(new Date());
+  }
+
+  private handleClearClick(): void {
+    this.resetInputValues();
+    this.hide();
   }
 
   /**
@@ -873,7 +884,7 @@ export class KsDatePicker extends LitElement {
     `;
   }
 
-  inputTemplates(input: string, index: number) {
+  private inputTemplates(input: string, index: number) {
     if (input === 'dd') {
       const placeholder = this.dayLabel.charAt(0).toLocaleLowerCase().repeat(2);
       return html`
@@ -949,7 +960,7 @@ export class KsDatePicker extends LitElement {
     return '';
   }
 
-  dropdownTemplate() {
+  private dropdownTemplate() {
     return html`
       <div
         id="calendar-dropdown"
@@ -982,9 +993,31 @@ export class KsDatePicker extends LitElement {
           @ks-focus="${this.handleDateFocused}"
           @ks-select="${this.handleDateSelected}"
         >
-          <slot slot="prev-month-icon" name="prev-month-icon"> </slot>
           <slot></slot>
         </ks-calendar>
+
+        ${this.bottomControlsTemplate()}
+      </div>
+    `;
+  }
+
+  private bottomControlsTemplate() {
+    return html`
+      <div class="bottom-controls">
+        <button
+          class="clear"
+          part="button clear"
+          @click="${this.handleClearClick}"
+        >
+          ${this.clearLabel}
+        </button>
+        <button
+          class="today"
+          part="button today"
+          @click="${this.handleTodayClick}"
+        >
+          ${this.todayLabel}
+        </button>
       </div>
     `;
   }

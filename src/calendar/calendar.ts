@@ -47,8 +47,6 @@ import { styles } from './calendar.styles';
  * @csspart day-today - Controls styles of current day
  * @csspart selected - Controls styles of selected day
  * @csspart day-label - Controls styles of day number label
- * @csspart clear - Controls style of "Clear" button
- * @csspart today - Controls style of "Today" button
  *
  * @event {CustomEvent} ks-focus - emits the date as short ISO string when calendar date is selected
  * @event {CustomEvent} ks-select - emits the date as short ISO string when calendar date is selected
@@ -189,12 +187,8 @@ export class KsCalendar extends LitElement {
     this.dispatchEvent(new CustomEvent('ks-focus', options));
   }
 
-  private emitSelected(reset = false) {
+  private emitSelected() {
     const fieldData = this.getEmittedData();
-    if (reset) {
-      fieldData.value = undefined;
-    }
-
     const options = {
       detail: fieldData,
       bubbles: true,
@@ -305,19 +299,6 @@ export class KsCalendar extends LitElement {
     return this.lang
       ? this.lang
       : navigator.language || (navigator.languages || ['en'])[0];
-  }
-
-  private setDateForToday(): void {
-    this.pickDate(new Date());
-  }
-
-  private clearInput(): void {
-    this.value = undefined;
-    this._selectedDay = this._curDate.getDate();
-    this._selectedMonth = this._curDate.getMonth();
-    this._selectedYear = this._curDate.getFullYear();
-    this._selectedDate = this.getFocusDate();
-    this.emitSelected(true);
   }
 
   private getFocusDate(): Date {
@@ -502,11 +483,6 @@ export class KsCalendar extends LitElement {
     this.emitFocus();
   }
 
-  private beforeRender() {
-    // this.setMinMaxDates();
-    // this.setSelectedDateForRange();
-  }
-
   /**
    *
    * TEMPLATES AND RENDERING
@@ -514,12 +490,7 @@ export class KsCalendar extends LitElement {
    */
 
   render() {
-    this.beforeRender();
-
-    return html`
-      ${this.topControlsTemplate()} ${this.calendarTemplate()}
-      ${this.bottomControlsTemplate()}
-    `;
+    return html` ${this.topControlsTemplate()} ${this.calendarTemplate()} `;
   }
 
   private topControlsTemplate() {
@@ -669,23 +640,6 @@ export class KsCalendar extends LitElement {
         </span>
         <slot name="${getShortIsoDate(day)}"></slot>
       </td>
-    `;
-  }
-
-  private bottomControlsTemplate() {
-    return html`
-      <div class="bottom-controls">
-        <button class="clear" part="button clear" @click="${this.clearInput}">
-          ${this.clearLabel}
-        </button>
-        <button
-          class="today"
-          part="button today"
-          @click="${this.setDateForToday}"
-        >
-          ${this.todayLabel}
-        </button>
-      </div>
     `;
   }
 }

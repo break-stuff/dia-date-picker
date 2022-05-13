@@ -142,33 +142,7 @@ export const styles = css`
     z-index: 10;
     transform: translateY(-0.25rem);
   }
-  /* .calendar-dropdown:before {
-    border: 10px solid transparent;
-    content: '';
-    display: block;
-    height: 0;
-    position: absolute;
-    width: 0;
-    border-bottom-color: var(--ks-border-color);
-    bottom: 100%;
-    left: 25%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-  }
-  .calendar-dropdown:after {
-    border: 9px solid transparent;
-    content: '';
-    display: block;
-    height: 0;
-    position: absolute;
-    width: 0;
-    border-bottom-color: #fff;
-    bottom: 100%;
-    left: 25%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    transition: all 0.3s ease-in-out;
-  } */
+
   .calendar-dropdown.open {
     visibility: visible;
     opacity: 1;
@@ -188,5 +162,11 @@ export const styles = css`
 
   .calendar-control:focus {
     outline: none;
+  }
+
+    /* BOTTOM CONTROLS */
+    .bottom-controls {
+    display: flex;
+    justify-content: space-between;
   }
 `;

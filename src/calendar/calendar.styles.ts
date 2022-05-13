@@ -127,10 +127,4 @@ export const styles = css`
     width: 1.25rem;
     height: 1.25rem;
   }
-
-  /* BOTTOM CONTROLS */
-  .bottom-controls {
-    display: flex;
-    justify-content: space-between;
-  }
 `;
