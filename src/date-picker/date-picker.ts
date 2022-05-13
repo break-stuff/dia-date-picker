@@ -188,12 +188,6 @@ export class KsDatePicker extends LitElement {
   private _selectedYear: number = this._curDate.getFullYear();
 
   @state()
-  private _minDate?: Date;
-
-  @state()
-  private _maxDate?: Date;
-
-  @state()
   private $calendarFocusableElements?: HTMLElement[];
 
   @state()
@@ -518,19 +512,6 @@ export class KsDatePicker extends LitElement {
       day = 1;
     }
     return day;
-  }
-
-  private getValidYear(value: string) {
-    let year = Number(value);
-    if (year > 9999) {
-      year = 9999;
-    }
-
-    if (year < 1) {
-      year = 1;
-    }
-
-    return year;
   }
 
   private validateInput() {
