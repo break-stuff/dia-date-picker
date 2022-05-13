@@ -251,7 +251,6 @@ export class KsDatePicker extends LitElement {
   protected firstUpdated(): void {
     this.onComponentBlur();
     this.initInputValues();
-    this.setMinMaxDates();
     setTimeout(() => this.setCalendarElementVariables());
   }
 
@@ -379,16 +378,6 @@ export class KsDatePicker extends LitElement {
     }
 
     this.setSelectedValues(valueDate);
-  }
-
-  private setMinMaxDates() {
-    this._minDate = (
-      this.minDate ? new Date(formatDateString(this.minDate)) : null
-    ) as Date;
-
-    this._maxDate = (
-      this.maxDate ? new Date(formatDateString(this.maxDate)) : null
-    ) as Date;
   }
 
   private onComponentBlur() {
