@@ -188,7 +188,7 @@ export class KsDatePicker extends LitElement {
   private _selectedYear: number = this._curDate.getFullYear();
 
   @state()
-  private $calendarFocusableElements?: HTMLElement[];
+  private $dropDownFocusableElements?: HTMLElement[];
 
   @state()
   private $calendarFirstElement?: HTMLElement;
@@ -216,6 +216,9 @@ export class KsDatePicker extends LitElement {
 
   @query('ks-calendar')
   private $calendar?: KsCalendar;
+
+  @query('.today')
+  private $todayButton?: HTMLButtonElement;
 
   @watch('value', { waitUntilFirstUpdate: true })
   handleValueChange() {
@@ -522,14 +525,11 @@ export class KsDatePicker extends LitElement {
   }
 
   private setCalendarElementVariables() {
-    this.$calendarFocusableElements = getFocusableElements(
+    this.$dropDownFocusableElements = getFocusableElements(
       this.$calendar?.shadowRoot
     );
-    this.$calendarFirstElement = this.$calendarFocusableElements[0];
-    this.$calendarLastElement =
-      this.$calendarFocusableElements[
-        this.$calendarFocusableElements.length - 1
-      ];
+    this.$calendarFirstElement = this.$dropDownFocusableElements[0];
+    this.$calendarLastElement = this.$todayButton;
   }
 
   private hasCompletedAllFields() {
@@ -592,7 +592,7 @@ export class KsDatePicker extends LitElement {
 
   private handleDropdownTab(e: KeyboardEvent): void {
     const $focusedElement = (e.target as HTMLElement).shadowRoot
-      ?.activeElement as HTMLElement;
+      ?.activeElement as HTMLElement || e.target;
 
     if (e.shiftKey) {
       this.handleDropdownBackwardTab($focusedElement, e);
@@ -617,6 +617,7 @@ export class KsDatePicker extends LitElement {
   ): void {
     if ($focusedElement === this.$calendarLastElement) {
       e.preventDefault();
+      
       this.$calendarFirstElement?.focus();
     }
   }
