@@ -1,13 +1,13 @@
 {
-  "name": "ks-date-picker",
+  "name": "dia-date-picker",
   "version": "0.0.1",
-  "description": "Kickstand UI date picker is a light-weight and accessible date picker built with web components",
+  "description": "Dia date picker is a light-weight and accessible date picker built with web components",
   "main": "index.js",
   "authors": {
     "name": "",
     "email": ""
   },
-  "repository": "/ks-date-picker",
+  "repository": "/dia-date-picker",
   "scripts": {
     "dev": "vuepress dev src",
     "build": "vuepress build src"

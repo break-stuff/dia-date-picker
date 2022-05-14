@@ -3,7 +3,7 @@ import './index';
 
 export default {
   title: 'Components/Calendar',
-  component: 'ks-calendar',
+  component: 'dia-calendar',
   args: {
     value: '',
     lang: 'en-US',
@@ -19,13 +19,13 @@ export default {
     ['focus-date']: '',
     ['show-week-numbers']: false,
     ['first-day-of-week']: 0,
-    ['--ks-border-color']: 'rgb(var(--ks-color-light-base))',
-    ['--ks-border-radius']: '0.25rem',
-    ['--ks-disabled-color']: 'rgb(var(--ks-color-light-dark))',
-    ['--ks-error-color']: 'rgb(var(--ks-color-danger-base))',
-    ['--ks-outline']: 'var(--ks-default-outline)',
-    ['--ks-outline-offset']: '0.125rem',
-    ['--ks-primary-color']: 'rgb(var(--ks-color-primary-base))',
+    ['--dia-border-color']: 'rgb(var(--dia-color-light-base))',
+    ['--dia-border-radius']: '0.25rem',
+    ['--dia-disabled-color']: 'rgb(var(--dia-color-light-dark))',
+    ['--dia-error-color']: 'rgb(var(--dia-color-danger-base))',
+    ['--dia-outline']: 'var(--dia-default-outline)',
+    ['--dia-outline-offset']: '0.125rem',
+    ['--dia-primary-color']: 'rgb(var(--dia-color-primary-base))',
   },
   parameters: {
     actions: {
@@ -37,18 +37,18 @@ export default {
 const DefaultTemplate = (args: any) => {
   return html`
     <style>
-      ks-calendar {
-        --ks-border-color: ${args['--ks-border-color']};
-        --ks-border-radius: ${args['--ks-border-radius']};
-        --ks-disabled-color: ${args['--ks-disabled-color']};
-        --ks-error-color: ${args['--ks-error-color']};
-        --ks-outline: ${args['--ks-outline']};
-        --ks-outline-offset: ${args['--ks-outline-offset']};
-        --ks-primary-color: ${args['--ks-primary-color']};
+      dia-calendar {
+        --dia-border-color: ${args['--dia-border-color']};
+        --dia-border-radius: ${args['--dia-border-radius']};
+        --dia-disabled-color: ${args['--dia-disabled-color']};
+        --dia-error-color: ${args['--dia-error-color']};
+        --dia-outline: ${args['--dia-outline']};
+        --dia-outline-offset: ${args['--dia-outline-offset']};
+        --dia-primary-color: ${args['--dia-primary-color']};
       }
     </style>
 
-    <ks-calendar
+    <dia-calendar
       id="example"
       value="${args.value}"
       lang="${args.lang}"
@@ -64,7 +64,7 @@ const DefaultTemplate = (args: any) => {
       focus-date="${args['focus-date']}"
       ?show-week-numbers="${args['show-week-numbers']}"
       first-day-of-week="${args['first-day-of-week']}"
-    ></ks-calendar>
+    ></dia-calendar>
     <!--<span>some random inline content</span>
         <div>some random block content</div>-->
   `;
@@ -72,14 +72,14 @@ const DefaultTemplate = (args: any) => {
 
 const DaySlotTemplate = (args: any) => {
   return html`
-    <ks-calendar
+    <dia-calendar
       label="Day Slot Example"
       focus-date="2-22-2022"
     >
     <span slot="2022-02-02">$300</span>
     <span slot="2022-02-05">$100</span>
     <span slot="2022-02-15">$500 <br> <em>free</em></span>
-  </ks-calendar>
+  </dia-calendar>
   `;
 };
 

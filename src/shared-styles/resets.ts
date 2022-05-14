@@ -4,12 +4,12 @@ export default css`
   :host {
     display: inline-block;
     line-height: 1;
-    color: var(--ks-primary-color);
+    color: var(--dia-primary-color);
   }
   
   *:focus-visible {
-    outline: var(--ks-outline);
-    outline-offset: var(--ks-outline-offset);
+    outline: var(--dia-outline);
+    outline-offset: var(--dia-outline-offset);
   }
 
   /* RESETS */
@@ -21,17 +21,17 @@ export default css`
     line-height: 1.2;
     margin: 0;
     -webkit-appearance: none;
-    border-radius: var(--ks-border-radius);
+    border-radius: var(--dia-border-radius);
     border: 0;
     background-color: transparent;
-    color: rgb(var(--ks-primary-color));
+    color: rgb(var(--dia-primary-color));
   }
 
   button:focus-visible,
   input:focus-visible,
   select:focus-visible {
-    outline: var(--ks-outline);
-    outline-offset: var(--ks-outline-offset);
+    outline: var(--dia-outline);
+    outline-offset: var(--dia-outline-offset);
   }
   
   label:hover,

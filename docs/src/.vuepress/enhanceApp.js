@@ -13,6 +13,6 @@ export default ({
 }) => {
   // ...apply enhancements for the site.
   if(!isServer) {
-    import('../../../dist/ks-date-picker.es');
+    import('../../../dist/dia-date-picker.es');
   }
 }

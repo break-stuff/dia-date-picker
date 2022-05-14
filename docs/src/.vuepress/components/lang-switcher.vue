@@ -18,7 +18,7 @@
     </div>
 
     <div id="translated_datepicker" class="my-xl" style="height: 5.75rem;">
-      <ks-date-picker v-if="isVisible" :label="`${language} Input`" :lang="language"></ks-date-picker>
+      <dia-date-picker v-if="isVisible" :label="`${language} Input`" :lang="language"></dia-date-picker>
     </div>
   </div>
 </template>

@@ -30,8 +30,8 @@ export const styles = css`
 
   .main-input-controls {
     background-color: white;
-    border: solid 1px var(--ks-border-color);
-    border-radius: var(--ks-border-radius);
+    border: solid 1px var(--dia-border-color);
+    border-radius: var(--dia-border-radius);
     padding: 0 0.5rem;
     display: inline-flex;
     align-items: center;
@@ -42,13 +42,13 @@ export const styles = css`
   .main-input-controls[aria-disabled='true'],
   .main-input-controls[aria-disabled='true'] input,
   .main-input-controls[aria-disabled='true'] button {
-    background-color: var(--ks-disabled-color);
+    background-color: var(--dia-disabled-color);
     cursor: not-allowed;
   }
 
   .main-input-controls:focus-within {
-    outline: var(--ks-outline);
-    outline-offset: var(--ks-outline-offset);
+    outline: var(--dia-outline);
+    outline-offset: var(--dia-outline-offset);
   }
 
   .main-input-controls input {
@@ -93,7 +93,7 @@ export const styles = css`
     background: transparent;
     border: 0;
     font-size: 1.5rem;
-    color: var(--ks-primary-color);
+    color: var(--dia-primary-color);
     padding-top: 0.25rem;
     padding-left: 0.125rem;
     outline-offset: 0;
@@ -114,7 +114,7 @@ export const styles = css`
   .error-message {
     visibility: hidden;
     margin-top: 0.25rem;
-    color: var(--ks-error-color);
+    color: var(--dia-error-color);
     font-size: 0.9rem;
   }
 
@@ -123,7 +123,7 @@ export const styles = css`
   }
 
   [aria-invalid='true'] {
-    border-color: var(--ks-error-color);
+    border-color: var(--dia-error-color);
   }
 
   /* CALENDAR DROPDOWN */
@@ -136,7 +136,7 @@ export const styles = css`
     margin-top: -0.75rem;
     visibility: hidden;
     opacity: 0;
-    border: solid 1px var(--ks-border-color);
+    border: solid 1px var(--dia-border-color);
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
     transition: all 0.3s ease-in-out;
     z-index: 10;
@@ -151,13 +151,13 @@ export const styles = css`
   }
 
   .calendar-control {
-    --ks-border-color: inherit;
-    --ks-border-radius: inherit;
-    --ks-disabled-color: inherit;
-    --ks-error-color: inherit;
-    --ks-outline: inherit;
-    --ks-outline-offset: inherit;
-    --ks-primary-color: inherit;
+    --dia-border-color: inherit;
+    --dia-border-radius: inherit;
+    --dia-disabled-color: inherit;
+    --dia-error-color: inherit;
+    --dia-outline: inherit;
+    --dia-outline-offset: inherit;
+    --dia-primary-color: inherit;
   }
 
   .calendar-control:focus {

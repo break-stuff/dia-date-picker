@@ -17,6 +17,6 @@ sidebar: true
 
 <!-- <img :src="$withBase('/calendar.png')" alt="calendar graphic"> -->
 
-# Kickstand UI Calendar and Date Picker Components
+# Dia Calendar and Date Picker Components
 
 These components are designed from the ground up with accessibility and usability in mind. They are built using standards-based web components, so you can use them in any of your projects regardless of the framework or non-framework you are using.

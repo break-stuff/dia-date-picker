@@ -13,10 +13,10 @@
   </head>
   <body class="bg-light-light">
     <main class="bg-light-lighter mx-auto p-lg shadow-sm">
-      <h1>Kickstand UI Date Picker Component</h1>
+      <h1>Dia Date Picker Component</h1>
 
       <p>
-        This is a prototype for Kickstand UI's custom date picker. The goal of
+        This is a prototype for Dia's custom date picker. The goal of
         this component is:
       </p>
 
@@ -36,11 +36,11 @@
 
 <pre class="my-xl bg-light-light">
   <code>
-    &lt;ks-date-picker label="Default"&gt;&lt;/ks-date-picker&gt;
+    &lt;dia-date-picker label="Default"&gt;&lt;/dia-date-picker&gt;
   </code>
 </pre>
 
-      <ks-date-picker label="Default"></ks-date-picker>
+      <dia-date-picker label="Default"></dia-date-picker>
 
       <p>
         The default date picker component will provide you with an input field
@@ -63,15 +63,15 @@
 
 <pre class="my-xl bg-light-light">
   <code>
-    &lt;ks-date-picker 
+    &lt;dia-date-picker 
       label="Date Range" 
       min-date="3/5/2022" 
       max-date="3/20/2022"&gt;
-    &lt;/ks-date-picker&gt;
+    &lt;/dia-date-picker&gt;
   </code>
 </pre>
 
-      <ks-date-picker label="Date Range" min-date="3/5/2022" max-date="3/20/2022"></ks-date-picker>
+      <dia-date-picker label="Date Range" min-date="3/5/2022" max-date="3/20/2022"></dia-date-picker>
 
       <h2>Validation</h2>
 
@@ -79,14 +79,14 @@
 
 <pre class="my-xl bg-light-light">
   <code>
-    &lt;ks-date-picker 
+    &lt;dia-date-picker 
       label="Required Date" 
       required&gt;
-    &lt;/ks-date-picker&gt;
+    &lt;/dia-date-picker&gt;
   </code>
 </pre>
 
-      <ks-date-picker label="Required Date" required></ks-date-picker>
+      <dia-date-picker label="Required Date" required></dia-date-picker>
 
       <h2>Translations</h2>
 
@@ -118,7 +118,7 @@
       <input type="text" id="locale_input" value="fr-CA" />
 
       <div id="translated_datepicker" class="my-xl">
-        <ks-date-picker label="en-US Input" lang="fr-CA"></ks-date-picker>
+        <dia-date-picker label="en-US Input" lang="fr-CA"></dia-date-picker>
       </div>
 
       <p>As you can see not everything gets translated. It will need translations for the following attributes:</p>
@@ -136,12 +136,12 @@
       <p>You can display week numbers at the beginning of each week in the calendar using the <code>show-week-numbers</code> attribute.</p>
 <pre class="my-xl bg-light-light">
   <code>
-    &lt;ks-date-picker label="Default" show-week-numbers &gt;&lt;/ks-date-picker&gt;
+    &lt;dia-date-picker label="Default" show-week-numbers &gt;&lt;/dia-date-picker&gt;
   </code>
 </pre>
 
       <div id="translated_datepicker" class="my-xl">
-        <ks-date-picker label="Show Week Numbers" show-week-numbers></ks-date-picker>
+        <dia-date-picker label="Show Week Numbers" show-week-numbers></dia-date-picker>
       </div>
 
       <h2>Road Map</h2>
@@ -182,7 +182,7 @@
       const $langInput = document.querySelector('#locale_input');
       const $wrapper = document.querySelector('#translated_datepicker');
       $langInput.addEventListener('input', e => {
-        $wrapper.innerHTML = `<ks-date-picker label="${e.target.value} Input" lang="${e.target.value}"></ks-date-picker>`
+        $wrapper.innerHTML = `<dia-date-picker label="${e.target.value} Input" lang="${e.target.value}"></dia-date-picker>`
       });
     </script>
   </body>

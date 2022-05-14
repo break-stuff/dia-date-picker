@@ -22,20 +22,20 @@ import { watch } from '../utils/watchDecorator';
 import { styles } from './calendar.styles';
 
 /**
- * @tag ks-calendar
+ * @tag dia-calendar
  *
  * @summary Custom calendar element
  *
  * @slot prev-month-icon - icon in previous month button
  * @slot next-month-icon - icon in next month button
  *
- * @cssprop [--ks-border-color=rgb(var(--ks-color-light-base))] - Default border color
- * @cssprop [--ks-border-radius=0.25rem] - Default border radius
- * @cssprop [--ks-disabled-color=#8d8d8d] - Color of disabled days
- * @cssprop [--ks-error-color=rgb(var(--ks-color-danger-base))] - Color used to communicate error in the component
- * @cssprop [--ks-outline=var(--ks-default-outline)] - Default focus outline style
- * @cssprop [--ks-outline-offset=0.125rem] - Outline offset
- * @cssprop [--ks-primary-color=rgb(var(--ks-color-light-dark))] - Primary color used in the component
+ * @cssprop [--dia-border-color=rgb(var(--dia-color-light-base))] - Default border color
+ * @cssprop [--dia-border-radius=0.25rem] - Default border radius
+ * @cssprop [--dia-disabled-color=#8d8d8d] - Color of disabled days
+ * @cssprop [--dia-error-color=rgb(var(--dia-color-danger-base))] - Color used to communicate error in the component
+ * @cssprop [--dia-outline=var(--dia-default-outline)] - Default focus outline style
+ * @cssprop [--dia-outline-offset=0.125rem] - Outline offset
+ * @cssprop [--dia-primary-color=rgb(var(--dia-color-light-dark))] - Primary color used in the component
  *
  * @csspart input - Controls styles of calendar inputs (month and year)
  * @csspart button - Controls styles of buttons
@@ -52,7 +52,7 @@ import { styles } from './calendar.styles';
  * @event {CustomEvent} ks-select - emits the date as short ISO string when calendar date is selected
  *
  */
-@customElement('ks-calendar')
+@customElement('dia-calendar')
 export class KsCalendar extends LitElement {
   static styles = styles;
 
@@ -646,6 +646,6 @@ export class KsCalendar extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'ks-calendar': KsCalendar;
+    'dia-calendar': KsCalendar;
   }
 }

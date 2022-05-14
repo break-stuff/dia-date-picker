@@ -34,7 +34,7 @@ export interface DatePickerValidation {
 }
 
 /**
- * @tag ks-date-picker
+ * @tag dia-date-picker
  *
  * @summary Custom date picker
  *
@@ -42,13 +42,13 @@ export interface DatePickerValidation {
  * @slot prev-month-icon - icon in previous month button
  * @slot next-month-icon - icon in next month button
  *
- * @cssprop [--ks-border-color=rgb(var(--ks-color-light-base))] - Default border color
- * @cssprop [--ks-border-radius=0.25rem] - Default border radius
- * @cssprop [--ks-disabled-color=#8d8d8d] - Color of disabled days
- * @cssprop [--ks-error-color=rgb(var(--ks-color-danger-base))] - Color used to communicate error in the component
- * @cssprop [--ks-outline=var(--ks-default-outline)] - Default focus outline style
- * @cssprop [--ks-outline-offset=0.125rem] - Outline offset
- * @cssprop [--ks-primary-color=rgb(var(--ks-color-light-dark))] - Primary color used in the component
+ * @cssprop [--dia-border-color=rgb(var(--dia-color-light-base))] - Default border color
+ * @cssprop [--dia-border-radius=0.25rem] - Default border radius
+ * @cssprop [--dia-disabled-color=#8d8d8d] - Color of disabled days
+ * @cssprop [--dia-error-color=rgb(var(--dia-color-danger-base))] - Color used to communicate error in the component
+ * @cssprop [--dia-outline=var(--dia-default-outline)] - Default focus outline style
+ * @cssprop [--dia-outline-offset=0.125rem] - Outline offset
+ * @cssprop [--dia-primary-color=rgb(var(--dia-color-light-dark))] - Primary color used in the component
  *
  * @csspart dropdown - controls styles for the dropdown panel that contains the calendar
  * @csspart main-input - controls styles for the main input for day, month, and year
@@ -69,7 +69,7 @@ export interface DatePickerValidation {
  * @event {CustomEvent} ks-input - emits the date as short ISO string when calendar date is manually entered or focused on in the calendar
  * @event {CustomEvent} ks-change - emits the date as short ISO string when calendar date is selected
  */
-@customElement('ks-date-picker')
+@customElement('dia-date-picker')
 export class KsDatePicker extends LitElement {
   static styles = styles;
 
@@ -214,7 +214,7 @@ export class KsDatePicker extends LitElement {
   @query('.year')
   private $yearInput?: HTMLInputElement;
 
-  @query('ks-calendar')
+  @query('dia-calendar')
   private $calendar?: KsCalendar;
 
   @query('.today')
@@ -975,7 +975,7 @@ export class KsDatePicker extends LitElement {
         )}"
         @keydown="${this.handleDropdownKeyDown}"
       >
-        <ks-calendar
+        <dia-calendar
           class="calendar-control"
           .value=${getShortIsoDate(this._selectedDate as Date)}
           min-date="${this.minDate || ''}"
@@ -995,7 +995,7 @@ export class KsDatePicker extends LitElement {
           @ks-select="${this.handleDateSelected}"
         >
           <slot></slot>
-        </ks-calendar>
+        </dia-calendar>
 
         ${this.bottomControlsTemplate()}
       </div>
@@ -1026,6 +1026,6 @@ export class KsDatePicker extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'ks-date-picker': KsDatePicker;
+    'dia-date-picker': KsDatePicker;
   }
 }

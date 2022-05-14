@@ -3,7 +3,7 @@ import './index';
 
 export default {
   title: 'Components/Date Picker',
-  component: 'ks-date-picker',
+  component: 'dia-date-picker',
   args: {
     value: '',
     label: 'Select Date',
@@ -23,13 +23,13 @@ export default {
     ['focus-date']: '',
     ['show-week-numbers']: false,
     ['first-day-of-week']: 0,
-    ['--ks-border-color']: 'rgb(var(--ks-color-light-base))',
-    ['--ks-border-radius']: '0.25rem',
-    ['--ks-disabled-color']: 'rgb(var(--ks-color-light-dark))',
-    ['--ks-error-color']: 'rgb(var(--ks-color-danger-base))',
-    ['--ks-outline']: 'var(--ks-default-outline)',
-    ['--ks-outline-offset']: '0.125rem',
-    ['--ks-primary-color']: 'rgb(var(--ks-color-primary-base))',
+    ['--dia-border-color']: 'rgb(var(--dia-color-light-base))',
+    ['--dia-border-radius']: '0.25rem',
+    ['--dia-disabled-color']: 'rgb(var(--dia-color-light-dark))',
+    ['--dia-error-color']: 'rgb(var(--dia-color-danger-base))',
+    ['--dia-outline']: 'var(--dia-default-outline)',
+    ['--dia-outline-offset']: '0.125rem',
+    ['--dia-primary-color']: 'rgb(var(--dia-color-primary-base))',
   },
   parameters: {
     actions: {
@@ -41,17 +41,17 @@ export default {
 const DefaultTemplate = (args: any) => {
   return html`
     <style>
-      ks-date-picker {
-        --ks-border-color: ${args['--ks-border-color']};
-        --ks-border-radius: ${args['--ks-border-radius']};
-        --ks-disabled-color: ${args['--ks-disabled-color']};
-        --ks-error-color: ${args['--ks-error-color']};
-        --ks-outline: ${args['--ks-outline']};
-        --ks-outline-offset: ${args['--ks-outline-offset']};
-        --ks-primary-color: ${args['--ks-primary-color']};
+      dia-date-picker {
+        --dia-border-color: ${args['--dia-border-color']};
+        --dia-border-radius: ${args['--dia-border-radius']};
+        --dia-disabled-color: ${args['--dia-disabled-color']};
+        --dia-error-color: ${args['--dia-error-color']};
+        --dia-outline: ${args['--dia-outline']};
+        --dia-outline-offset: ${args['--dia-outline-offset']};
+        --dia-primary-color: ${args['--dia-primary-color']};
       }
     </style>
-    <ks-date-picker
+    <dia-date-picker
       value="${args.value}"
       label="${args.label}"
       ?required="${args.required}"
@@ -70,7 +70,7 @@ const DefaultTemplate = (args: any) => {
       focus-date="${args['focus-date']}"
       ?show-week-numbers="${args['show-week-numbers']}"
       first-day-of-week="${args['first-day-of-week']}"
-    ></ks-date-picker>
+    ></dia-date-picker>
     <!-- <span>some random inline content</span>
         <div>some random block content</div> -->
   `;

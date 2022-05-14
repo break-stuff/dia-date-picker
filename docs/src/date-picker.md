@@ -1,13 +1,13 @@
 # Date Picker
 
-The Kickstand UI date picker component is an open source input element that allows users to enter a date into input fields or by selecting a date using a calendar interface.
+The Dia date picker component is an open source input element that allows users to enter a date into input fields or by selecting a date using a calendar interface.
 
 ## Usage
 
-<ks-date-picker class="demo" label="Default"></ks-date-picker>
+<dia-date-picker class="demo" label="Default"></dia-date-picker>
 
 ```html
-<ks-date-picker label="Default"></ks-date-picker>
+<dia-date-picker label="Default"></dia-date-picker>
 ```
 
 The default date picker component will provide you with an input field and the calendar dialog. The dialog can be activated by clicking calendar icon on the right side of the input.
@@ -16,40 +16,40 @@ The default date picker component will provide you with an input field and the c
 
 Beside setting the date range on the component, you can also indicate if it is required using the <code>required</code> attribute.
 
-<ks-date-picker label="Required Date" required></ks-date-picker>
+<dia-date-picker label="Required Date" required></dia-date-picker>
 
 ```html
-<ks-date-picker label="Required Date" required></ks-date-picker>
+<dia-date-picker label="Required Date" required></dia-date-picker>
 ```
 
 ## Disabled
 
 Adding the `disabled` attribute will prevent to control from being updated or focused on.
 
-<ks-date-picker label="Disabled Date" value="2/22/2022" disabled></ks-date-picker>
+<dia-date-picker label="Disabled Date" value="2/22/2022" disabled></dia-date-picker>
 
 ```html
-<ks-date-picker label="Disabled Date" value="2/22/2022" disabled></ks-date-picker>
+<dia-date-picker label="Disabled Date" value="2/22/2022" disabled></dia-date-picker>
 ```
 
 ## Readonly
 
 Adding the `readonly` attribute will allow the input to be focused on, but the date cannot be modified and the calendar control cannot be expanded.
 
-<ks-date-picker label="Readonly Date" value="2/22/2022" readonly></ks-date-picker>
+<dia-date-picker label="Readonly Date" value="2/22/2022" readonly></dia-date-picker>
 
 ```html
-<ks-date-picker label="Readonly Date" value="2/22/2022" readonly></ks-date-picker>
+<dia-date-picker label="Readonly Date" value="2/22/2022" readonly></dia-date-picker>
 ```
 
 ## Focus Date
 
 If you don't want to set the value, but you want the calendar to be focused on a specific date initially, you can use the `focus-date` attribute.
 
-<ks-date-picker label="Focus Date" focus-date="2-22-2022"></ks-date-picker>
+<dia-date-picker label="Focus Date" focus-date="2-22-2022"></dia-date-picker>
 
 ```html
-<ks-date-picker label="Focus Date" focus-date="2-22-2022"></ks-date-picker>
+<dia-date-picker label="Focus Date" focus-date="2-22-2022"></dia-date-picker>
 ```
 
 ::: warning
@@ -60,54 +60,54 @@ This currently has a bug in the Date Picker and is being looked into.
 
 You can provide a range of available date using the `min-date` and `max-date` attributes.
 
-<ks-date-picker label="Date Range" min-date="3/5/2022" max-date="3/20/2022"></ks-date-picker>
+<dia-date-picker label="Date Range" min-date="3/5/2022" max-date="3/20/2022"></dia-date-picker>
 
 
 ```html
-<ks-date-picker label="Date Range" min-date="3/5/2022" max-date="3/20/2022"></ks-date-picker>
+<dia-date-picker label="Date Range" min-date="3/5/2022" max-date="3/20/2022"></dia-date-picker>
 ```
 
 ## Disabled Dates
 
 In order to disabled multiple dates, you can pass a comma separated list of dates to the `disabled-dates` attribute.
 
-<ks-date-picker label="Disabled Dates" disabled-dates="5/5/2022,5/8/2022, 5/19/2022, 5/25/2022"></ks-date-picker>
+<dia-date-picker label="Disabled Dates" disabled-dates="5/5/2022,5/8/2022, 5/19/2022, 5/25/2022"></dia-date-picker>
 
 ```html
-<ks-date-picker label="Disabled Dates" disabled-dates="5/5/2022,5/8/2022, 5/19/2022, 5/25/2022"></ks-date-picker>
+<dia-date-picker label="Disabled Dates" disabled-dates="5/5/2022,5/8/2022, 5/19/2022, 5/25/2022"></dia-date-picker>
 ```
 
 ## Week Numbers
 
 When the `show-week-numbers` attribute is added to the component, week numbers will appear at the beginning of each week's row indicating the week number in the year.
 
-<ks-date-picker label="Show Week Numbers" show-week-numbers></ks-date-picker>
+<dia-date-picker label="Show Week Numbers" show-week-numbers></dia-date-picker>
 
 
 ```html
-<ks-date-picker label="Show Week Numbers" show-week-numbers></ks-date-picker>
+<dia-date-picker label="Show Week Numbers" show-week-numbers></dia-date-picker>
 ```
 
 ## Disabled Days of the Week
 
 There may be occasion where only weekends need to be available or specific days of the week may not be. This can be achieved by adding a comma separated list of week days (1-7) to the `disabled-week-days` attribute.
 
-<ks-date-picker label="Disabled Weekends" disabled-week-days="1,7"></ks-date-picker>
+<dia-date-picker label="Disabled Weekends" disabled-week-days="1,7"></dia-date-picker>
 
 
 ```html
-<ks-date-picker label="Disabled Weekends" disabled-week-days="1,7"></ks-date-picker>
+<dia-date-picker label="Disabled Weekends" disabled-week-days="1,7"></dia-date-picker>
 ```
 
 ## First Day of the Week
 
 Depending on your application or your location, you may want to start the day of the week with a day other than Sunday. You can pass the number of days to off-set the week by (0-6) to the `first-day-of-week` attribute to shift the week to your preference.
 
-<ks-date-picker label="Week Starts on Monday" first-day-of-week="1"></ks-date-picker>
+<dia-date-picker label="Week Starts on Monday" first-day-of-week="1"></dia-date-picker>
 
 
 ```html
-<ks-date-picker label="Week Starts on Monday" first-day-of-week="1"></ks-date-picker>
+<dia-date-picker label="Week Starts on Monday" first-day-of-week="1"></dia-date-picker>
 ```
 
 ## Translations
@@ -151,16 +151,16 @@ This component has been decorated with the appropriate `roles`, `aria` attribute
 
 ## Attributes / Properties
 
-<attribute-docs tag="ks-date-picker" />
+<attribute-docs tag="dia-date-picker" />
 
 ## CSS Properties
 
-<css-prop-docs tag="ks-date-picker" />
+<css-prop-docs tag="dia-date-picker" />
 
 ## CSS Parts
 
-<css-parts-docs tag="ks-date-picker" />
+<css-parts-docs tag="dia-date-picker" />
 
 ## Events
 
-<events-docs tag="ks-date-picker" />
+<events-docs tag="dia-date-picker" />

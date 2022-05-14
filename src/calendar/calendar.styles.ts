@@ -39,7 +39,7 @@ export const styles = css`
     display: inline-flex;
     align-items: center;
     font-size: 1.75rem;
-    color: var(--ks-primary-color);
+    color: var(--dia-primary-color);
   }
 
   .top-controls .year-selector {
@@ -63,8 +63,8 @@ export const styles = css`
   }
 
   .week-number {
-    background-color: rgb(var(--ks-color-light-lighter));
-    color: rgb(var(--ks-color-light-lighter-text));
+    background-color: rgb(var(--dia-color-light-lighter));
+    color: rgb(var(--dia-color-light-lighter-text));
     font-weight: 600;
     width: 2rem;
   }
@@ -72,7 +72,7 @@ export const styles = css`
   .day {
     background-color: transparent;
     border: none;
-    border-radius: var(--ks-border-radius);
+    border-radius: var(--dia-border-radius);
     cursor: pointer;
     font-size: 1rem;
     height: 2em;
@@ -81,42 +81,42 @@ export const styles = css`
     padding: 0;
     vertical-align: middle;
     width: 2em;
-    color: var(--ks-primary-color);
+    color: var(--dia-primary-color);
   }
 
   .day.alt-month {
-    color: rgb(var(--ks-color-dark-lighter));
+    color: rgb(var(--dia-color-dark-lighter));
     font-style: italic;
   }
 
   .day:hover,
   .day:focus,
   .day[tabindex='0'] {
-    background-color: rgb(var(--ks-color-light-light));
-    color: rgb(var(--ks-color-light-light-text));
-    border-radius: var(--ks-border-radius);
+    background-color: rgb(var(--dia-color-light-light));
+    color: rgb(var(--dia-color-light-light-text));
+    border-radius: var(--dia-border-radius);
   }
 
   .day[aria-current='date'] {
-    border: solid 2px var(--ks-border-color);
+    border: solid 2px var(--dia-border-color);
   }
   .day[aria-selected='true'] {
-    background-color: var(--ks-primary-color);
+    background-color: var(--dia-primary-color);
     color: white;
   }
   .day[aria-selected='true']:hover {
-    background-color: var(--ks-primary-color);
+    background-color: var(--dia-primary-color);
     color: white;
   }
 
   .day[aria-disabled='true'] {
     cursor: not-allowed;
-    color: var(--ks-disabled-color);
+    color: var(--dia-disabled-color);
     background-color: transparent;
   }
 
   .day[aria-disabled='true']:hover {
-    color: var(--ks-disabled-color);
+    color: var(--dia-disabled-color);
     background-color: transparent;
   }
 
