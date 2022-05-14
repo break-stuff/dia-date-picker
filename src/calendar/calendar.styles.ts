@@ -20,18 +20,15 @@ export const styles = css`
   }
   .month-label {
     display: inline-flex;
-    align-items: stretch;
+    align-items: center;
     margin-right: 0.25rem;
-    position: relative;
   }
   .month-label select {
     min-width: 6.25rem;
   }
   .month-icon {
     pointer-events: none;
-    right: 0.25rem;
-    top: 0.5rem;
-    position: absolute;
+    margin-left: -1rem;
   }
 
   .top-controls .right-controls > button {
