@@ -70,6 +70,19 @@ const DefaultTemplate = (args: any) => {
   `;
 };
 
+const DaySlotTemplate = (args: any) => {
+  return html`
+    <ks-calendar
+      label="Day Slot Example"
+      focus-date="2-22-2022"
+    >
+    <span slot="2022-02-02">$300</span>
+    <span slot="2022-02-05">$100</span>
+    <span slot="2022-02-15">$500 <br> <em>free</em></span>
+  </ks-calendar>
+  `;
+};
+
 export const Default: any = DefaultTemplate.bind({});
 Default.args = {};
 
@@ -105,3 +118,6 @@ export const WeekNumbers: any = DefaultTemplate.bind({});
 WeekNumbers.args = {
   ['show-week-numbers']: true,
 };
+
+export const DaySlots: any = DaySlotTemplate.bind({});
+DaySlots.args = {};
