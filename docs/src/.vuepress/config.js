@@ -9,7 +9,7 @@ module.exports = {
    * Ref：https://v1.vuepress.vuejs.org/config/#description
    */
   description: description,
-  base: '/ks-datepicker/',
+  base: '/dia-date-picker/',
   /**
    * Extra tags to be injected to the page HTML `<head>`
    *
@@ -38,7 +38,7 @@ module.exports = {
     nav: [
       {
         text: 'GitHub',
-        link: 'https://github.com/break-stuff/ks-datepicker',
+        link: 'https://github.com/break-stuff/dia-date-picker',
       },
       {
         text: 'NPM',
