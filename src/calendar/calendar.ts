@@ -48,8 +48,8 @@ import { styles } from './calendar.styles';
  * @csspart selected - Controls styles of selected day
  * @csspart day-label - Controls styles of day number label
  *
- * @event {CustomEvent} ks-focus - emits the date as short ISO string when calendar date is selected
- * @event {CustomEvent} ks-select - emits the date as short ISO string when calendar date is selected
+ * @event {CustomEvent} dia-focus - emits the date as short ISO string when calendar date is selected
+ * @event {CustomEvent} dia-select - emits the date as short ISO string when calendar date is selected
  *
  */
 @customElement('dia-calendar')
@@ -184,7 +184,7 @@ export class KsCalendar extends LitElement {
       bubbles: true,
       composed: true,
     };
-    this.dispatchEvent(new CustomEvent('ks-focus', options));
+    this.dispatchEvent(new CustomEvent('dia-focus', options));
   }
 
   private emitSelected() {
@@ -194,7 +194,7 @@ export class KsCalendar extends LitElement {
       bubbles: true,
       composed: true,
     };
-    this.dispatchEvent(new CustomEvent('ks-select', options));
+    this.dispatchEvent(new CustomEvent('dia-select', options));
   }
 
   /**

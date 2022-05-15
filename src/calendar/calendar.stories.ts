@@ -29,7 +29,7 @@ export default {
   },
   parameters: {
     actions: {
-      handles: ['ks-focus', 'ks-select'],
+      handles: ['dia-focus', 'dia-select'],
     },
   },
 };

@@ -33,7 +33,7 @@ export default {
   },
   parameters: {
     actions: {
-      handles: ['ks-input', 'ks-change'],
+      handles: ['dia-input', 'dia-change'],
     },
   },
 };

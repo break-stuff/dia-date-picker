@@ -66,8 +66,8 @@ export interface DatePickerValidation {
  * @csspart clear - Controls style of "Clear" button
  * @csspart today - Controls style of "Today" button
  *
- * @event {CustomEvent} ks-input - emits the date as short ISO string when calendar date is manually entered or focused on in the calendar
- * @event {CustomEvent} ks-change - emits the date as short ISO string when calendar date is selected
+ * @event {CustomEvent} dia-input - emits the date as short ISO string when calendar date is manually entered or focused on in the calendar
+ * @event {CustomEvent} dia-change - emits the date as short ISO string when calendar date is selected
  */
 @customElement('dia-date-picker')
 export class KsDatePicker extends LitElement {
@@ -294,7 +294,7 @@ export class KsDatePicker extends LitElement {
       composed: true,
     };
 
-    this.dispatchEvent(new CustomEvent('ks-input', options));
+    this.dispatchEvent(new CustomEvent('dia-input', options));
     (this.$calendar as KsCalendar).value = getShortIsoDate(
       this._selectedDate as Date
     );
@@ -308,7 +308,7 @@ export class KsDatePicker extends LitElement {
       composed: true,
     };
 
-    this.dispatchEvent(new CustomEvent('ks-change', options));
+    this.dispatchEvent(new CustomEvent('dia-change', options));
   }
 
   /**
@@ -991,8 +991,8 @@ export class KsDatePicker extends LitElement {
           first-day-of-week="${this.firstDayOfWeek || ''}"
           lang="${this.getLocale()}"
           focus-date="${this.focusDate || ''}"
-          @ks-focus="${this.handleDateFocused}"
-          @ks-select="${this.handleDateSelected}"
+          @dia-focus="${this.handleDateFocused}"
+          @dia-select="${this.handleDateSelected}"
         >
           <slot></slot>
         </dia-calendar>
