@@ -29,13 +29,13 @@ import { styles } from './calendar.styles';
  * @slot prev-month-icon - icon in previous month button
  * @slot next-month-icon - icon in next month button
  *
- * @cssprop [--dia-border-color=rgb(var(--dia-color-light-base))] - Default border color
+ * @cssprop [--dia-border-color=#c5d1da] - Default border color
  * @cssprop [--dia-border-radius=0.25rem] - Default border radius
- * @cssprop [--dia-disabled-color=#8d8d8d] - Color of disabled days
- * @cssprop [--dia-error-color=rgb(var(--dia-color-danger-base))] - Color used to communicate error in the component
- * @cssprop [--dia-outline=var(--dia-default-outline)] - Default focus outline style
+ * @cssprop [--dia-disabled-color=#acbdca] - Color of disabled days
+ * @cssprop [--dia-error-color=#b32e2e] - Color used to communicate error in the component
+ * @cssprop [--dia-outline=solid 0.0625rem #37444F] - Default focus outline style
  * @cssprop [--dia-outline-offset=0.125rem] - Outline offset
- * @cssprop [--dia-primary-color=rgb(var(--dia-color-light-dark))] - Primary color used in the component
+ * @cssprop [--dia-primary-color=#2c5374] - Primary color used in the component
  *
  * @csspart input - Controls styles of calendar inputs (month and year)
  * @csspart button - Controls styles of buttons

@@ -30,20 +30,19 @@ export const styles = css`
 
   .main-input-controls {
     background-color: white;
-    border: solid 1px var(--dia-border-color);
+    border: solid 0.125rem var(--dia-border-color);
     border-radius: var(--dia-border-radius);
-    padding: 0 0.5rem;
+    padding-left: 0.5rem;
     display: inline-flex;
     align-items: center;
-    height: 3rem;
-    box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   .main-input-controls[aria-disabled='true'],
   .main-input-controls[aria-disabled='true'] input,
   .main-input-controls[aria-disabled='true'] button {
-    background-color: var(--dia-disabled-color);
+    background-color: var(--dia-border-color);
     cursor: not-allowed;
+    opacity: 0.75;
   }
 
   .main-input-controls:focus-within {
@@ -95,15 +94,17 @@ export const styles = css`
     font-size: 1.5rem;
     color: var(--dia-primary-color);
     padding-top: 0.25rem;
-    padding-left: 0.125rem;
-    outline-offset: 0;
+    padding: 0.5rem;
     display: inline-flex;
     align-items: center;
     margin-left: 0.125rem;
+    background-color: #f4f4f4;
+    border-radius: 0;
+    border-left: 0.0625rem solid var(--dia-border-color);
   }
 
-  .calendar-toggle .icon {
-    margin-top: -0.25rem;
+  .calendar-toggle:focus-visible {
+    outline-offset: 0;
   }
 
   .icon {

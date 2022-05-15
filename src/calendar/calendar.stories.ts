@@ -19,13 +19,13 @@ export default {
     ['focus-date']: '',
     ['show-week-numbers']: false,
     ['first-day-of-week']: 0,
-    ['--dia-border-color']: 'rgb(var(--dia-color-light-base))',
+    ['--dia-border-color']: '#c5d1da',
     ['--dia-border-radius']: '0.25rem',
-    ['--dia-disabled-color']: 'rgb(var(--dia-color-light-dark))',
-    ['--dia-error-color']: 'rgb(var(--dia-color-danger-base))',
-    ['--dia-outline']: 'var(--dia-default-outline)',
+    ['--dia-disabled-color']: '#acbdca',
+    ['--dia-error-color']: '#b32e2e',
+    ['--dia-outline']: 'solid 0.0625rem #37444F',
     ['--dia-outline-offset']: '0.125rem',
-    ['--dia-primary-color']: 'rgb(var(--dia-color-primary-base))',
+    ['--dia-primary-color']: '#004884',
   },
   parameters: {
     actions: {
