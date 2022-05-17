@@ -46,8 +46,8 @@ module.exports = {
       },
     ],
     sidebar: [
-      ['/calendar', 'Calendar'],
       ['/date-picker', 'Date Picker'],
+      ['/calendar', 'Calendar'],
     ],
   },
 

@@ -977,7 +977,7 @@ export class KsDatePicker extends LitElement {
       >
         <dia-calendar
           class="calendar-control"
-          .value=${getShortIsoDate(this._selectedDate as Date)}
+          value=${this.value || ''}
           min-date="${this.minDate || ''}"
           max-date="${this.maxDate || ''}"
           day-label="${this.dayLabel}"

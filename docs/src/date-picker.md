@@ -52,10 +52,6 @@ If you don't want to set the value, but you want the calendar to be focused on a
 <dia-date-picker label="Focus Date" focus-date="2-22-2022"></dia-date-picker>
 ```
 
-::: warning
-This currently has a bug in the Date Picker and is being looked into. 
-:::
-
 ## Min/Max Dates
 
 You can provide a range of available date using the `min-date` and `max-date` attributes.
