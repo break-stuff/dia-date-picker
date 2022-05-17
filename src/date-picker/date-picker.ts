@@ -234,11 +234,6 @@ export class KsDatePicker extends LitElement {
     return this.value ? new Date(formatDateString(this.value)) : undefined;
   }
 
-  get validate() {
-    this.validateInput();
-    return this._formFieldData;
-  }
-
   /**
    *
    * LIFECYCLE HOOKS
@@ -273,6 +268,11 @@ export class KsDatePicker extends LitElement {
     this._expanded = false;
     setTimeout(() => this.$firstInput?.focus());
     this.value = getShortIsoDate(this._selectedDate as Date);
+  }
+
+  public validate() {
+    this.validateInput();
+    return this._formFieldData;
   }
 
   /**
@@ -814,7 +814,12 @@ export class KsDatePicker extends LitElement {
   }
 
   private handleDateInputBlur() {
-    setTimeout(() => (this._isFocused = this === document.activeElement));
+    setTimeout(() => {
+      this._isFocused = this === document.activeElement;
+      if(!this._isFocused) {
+        this.validate();
+      }
+    });
   }
 
   private handleTodayClick(): void {
@@ -889,7 +894,7 @@ export class KsDatePicker extends LitElement {
     if (input === 'dd') {
       const placeholder = this.dayLabel.charAt(0).toLocaleLowerCase().repeat(2);
       return html`
-        <label for="day" class="sr-only">${this.dayLabel}</label>
+        <label for="input_${index}" class="sr-only">${this.dayLabel}</label>
         <input
           id="input_${index}"
           class="day"
@@ -914,7 +919,7 @@ export class KsDatePicker extends LitElement {
         .toLocaleLowerCase()
         .repeat(2);
       return html`
-        <label for="month" class="sr-only">${this.monthLabel}</label>
+        <label for="input_${index}" class="sr-only">${this.monthLabel}</label>
         <input
           id="input_${index}"
           class="month"
@@ -939,7 +944,7 @@ export class KsDatePicker extends LitElement {
         .toLocaleLowerCase()
         .repeat(4);
       return html`
-        <label for="year" class="sr-only">${this.yearLabel}</label>
+        <label for="input_${index}" class="sr-only">${this.yearLabel}</label>
         <input
           id="input_${index}"
           class="year"
