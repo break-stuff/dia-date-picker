@@ -29,7 +29,11 @@ Adding the `disabled` attribute will prevent to control from being updated or fo
 <dia-date-picker label="Disabled Date" value="2/22/2022" disabled></dia-date-picker>
 
 ```html
-<dia-date-picker label="Disabled Date" value="2/22/2022" disabled></dia-date-picker>
+<dia-date-picker
+  label="Disabled Date"
+  value="2/22/2022"
+  disabled
+></dia-date-picker>
 ```
 
 ## Readonly
@@ -39,7 +43,11 @@ Adding the `readonly` attribute will allow the input to be focused on, but the d
 <dia-date-picker label="Readonly Date" value="2/22/2022" readonly></dia-date-picker>
 
 ```html
-<dia-date-picker label="Readonly Date" value="2/22/2022" readonly></dia-date-picker>
+<dia-date-picker
+  label="Readonly Date"
+  value="2/22/2022"
+  readonly
+></dia-date-picker>
 ```
 
 ## Focus Date
@@ -58,9 +66,12 @@ You can provide a range of available date using the `min-date` and `max-date` at
 
 <dia-date-picker label="Date Range" min-date="3/5/2022" max-date="3/20/2022"></dia-date-picker>
 
-
 ```html
-<dia-date-picker label="Date Range" min-date="3/5/2022" max-date="3/20/2022"></dia-date-picker>
+<dia-date-picker
+  label="Date Range"
+  min-date="3/5/2022"
+  max-date="3/20/2022"
+></dia-date-picker>
 ```
 
 ## Disabled Dates
@@ -70,7 +81,10 @@ In order to disabled multiple dates, you can pass a comma separated list of date
 <dia-date-picker label="Disabled Dates" disabled-dates="5/5/2022,5/8/2022, 5/19/2022, 5/25/2022"></dia-date-picker>
 
 ```html
-<dia-date-picker label="Disabled Dates" disabled-dates="5/5/2022,5/8/2022, 5/19/2022, 5/25/2022"></dia-date-picker>
+<dia-date-picker
+  label="Disabled Dates"
+  disabled-dates="5/5/2022,5/8/2022, 5/19/2022, 5/25/2022"
+></dia-date-picker>
 ```
 
 ## Week Numbers
@@ -78,7 +92,6 @@ In order to disabled multiple dates, you can pass a comma separated list of date
 When the `show-week-numbers` attribute is added to the component, week numbers will appear at the beginning of each week's row indicating the week number in the year.
 
 <dia-date-picker label="Show Week Numbers" show-week-numbers></dia-date-picker>
-
 
 ```html
 <dia-date-picker label="Show Week Numbers" show-week-numbers></dia-date-picker>
@@ -90,9 +103,11 @@ There may be occasion where only weekends need to be available or specific days 
 
 <dia-date-picker label="Disabled Weekends" disabled-week-days="1,7"></dia-date-picker>
 
-
 ```html
-<dia-date-picker label="Disabled Weekends" disabled-week-days="1,7"></dia-date-picker>
+<dia-date-picker
+  label="Disabled Weekends"
+  disabled-week-days="1,7"
+></dia-date-picker>
 ```
 
 ## First Day of the Week
@@ -101,9 +116,11 @@ Depending on your application or your location, you may want to start the day of
 
 <dia-date-picker label="Week Starts on Monday" first-day-of-week="1"></dia-date-picker>
 
-
 ```html
-<dia-date-picker label="Week Starts on Monday" first-day-of-week="1"></dia-date-picker>
+<dia-date-picker
+  label="Week Starts on Monday"
+  first-day-of-week="1"
+></dia-date-picker>
 ```
 
 ## Translations
@@ -126,7 +143,6 @@ These components have been built form the ground up with accessibility in mind. 
 
 ### Keyboard Navigation
 
-
 #### Date Picker Input
 
 When focused on the main input, users can use <kbd>LEFT</kbd> and <kbd>RIGHT</kbd> arrow keys to move between day, month, and year input fields. Basic <kbd>TAB</kbd> functionality will also enable users to switch back and forth.
@@ -137,7 +153,7 @@ When focused on the main input, users can press the <kbd>SPACE</kbd> key to trig
 
 #### Date Picker Dialog
 
-Once the calendar dialog is open you can navigate the days in the calendar using the <kbd>ARROW</kbd> keys and the rest of the controls in the dialog using the <kbd>TAB</kbd> key. 
+Once the calendar dialog is open you can navigate the days in the calendar using the <kbd>ARROW</kbd> keys and the rest of the controls in the dialog using the <kbd>TAB</kbd> key.
 
 If the value or focus date has been set and the user has focused on another date, pressing the <kbd>ESC</kbd> key will reset the date back to the originally focused date. Pressing the <kbd>ESC</kbd> key again will close the dialog. Otherwise, pressing the <kbd>ESC</kbd> key will close the dialog and set the focus back on the main input.
 

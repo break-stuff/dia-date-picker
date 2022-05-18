@@ -26,7 +26,6 @@ You can provide a range of available date using the `min-date` and `max-date` at
 
 <dia-calendar min-date="3/5/2022" max-date="3/20/2022"></dia-calendar>
 
-
 ```html
 <dia-calendar min-date="3/5/2022" max-date="3/20/2022"></dia-calendar>
 ```
@@ -38,7 +37,9 @@ In order to disabled multiple dates, you can pass a comma separated list of date
 <dia-calendar disabled-dates="5/5/2022,5/8/2022, 5/19/2022, 5/25/2022"></dia-calendar>
 
 ```html
-<dia-calendar disabled-dates="5/5/2022,5/8/2022, 5/19/2022, 5/25/2022"></dia-calendar>
+<dia-calendar
+  disabled-dates="5/5/2022,5/8/2022, 5/19/2022, 5/25/2022"
+></dia-calendar>
 ```
 
 ## Week Numbers
@@ -46,7 +47,6 @@ In order to disabled multiple dates, you can pass a comma separated list of date
 When the `show-week-numbers` attribute is added to the component, week numbers will appear at the beginning of each week's row indicating the week number in the year.
 
 <dia-calendar show-week-numbers></dia-calendar>
-
 
 ```html
 <dia-calendar show-week-numbers></dia-calendar>
@@ -58,7 +58,6 @@ There may be occasion where only weekends need to be available or specific days 
 
 <dia-calendar disabled-week-days="1,7"></dia-calendar>
 
-
 ```html
 <dia-calendar disabled-week-days="1,7"></dia-calendar>
 ```
@@ -68,7 +67,6 @@ There may be occasion where only weekends need to be available or specific days 
 Depending on your application or your location, you may want to start the day of the week with a day other than Sunday. You can pass the number of days to off-set the week by (0-6) to the `first-day-of-week` attribute to shift the week to your preference.
 
 <dia-calendar first-day-of-week="1"></dia-calendar>
-
 
 ```html
 <dia-calendar first-day-of-week="1"></dia-calendar>
@@ -82,7 +80,7 @@ These components have been built form the ground up with accessibility in mind. 
 
 #### Date Picker Dialog
 
-You can navigate the days in the calendar using the <kbd>ARROW</kbd> keys and the rest of the controls using the <kbd>TAB</kbd> key. 
+You can navigate the days in the calendar using the <kbd>ARROW</kbd> keys and the rest of the controls using the <kbd>TAB</kbd> key.
 
 ### Screen Readers
 
