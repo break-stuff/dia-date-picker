@@ -1,3 +1,5 @@
+import reactify from 'cem-plugin-reactify';
+
 export default {
   /** Globs to analyze */
   globs: ['src/**/calendar.ts', 'src/**/date-picker.ts'],
@@ -18,7 +20,18 @@ export default {
   /** Enable special handling for stencil */
   stencil: false,
   /** Provide custom plugins */
-  plugins: [removeMembers()],
+  plugins: [
+    reactify({
+      /** Directory to write the React wrappers to, defaults to `legacy` */
+      outdir: 'react',
+
+      /** Provide an attribute mapping to avoid using JS/React reserved keywords */
+      attributeMapping: {
+        for: '_for',
+      },
+    }),
+    removeMembers(),
+  ],
 
   /** Overrides default module creation: */
   //   overrideModuleCreation: ({ ts, globs }) => {

@@ -9,7 +9,9 @@
   "types": "types/index.d.ts",
   "files": [
     "dist",
-    "types"
+    "types",
+    "react",
+    "custom-elements.json"
   ],
   "scripts": {
     "clean": "rimraf dist",
@@ -54,6 +56,7 @@
     "@web/test-runner-playwright": "^0.8.8",
     "autoprefixer": "^10.4.3",
     "babel-loader": "^8.2.3",
+    "cem-plugin-reactify": "^0.0.2",
     "cssnano": "^5.1.4",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
@@ -70,6 +73,7 @@
     "rollup-plugin-postcss-lit": "^2.0.0",
     "sass": "^1.49.9",
     "storybook-builder-vite": "^0.1.17",
+    "ts-lit-plugin": "^1.2.1",
     "typescript": "^4.5.4",
     "vite": "^2.8.0"
   },
