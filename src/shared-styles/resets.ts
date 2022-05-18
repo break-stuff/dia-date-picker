@@ -24,7 +24,7 @@ export default css`
     border-radius: var(--dia-border-radius);
     border: 0;
     background-color: transparent;
-    color: rgb(var(--dia-primary-color));
+    color: var(--dia-primary-color);
   }
 
   button:focus-visible,

@@ -9,5 +9,7 @@ export default css`
     --dia-outline: solid 0.0625rem #37444F;
     --dia-outline-offset: 0.125rem;
     --dia-primary-color: #004884;
+    --dia-alt-day-color: #54575a;
+    --dia-alt-background-color: #f4f4f4;
   }
 `;

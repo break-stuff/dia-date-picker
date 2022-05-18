@@ -63,8 +63,7 @@ export const styles = css`
   }
 
   .week-number {
-    background-color: rgb(var(--dia-color-light-lighter));
-    color: rgb(var(--dia-color-light-lighter-text));
+    background-color: var(--dia-alt-background-color);
     font-weight: 600;
     width: 2rem;
   }
@@ -85,15 +84,14 @@ export const styles = css`
   }
 
   .day.alt-month {
-    color: rgb(var(--dia-color-dark-lighter));
+    color: var(--dia-alt-day-color);
     font-style: italic;
   }
 
   .day:hover,
   .day:focus,
   .day[tabindex='0'] {
-    background-color: rgb(var(--dia-color-light-light));
-    color: rgb(var(--dia-color-light-light-text));
+    background-color: var(--dia-alt-background-color);
     border-radius: var(--dia-border-radius);
   }
 

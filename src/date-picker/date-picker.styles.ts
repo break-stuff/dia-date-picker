@@ -60,7 +60,6 @@ export const styles = css`
   }
 
   .main-input-controls input::placeholder {
-    color: rgb(89, 109, 127);
     font-style: italic;
     opacity: 0.7;
     letter-spacing: 0.125rem;
@@ -98,7 +97,7 @@ export const styles = css`
     display: inline-flex;
     align-items: center;
     margin-left: 0.125rem;
-    background-color: #f4f4f4;
+    background-color: var(--dia-alt-background-color);
     border-radius: 0;
     border-left: 0.0625rem solid var(--dia-border-color);
   }
