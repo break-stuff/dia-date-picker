@@ -667,6 +667,9 @@ export class KsDatePicker extends LitElement {
 
   private handleYearKeyDown(e: KeyboardEvent, index: number) {
     switch (e.key) {
+      case 'Shift':
+      case 'Tab':
+        break;
       case 'ArrowUp':
       case 'ArrowDown':
         e.preventDefault();
@@ -712,6 +715,9 @@ export class KsDatePicker extends LitElement {
 
   private handleMonthKeyUp(e: KeyboardEvent, index: number) {
     switch (e.key) {
+      case 'Shift':
+      case 'Tab':
+        break;
       case 'ArrowLeft':
         this.goToPrevInput(index);
         break;
@@ -732,6 +738,9 @@ export class KsDatePicker extends LitElement {
 
   private handleDayKeyUp(e: KeyboardEvent, index: number) {
     switch (e.key) {
+      case 'Shift':
+      case 'Tab':
+        break;
       case 'ArrowLeft':
         this.goToPrevInput(index);
         break;
