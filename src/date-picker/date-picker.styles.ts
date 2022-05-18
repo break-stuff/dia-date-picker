@@ -30,8 +30,8 @@ export const styles = css`
 
   .main-input-controls {
     background-color: white;
-    border: solid 0.125rem var(--dia-border-color);
-    border-radius: var(--dia-border-radius);
+    border: solid 0.125rem var(--border-color);
+    border-radius: var(--border-radius);
     padding-left: 0.5rem;
     display: inline-flex;
     align-items: center;
@@ -40,14 +40,14 @@ export const styles = css`
   .main-input-controls[aria-disabled='true'],
   .main-input-controls[aria-disabled='true'] input,
   .main-input-controls[aria-disabled='true'] button {
-    background-color: var(--dia-border-color);
+    background-color: var(--border-color);
     cursor: not-allowed;
     opacity: 0.75;
   }
 
   .main-input-controls:focus-within {
-    outline: var(--dia-outline);
-    outline-offset: var(--dia-outline-offset);
+    outline: var(--outline);
+    outline-offset: var(--outline-offset);
   }
 
   .main-input-controls input {
@@ -91,15 +91,15 @@ export const styles = css`
     background: transparent;
     border: 0;
     font-size: 1.5rem;
-    color: var(--dia-primary-color);
+    color: var(--primary-color);
     padding-top: 0.25rem;
     padding: 0.5rem;
     display: inline-flex;
     align-items: center;
     margin-left: 0.125rem;
-    background-color: var(--dia-alt-background-color);
+    background-color: var(--alt-background-color);
     border-radius: 0;
-    border-left: 0.0625rem solid var(--dia-border-color);
+    border-left: 0.0625rem solid var(--border-color);
   }
 
   .calendar-toggle:focus-visible {
@@ -114,7 +114,7 @@ export const styles = css`
   .error-message {
     visibility: hidden;
     margin-top: 0.25rem;
-    color: var(--dia-error-color);
+    color: var(--error-color);
     font-size: 0.9rem;
   }
 
@@ -123,7 +123,7 @@ export const styles = css`
   }
 
   [aria-invalid='true'] {
-    border-color: var(--dia-error-color);
+    border-color: var(--error-color);
   }
 
   /* CALENDAR DROPDOWN */
@@ -136,7 +136,7 @@ export const styles = css`
     margin-top: -0.75rem;
     visibility: hidden;
     opacity: 0;
-    border: solid 1px var(--dia-border-color);
+    border: solid 1px var(--border-color);
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
     transition: all 0.3s ease-in-out;
     z-index: 10;
@@ -151,13 +151,13 @@ export const styles = css`
   }
 
   .calendar-control {
-    --dia-border-color: inherit;
-    --dia-border-radius: inherit;
-    --dia-disabled-color: inherit;
-    --dia-error-color: inherit;
-    --dia-outline: inherit;
-    --dia-outline-offset: inherit;
-    --dia-primary-color: inherit;
+    --border-color: inherit;
+    --border-radius: inherit;
+    --disabled-color: inherit;
+    --error-color: inherit;
+    --outline: inherit;
+    --outline-offset: inherit;
+    --primary-color: inherit;
   }
 
   .calendar-control:focus {

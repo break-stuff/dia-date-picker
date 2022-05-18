@@ -23,13 +23,13 @@ export default {
     ['focus-date']: '',
     ['show-week-numbers']: false,
     ['first-day-of-week']: 0,
-    ['--dia-border-color']: '#c5d1da',
-    ['--dia-border-radius']: '0.25rem',
-    ['--dia-disabled-color']: '#acbdca',
-    ['--dia-error-color']: '#b32e2e',
-    ['--dia-outline']: 'solid 0.0625rem #37444F',
-    ['--dia-outline-offset']: '0.125rem',
-    ['--dia-primary-color']: '#004884',
+    ['--border-color']: '#c5d1da',
+    ['--border-radius']: '0.25rem',
+    ['--disabled-color']: '#acbdca',
+    ['--error-color']: '#b32e2e',
+    ['--outline']: 'solid 0.0625rem #37444F',
+    ['--outline-offset']: '0.125rem',
+    ['--primary-color']: '#004884',
   },
   parameters: {
     actions: {
@@ -42,13 +42,13 @@ const DefaultTemplate = (args: any) => {
   return html`
     <style>
       dia-date-picker {
-        --dia-border-color: ${args['--dia-border-color']};
-        --dia-border-radius: ${args['--dia-border-radius']};
-        --dia-disabled-color: ${args['--dia-disabled-color']};
-        --dia-error-color: ${args['--dia-error-color']};
-        --dia-outline: ${args['--dia-outline']};
-        --dia-outline-offset: ${args['--dia-outline-offset']};
-        --dia-primary-color: ${args['--dia-primary-color']};
+        --border-color: ${args['--border-color']};
+        --border-radius: ${args['--border-radius']};
+        --disabled-color: ${args['--disabled-color']};
+        --error-color: ${args['--error-color']};
+        --outline: ${args['--outline']};
+        --outline-offset: ${args['--outline-offset']};
+        --primary-color: ${args['--primary-color']};
       }
     </style>
     <dia-date-picker

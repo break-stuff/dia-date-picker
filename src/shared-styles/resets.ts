@@ -4,12 +4,12 @@ export default css`
   :host {
     display: inline-block;
     line-height: 1;
-    color: var(--dia-primary-color);
+    color: var(--primary-color);
   }
   
   *:focus-visible {
-    outline: var(--dia-outline);
-    outline-offset: var(--dia-outline-offset);
+    outline: var(--outline);
+    outline-offset: var(--outline-offset);
   }
 
   /* RESETS */
@@ -21,17 +21,17 @@ export default css`
     line-height: 1.2;
     margin: 0;
     -webkit-appearance: none;
-    border-radius: var(--dia-border-radius);
+    border-radius: var(--border-radius);
     border: 0;
     background-color: transparent;
-    color: var(--dia-primary-color);
+    color: var(--primary-color);
   }
 
   button:focus-visible,
   input:focus-visible,
   select:focus-visible {
-    outline: var(--dia-outline);
-    outline-offset: var(--dia-outline-offset);
+    outline: var(--outline);
+    outline-offset: var(--outline-offset);
   }
   
   label:hover,

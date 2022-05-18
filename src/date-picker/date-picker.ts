@@ -42,13 +42,13 @@ export interface DatePickerValidation {
  * @slot prev-month-icon - icon in previous month button
  * @slot next-month-icon - icon in next month button
  *
- * @cssprop [--dia-border-color=#c5d1da] - Default border color
- * @cssprop [--dia-border-radius=0.25rem] - Default border radius
- * @cssprop [--dia-disabled-color=#acbdca] - Color of disabled days
- * @cssprop [--dia-error-color=#b32e2e] - Color used to communicate error in the component
- * @cssprop [--dia-outline=0.0625rem #37444F] - Default focus outline style
- * @cssprop [--dia-outline-offset=0.125rem] - Outline offset
- * @cssprop [--dia-primary-color=#004884] - Primary color used in the component
+ * @cssprop [--border-color=#c5d1da] - Default border color
+ * @cssprop [--border-radius=0.25rem] - Default border radius
+ * @cssprop [--disabled-color=#acbdca] - Color of disabled days
+ * @cssprop [--error-color=#b32e2e] - Color used to communicate error in the component
+ * @cssprop [--outline=solid 0.0625rem #37444F] - Default focus outline style
+ * @cssprop [--outline-offset=0.125rem] - Outline offset
+ * @cssprop [--primary-color=#004884] - Primary color used in the component
  *
  * @csspart dropdown - controls styles for the dropdown panel that contains the calendar
  * @csspart main-input - controls styles for the main input for day, month, and year
