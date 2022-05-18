@@ -5,7 +5,7 @@ import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import '../calendar';
 
-import { getFocusableElements } from '../utils/domUtils';
+import { getFocusableElements, keys } from '../utils/domUtils';
 import {
   getShortIsoDate,
   getMonthLabel,
@@ -579,10 +579,10 @@ export class DiaDatePicker extends LitElement {
 
   private handleDropdownKeyDown(e: KeyboardEvent): void {
     switch (e.key) {
-      case 'Tab':
+      case keys.Tab:
         this.handleDropdownTab(e);
         break;
-      case 'Escape':
+      case keys.Escape:
         this.handleDropdownEscKey();
         break;
       default:
@@ -631,7 +631,7 @@ export class DiaDatePicker extends LitElement {
   }
 
   private handleInputKeyDown(e: KeyboardEvent) {
-    if (e.key === ' ') {
+    if (e.key === keys.Space) {
       e.preventDefault();
       return false;
     }
@@ -645,7 +645,7 @@ export class DiaDatePicker extends LitElement {
     this._selectedYear =
       formattedValue > 9999 ? 9999 : formattedValue < 1 ? 1 : formattedValue;
 
-    if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown' && value.length === 4) {
+    if (e.key !== keys.ArrowUp && e.key !== keys.ArrowDown && value.length === 4) {
       this.setYearInput();
       this.goToNextInput(index);
       this.emitInput();
@@ -654,10 +654,10 @@ export class DiaDatePicker extends LitElement {
 
   private handleYearKeyUp(e: KeyboardEvent, index: number) {
     switch (e.key) {
-      case 'ArrowLeft':
+      case keys.ArrowLeft:
         this.goToPrevInput(index);
         break;
-      case 'ArrowRight':
+      case keys.ArrowRight:
         this.goToNextInput(index);
         break;
       default:
@@ -667,17 +667,17 @@ export class DiaDatePicker extends LitElement {
 
   private handleYearKeyDown(e: KeyboardEvent, index: number) {
     switch (e.key) {
-      case 'Shift':
-      case 'Tab':
+      case keys.Shift:
+      case keys.Tab:
         break;
-      case 'ArrowUp':
-      case 'ArrowDown':
+      case keys.ArrowUp:
+      case keys.ArrowDown:
         e.preventDefault();
-        e.key === 'ArrowUp' ? this._selectedYear++ : this._selectedYear--;
+        e.key === keys.ArrowUp ? this._selectedYear++ : this._selectedYear--;
         this.setYearInput();
         this.emitInput();
         break;
-      case ' ':
+      case keys.Space:
         if (!this.disabled && !this.readonly) {
           this.show();
         }
@@ -702,8 +702,8 @@ export class DiaDatePicker extends LitElement {
     this._selectedMonth = this.getValidMonth(value);
 
     if (
-      e.key !== 'ArrowUp' &&
-      e.key !== 'ArrowDown' &&
+      e.key !== keys.ArrowUp &&
+      e.key !== keys.ArrowDown &&
       (value.length > 1 || this._selectedMonth > 0)
     ) {
       this.setMonthInput();
@@ -715,16 +715,16 @@ export class DiaDatePicker extends LitElement {
 
   private handleMonthKeyUp(e: KeyboardEvent, index: number) {
     switch (e.key) {
-      case 'Shift':
-      case 'Tab':
+      case keys.Shift:
+      case keys.Tab:
         break;
-      case 'ArrowLeft':
+      case keys.ArrowLeft:
         this.goToPrevInput(index);
         break;
-      case 'ArrowRight':
+      case keys.ArrowRight:
         this.goToNextInput(index);
         break;
-      case ' ':
+      case keys.Space:
         e.preventDefault();
         if (!this.disabled && !this.readonly) {
           this.show();
@@ -738,16 +738,16 @@ export class DiaDatePicker extends LitElement {
 
   private handleDayKeyUp(e: KeyboardEvent, index: number) {
     switch (e.key) {
-      case 'Shift':
-      case 'Tab':
+      case keys.Shift:
+      case keys.Tab:
         break;
-      case 'ArrowLeft':
+      case keys.ArrowLeft:
         this.goToPrevInput(index);
         break;
-      case 'ArrowRight':
+      case keys.ArrowRight:
         this.goToNextInput(index);
         break;
-      case ' ':
+      case keys.Space:
         if (!this.disabled && !this.readonly) {
           this.show();
         }
@@ -768,8 +768,8 @@ export class DiaDatePicker extends LitElement {
     this._selectedDay = this.getValidDay(value);
 
     if (
-      e.key !== 'ArrowUp' &&
-      e.key !== 'ArrowDown' &&
+      e.key !== keys.ArrowUp &&
+      e.key !== keys.ArrowDown &&
       (value.length > 1 || this._selectedDay > 3)
     ) {
       this.setDayInput();

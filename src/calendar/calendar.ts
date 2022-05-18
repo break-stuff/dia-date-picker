@@ -17,6 +17,7 @@ import {
   getDaysInMonth,
 } from '../utils/dateUtils';
 import icon from '../utils/icons';
+import { keys } from "../utils/domUtils";
 import { watch } from '../utils/watchDecorator';
 
 import { styles } from './calendar.styles';
@@ -381,22 +382,22 @@ export class DiaCalendar extends LitElement {
     let newDate: Date = new Date();
 
     switch (e.key) {
-      case 'ArrowUp':
+      case keys.ArrowUp:
         newDate = addDaysToDate(day, -7);
         break;
-      case 'ArrowDown':
+      case keys.ArrowDown:
         newDate = addDaysToDate(day, 7);
         break;
-      case 'ArrowLeft':
+      case keys.ArrowLeft:
         newDate = addDaysToDate(day, -1);
         break;
-      case 'ArrowRight':
+      case keys.ArrowRight:
         newDate = addDaysToDate(day, 1);
         break;
-      case 'Enter':
+      case keys.Enter:
         this.pickDate(day);
         return;
-      case 'Escape':
+      case keys.Escape:
         e.preventDefault();
         newDate = this._selectedValue ?? (this._curDate as Date);
         break;
@@ -414,12 +415,12 @@ export class DiaCalendar extends LitElement {
   }
 
   private handleDayKeyDown(e: KeyboardEvent) {
-    if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Escape') {
+    if (e.key === keys.ArrowDown || e.key === keys.ArrowUp || e.key === keys.Escape) {
       e.preventDefault();
     }
 
     if (
-      e.key === 'Escape' &&
+      e.key === keys.Escape &&
       this._selectedDate?.toLocaleDateString() !==
         this._selectedValue?.toLocaleDateString()
     ) {
