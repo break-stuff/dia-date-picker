@@ -15,7 +15,7 @@ sidebar: true
 # footer: Made with ❤️ by @stuffbreaker
 ---
 
-<!-- <img :src="$withBase('/calendar.png')" alt="calendar graphic"> -->
+<img :src="$withBase('/calendar.png')" alt="calendar graphic">
 
 # Dia Calendar and Date Picker Components
 
