@@ -1,12 +1,12 @@
 import { fixture, assert } from '@open-wc/testing';
-import { KsDatePicker } from './index';
+import { DiaDatePicker } from './index';
 
-const tag = new KsDatePicker().tagName;
+const tag = new DiaDatePicker().tagName;
 
 describe('date picker accessibility', () => {
   it('test basic element accessibility', async () => {
     // Arrange
-    const $el = await fixture<KsDatePicker>(
+    const $el = await fixture<DiaDatePicker>(
       `<${tag} label="Select Date"></${tag}>`
     );
 
@@ -18,7 +18,7 @@ describe('date picker accessibility', () => {
 
   it('check accessibility when menu is open', async () => {
     // Arrange
-    const $el = await fixture<KsDatePicker>(
+    const $el = await fixture<DiaDatePicker>(
       `<${tag} label="Select Date"></${tag}>`
     );
     const $calendarToggle = $el.shadowRoot?.querySelector(
@@ -34,7 +34,7 @@ describe('date picker accessibility', () => {
 
   it('decreases the count on button click', async () => {
     // Arrange
-    const $el = await fixture<KsDatePicker>(`<${tag}></${tag}>`);
+    const $el = await fixture<DiaDatePicker>(`<${tag}></${tag}>`);
     const $calendarToggle = $el.shadowRoot?.querySelector(
       '.calendar-toggle'
     ) as HTMLButtonElement;
@@ -52,7 +52,7 @@ describe('date picker accessibility', () => {
 describe('date picker format', () => {
   it('should have "mm/dd/yyyy" format when "lang" is "en-US"', async () => {
     // Arrange
-    const $el = await fixture<KsDatePicker>(
+    const $el = await fixture<DiaDatePicker>(
       `<${tag} label="Select Date" lang="en-US"></${tag}>`
     );
 

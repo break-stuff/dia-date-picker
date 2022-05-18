@@ -17,7 +17,7 @@ import {
 import { styles } from './date-picker.styles';
 import icon from '../utils/icons';
 import { watch } from '../utils/watchDecorator';
-import { KsCalendar } from '../calendar';
+import { DiaCalendar } from '../calendar';
 
 export interface FormFieldData {
   name?: string;
@@ -70,7 +70,7 @@ export interface DatePickerValidation {
  * @event {CustomEvent} dia-change - emits the date as short ISO string when calendar date is selected
  */
 @customElement('dia-date-picker')
-export class KsDatePicker extends LitElement {
+export class DiaDatePicker extends LitElement {
   static styles = styles;
 
   /** selected value in input */
@@ -215,7 +215,7 @@ export class KsDatePicker extends LitElement {
   private $yearInput?: HTMLInputElement;
 
   @query('dia-calendar')
-  private $calendar?: KsCalendar;
+  private $calendar?: DiaCalendar;
 
   @query('.today')
   private $todayButton?: HTMLButtonElement;
@@ -295,7 +295,7 @@ export class KsDatePicker extends LitElement {
     };
 
     this.dispatchEvent(new CustomEvent('dia-input', options));
-    (this.$calendar as KsCalendar).value = getShortIsoDate(
+    (this.$calendar as DiaCalendar).value = getShortIsoDate(
       this._selectedDate as Date
     );
   }
@@ -1040,6 +1040,6 @@ export class KsDatePicker extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'dia-date-picker': KsDatePicker;
+    'dia-date-picker': DiaDatePicker;
   }
 }

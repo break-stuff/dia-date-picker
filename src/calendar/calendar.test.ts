@@ -4,16 +4,16 @@ import {
   expect,
 } from '@open-wc/testing';
 import { getShortIsoDate } from '../utils/dateUtils';
-import { KsCalendar } from './index';
+import { DiaCalendar } from './index';
 
-const tag = new KsCalendar().tagName;
+const tag = new DiaCalendar().tagName;
 
 async function element(selectedDay?: string) {
   const value = getShortIsoDate(
     selectedDay ? new Date(selectedDay) : new Date()
   );
 
-  const $el = await fixture<KsCalendar>(
+  const $el = await fixture<DiaCalendar>(
     `<${tag} value="${selectedDay}"></${tag}>`
   );
 
@@ -49,7 +49,7 @@ describe('calendar default date', () => {
 
   it('check that current date is selected in calendar', async () => {
     // Arrange
-    const $el = await fixture<KsCalendar>(`<${tag}></${tag}>`);
+    const $el = await fixture<DiaCalendar>(`<${tag}></${tag}>`);
     const today = getShortIsoDate(new Date());
     console.log('TODAY', today);
     
@@ -92,7 +92,7 @@ describe('calendar default date', () => {
 describe('calendar disabled dates', () => {
   it('should have 8 inactive days when the focus date is set to "2/1/2026" and the 2nd and 5th days of the week are disabled', async () => {
     // Arrange
-    const $el = await fixture<KsCalendar>(
+    const $el = await fixture<DiaCalendar>(
       `<${tag} focus-date="2/1/2026" disabled-week-days="2, 5"></${tag}>`
     );
 
@@ -109,7 +109,7 @@ describe('calendar disabled dates', () => {
 describe('calendar disabled dates', () => {
   it('should have 8 inactive days when the focus date is set to "2/1/2026" and the 2nd and 5th days of the week are disabled', async () => {
     // Arrange
-    const $el = await fixture<KsCalendar>(
+    const $el = await fixture<DiaCalendar>(
       `<${tag} focus-date="2/1/2026" disabled-week-days="2, 5"></${tag}>`
     );
 

@@ -53,7 +53,7 @@ import { styles } from './calendar.styles';
  *
  */
 @customElement('dia-calendar')
-export class KsCalendar extends LitElement {
+export class DiaCalendar extends LitElement {
   static styles = styles;
 
   /** selected value */
@@ -646,6 +646,6 @@ export class KsCalendar extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'dia-calendar': KsCalendar;
+    'dia-calendar': DiaCalendar;
   }
 }
