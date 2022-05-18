@@ -16,7 +16,12 @@
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": false,
     "downlevelIteration": true,
-    "target": "ESNext"
+    "target": "ESNext",
+    "plugins": [
+      {
+        "name": "ts-lit-plugin"
+      }
+    ]
   },
   "include": ["src/**/*.ts"],
   "exclude": [
