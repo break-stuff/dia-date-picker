@@ -670,22 +670,13 @@ export class DiaDatePicker extends LitElement {
       case keys.Shift:
       case keys.Tab:
         break;
-      case keys.ArrowUp:
-      case keys.ArrowDown:
-        e.preventDefault();
-        e.key === keys.ArrowUp ? this._selectedYear++ : this._selectedYear--;
-        this.setYearInput();
-        this.emitInput();
-        break;
       case keys.Space:
         if (!this.disabled && !this.readonly) {
           this.show();
         }
         break;
       default:
-        if (!isNaN(e.key as any)) {
-          this.handleYearInput(e, index);
-        }
+        this.handleYearInput(e, index);
         break;
     }
 
