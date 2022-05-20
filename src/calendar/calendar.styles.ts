@@ -68,58 +68,52 @@ export const styles = css`
     width: 2rem;
   }
 
-  .day {
+  .day-label {
     background-color: transparent;
     border: none;
     border-radius: var(--border-radius);
+    color: var(--primary-color);
     cursor: pointer;
     font-size: 1rem;
-    height: 2em;
     line-height: 1;
     margin: 0;
-    padding: 0;
+    padding: 8px;
     vertical-align: middle;
-    width: 2em;
-    color: var(--primary-color);
+    width: 100%;
   }
 
-  .day.alt-month {
+  .day-label.alt-month {
     color: var(--alt-day-color);
     font-style: italic;
   }
 
-  .day:hover,
-  .day:focus,
-  .day[tabindex='0'] {
+  .day-label:hover,
+  .day-label:focus,
+  .day-label[tabindex='0'] {
     background-color: var(--alt-background-color);
     border-radius: var(--border-radius);
   }
 
-  .day[aria-current='date'] {
+  .day-label[aria-current='date'] {
     border: solid 2px var(--border-color);
   }
-  .day[aria-selected='true'] {
+  .day-label[aria-pressed='true'] {
     background-color: var(--primary-color);
     color: white;
   }
-  .day[aria-selected='true']:hover {
+  .day-label[aria-selected='true']:hover {
     background-color: var(--primary-color);
     color: white;
   }
 
-  .day[aria-disabled='true'] {
+  .day-label[aria-disabled='true'] {
     cursor: not-allowed;
     color: var(--disabled-color);
     background-color: transparent;
   }
 
-  .day[aria-disabled='true']:hover {
+  .day-label[aria-disabled='true']:hover {
     color: var(--disabled-color);
     background-color: transparent;
-  }
-
-  .day-label {
-    width: 1.25rem;
-    height: 1.25rem;
   }
 `;

@@ -392,7 +392,7 @@ export class DiaDatePicker extends LitElement {
       () =>
         (
           this.$calendar?.shadowRoot?.querySelector(
-            `.day[aria-selected="true"]`
+            `.day-label[aria-pressed="true"]`
           ) as HTMLElement
         )?.focus(),
       200

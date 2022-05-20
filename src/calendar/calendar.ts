@@ -17,7 +17,7 @@ import {
   getDaysInMonth,
 } from '../utils/dateUtils';
 import icon from '../utils/icons';
-import { keys } from "../utils/domUtils";
+import { keys } from '../utils/domUtils';
 import { watch } from '../utils/watchDecorator';
 
 import { styles } from './calendar.styles';
@@ -283,16 +283,16 @@ export class DiaCalendar extends LitElement {
       this.$focusableEls.splice(4, 1, $control);
 
       this.resetDayButtons();
-      $control?.setAttribute('aria-selected', 'true');
+      $control?.setAttribute('aria-pressed', 'true');
       $control?.setAttribute('tabindex', '0');
       $control?.focus();
     });
   }
 
   private resetDayButtons() {
-    this.shadowRoot?.querySelectorAll('.day').forEach(x => {
+    this.shadowRoot?.querySelectorAll('.day-label').forEach(x => {
       x.setAttribute('tabindex', '-1');
-      x.setAttribute('aria-selected', 'false');
+      x.setAttribute('aria-pressed', 'false');
     });
   }
 
@@ -414,8 +414,12 @@ export class DiaCalendar extends LitElement {
     this.emitFocus();
   }
 
-  private handleDayKeyDown(e: KeyboardEvent) {
-    if (e.key === keys.ArrowDown || e.key === keys.ArrowUp || e.key === keys.Escape) {
+  private handleDayKeyDown(e: KeyboardEvent, day: Date) {
+    if (
+      e.key === keys.ArrowDown ||
+      e.key === keys.ArrowUp ||
+      e.key === keys.Escape
+    ) {
       e.preventDefault();
     }
 
@@ -425,6 +429,10 @@ export class DiaCalendar extends LitElement {
         this._selectedValue?.toLocaleDateString()
     ) {
       e.stopPropagation();
+    }
+
+    if (e.key === keys.Space || e.key === keys.Enter) {
+      this.pickDate(day);
     }
   }
 
@@ -620,25 +628,28 @@ export class DiaCalendar extends LitElement {
 
     return html`
       <td
-        id="${getShortIsoDate(day)}"
         role="gridcell"
-        aria-selected="${isSelected}"
         class="day ${day.getMonth() !== this._selectedMonth ? 'alt-month' : ''}"
         part="day 
           ${day.getMonth() !== this._selectedMonth ? 'alt-month' : ''} 
           ${isToday ? 'day-today' : ''} 
           ${isSelected ? 'selected' : ''}"
-        aria-label="${getFullDate(day, this.getLocale())}"
-        aria-current="${isToday ? 'date' : false}"
-        tabindex="${isSelected ? 0 : -1}"
-        aria-disabled="${this.isDateDisabled(day)}"
-        @keydown="${(e: KeyboardEvent) => this.handleDayKeyDown(e)}"
+        @keydown="${(e: KeyboardEvent) => this.handleDayKeyDown(e, day)}"
         @click="${() => this.pickDate(day)}"
         @keyup="${(e: KeyboardEvent) => this.handleDayKeyUp(day, e)}"
       >
-        <span class="day-label" aria-hidden="true" part="day-label">
+        <button
+          id="${getShortIsoDate(day)}"
+          class="day-label"
+          part="day-label"
+          aria-label="${getFullDate(day, this.getLocale())}"
+          tabindex="${isSelected ? 0 : -1}"
+          aria-pressed="${isSelected}"
+          aria-current="${isToday ? 'date' : false}"
+          aria-disabled="${this.isDateDisabled(day)}"
+        >
           ${day.getDate()}
-        </span>
+        </button>
         <slot name="${getShortIsoDate(day)}"></slot>
       </td>
     `;
