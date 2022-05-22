@@ -565,13 +565,13 @@ export class DiaCalendar extends LitElement {
         aria-multiselectable="false"
         aria-labelledby="calendar_header"
       >
-        <caption id="calendar_header" class="sr-only">
+        <!-- <caption id="calendar_header" class="sr-only">
           ${getMonthLabel(
             this._selectedMonth,
             this._selectedYear,
             this.getLocale()
           )}
-        </caption>
+        </caption> -->
         <thead role="rowgroup">
           <tr class="week-days" role="row">
             ${this.showWeekNumbers ? html`<th></th>` : ''}
@@ -628,7 +628,6 @@ export class DiaCalendar extends LitElement {
           ${day.getMonth() !== this._selectedMonth ? 'alt-month' : ''} 
           ${isToday ? 'day-today' : ''} 
           ${isSelected ? 'selected' : ''}"
-        aria-label="${getFullDate(day, this.getLocale())}"
         aria-current="${isToday ? 'date' : false}"
         tabindex="${isSelected ? 0 : -1}"
         aria-disabled="${this.isDateDisabled(day)}"
@@ -636,7 +635,7 @@ export class DiaCalendar extends LitElement {
         @click="${() => this.pickDate(day)}"
         @keyup="${(e: KeyboardEvent) => this.handleDayKeyUp(day, e)}"
       >
-        <span class="day-label" aria-hidden="true" part="day-label">
+        <span class="day-label" aria-label="${getFullDate(day, this.getLocale())}" part="day-label">
           ${day.getDate()}
         </span>
         <slot name="${getShortIsoDate(day)}"></slot>
