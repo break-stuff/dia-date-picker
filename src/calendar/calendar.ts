@@ -565,13 +565,6 @@ export class DiaCalendar extends LitElement {
         aria-multiselectable="false"
         aria-labelledby="calendar_header"
       >
-        <!-- <caption id="calendar_header" class="sr-only">
-          ${getMonthLabel(
-            this._selectedMonth,
-            this._selectedYear,
-            this.getLocale()
-          )}
-        </caption> -->
         <thead role="rowgroup">
           <tr class="week-days" role="row">
             ${this.showWeekNumbers ? html`<th></th>` : ''}
