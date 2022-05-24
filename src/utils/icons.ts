@@ -68,4 +68,23 @@ const icons = {
       </g>
     </svg>
   `,
+  warning: html`
+    <svg
+      class="icon"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <g>
+        <path
+          d="M20 19.232H4l8-14.485 8 14.484zM12 8.5a1.406 1.406 0 0 0-1.457 1.312v4.183a1.431 1.431 0 0 0 .384 1.07 1.558 1.558 0 0 0 1.07.433h0a1.5 1.5 0 0 0-1.5 1.5 1.5 1.5 0 0 0 1.5 1.5 1.5 1.5 0 0 0 1.5-1.5 1.5 1.5 0 0 0-1.491-1.5 1.691 1.691 0 0 0 .857-.234 1.394 1.394 0 0 0 .592-1.27V9.811A1.377 1.377 0 0 0 12 8.501z"
+          fill="currentColor"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+        ></path>
+      </g>
+    </svg>
+  `,
 };

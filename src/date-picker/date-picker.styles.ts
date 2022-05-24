@@ -116,6 +116,12 @@ export const styles = css`
     margin-top: 0.25rem;
     color: var(--error-color);
     font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .error-message .icon {
+    font-size: 1.25rem;
   }
 
   [aria-invalid='true'] ~ .error-message {

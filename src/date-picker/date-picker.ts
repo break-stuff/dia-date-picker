@@ -65,6 +65,7 @@ export interface DatePickerValidation {
  * @csspart day-label - Controls styles of day number label
  * @csspart clear - Controls style of "Clear" button
  * @csspart today - Controls style of "Today" button
+ * @csspart delimiter - Controls style of delimiters between the day, month, and year inputs
  *
  * @event {CustomEvent} dia-input - emits the date as short ISO string when calendar date is manually entered or focused on in the calendar
  * @event {CustomEvent} dia-change - emits the date as short ISO string when calendar date is selected
@@ -591,8 +592,9 @@ export class DiaDatePicker extends LitElement {
   }
 
   private handleDropdownTab(e: KeyboardEvent): void {
-    const $focusedElement = (e.target as HTMLElement).shadowRoot
-      ?.activeElement as HTMLElement || e.target;
+    const $focusedElement =
+      ((e.target as HTMLElement).shadowRoot?.activeElement as HTMLElement) ||
+      e.target;
 
     if (e.shiftKey) {
       this.handleDropdownBackwardTab($focusedElement, e);
@@ -617,7 +619,7 @@ export class DiaDatePicker extends LitElement {
   ): void {
     if ($focusedElement === this.$calendarLastElement) {
       e.preventDefault();
-      
+
       this.$calendarFirstElement?.focus();
     }
   }
@@ -645,7 +647,11 @@ export class DiaDatePicker extends LitElement {
     this._selectedYear =
       formattedValue > 9999 ? 9999 : formattedValue < 1 ? 1 : formattedValue;
 
-    if (e.key !== keys.ArrowUp && e.key !== keys.ArrowDown && value.length === 4) {
+    if (
+      e.key !== keys.ArrowUp &&
+      e.key !== keys.ArrowDown &&
+      value.length === 4
+    ) {
       this.setYearInput();
       this.goToNextInput(index);
       this.emitInput();
@@ -816,7 +822,7 @@ export class DiaDatePicker extends LitElement {
   private handleDateInputBlur() {
     setTimeout(() => {
       this._isFocused = this === document.activeElement;
-      if(!this._isFocused) {
+      if (!this._isFocused) {
         this.validate();
       }
     });
@@ -864,9 +870,9 @@ export class DiaDatePicker extends LitElement {
             aria-disabled="${this.disabled}"
           >
             ${this.inputTemplates(dateFormat[0], 0)}
-            <span aria-hidden="true">${dateFormat[1]}</span>
+            <span aria-hidden="true" part="delimiter">${dateFormat[1]}</span>
             ${this.inputTemplates(dateFormat[2], 2)}
-            <span aria-hidden="true">${dateFormat[3]}</span>
+            <span aria-hidden="true" part="delimiter">${dateFormat[3]}</span>
             ${this.inputTemplates(dateFormat[4], 4)}
             <button
               class="calendar-toggle"
@@ -882,10 +888,16 @@ export class DiaDatePicker extends LitElement {
               <slot name="calendar-icon"> ${icon('calendar')} </slot>
             </button>
           </div>
-          <div id="error_message" class="error-message" aria-live="assertive">
-            ${this._errorMessage}
-          </div>
+          ${this.errorMessageTemplate()}
         </fieldset>
+      </div>
+    `;
+  }
+
+  private errorMessageTemplate() {
+    return html`
+      <div id="error_message" class="error-message" aria-live="assertive">
+        ${icon('warning')} ${this._errorMessage}
       </div>
     `;
   }
