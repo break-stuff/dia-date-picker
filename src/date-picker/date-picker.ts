@@ -50,6 +50,9 @@ export interface DatePickerValidation {
  * @cssprop [--outline-offset=0.125rem] - Outline offset
  * @cssprop [--primary-color=#004884] - Primary color used in the component
  *
+ * @csspart label - controls styles for the main input label
+ * @csspart help-text - controls styles for the help text
+ * @csspart error-message - controls styles for the error message
  * @csspart dropdown - controls styles for the dropdown panel that contains the calendar
  * @csspart main-input - controls styles for the main input for day, month, and year
  * @csspart calendar-toggle - controls styles for the toggle button to show and hide the calendar
@@ -82,9 +85,17 @@ export class DiaDatePicker extends LitElement {
   @property({ type: String })
   label?: string;
 
+  /** content to provide additional context to the input */
+  @property({ type: String })
+  helpText?: string;
+
   /** name used to identify the input */
   @property({ type: String })
   name?: string;
+
+  /** adds required validation to the input */
+  @property({ type: Boolean })
+  invalid = false;
 
   /** adds required validation to the input */
   @property({ type: Boolean })
@@ -116,7 +127,7 @@ export class DiaDatePicker extends LitElement {
 
   /** show week numbers at the beginning of each week */
   @property({ attribute: 'show-week-numbers', type: Boolean })
-  showWeekNumbers = false;
+  showWeekNumbers?: boolean;
 
   /** comma separated list of week days to be disabled (1-7) */
   @property({ attribute: 'disabled-week-days', type: String })
@@ -158,14 +169,23 @@ export class DiaDatePicker extends LitElement {
   @property({ attribute: 'unavailable-error-message', type: String })
   unavailableErrorMessage = 'The date you have selected is unavailable';
 
+  /** custom error message when the `invalid` attribute is set to "true" */
+  @property({ attribute: 'custom-error-message', type: String })
+  customErrorMessage?: string;
+  
+  /** displays error message below input */
+  @property({ attribute: 'show-error-below', type: Boolean })
+  showErrorBelow?: boolean;
+
+  /** shows help text below input */
+  @property({ attribute: 'show-help-text-below', type: Boolean })
+  showHelpTextBelow?: boolean;
+
   @state()
   private _formFieldData: FormFieldData = this.getInitialFormFieldData();
 
   @state()
   private _expanded = false;
-
-  @state()
-  private _isValid = true;
 
   @state()
   private _isFocused = false;
@@ -495,30 +515,30 @@ export class DiaDatePicker extends LitElement {
   }
 
   private validateInput() {
-    this._isValid = true;
+    this.invalid = false;
 
     if (this.required && !this.hasCompletedAllFields()) {
       this._errorMessage = this.requiredErrorMessage;
-      this._isValid = false;
+      this.invalid = true;
       this._formFieldData.isValid = false;
       return;
     }
 
     if (this._formFieldData.validity.outOfRange) {
       this._errorMessage = this.rangeErrorMessage;
-      this._isValid = false;
+      this.invalid = true;
       this._formFieldData.isValid = false;
       return;
     }
 
     if (this._formFieldData.validity.dateUnavailable) {
       this._errorMessage = this.unavailableErrorMessage;
-      this._isValid = false;
+      this.invalid = true;
       this._formFieldData.isValid = false;
       return;
     }
 
-    this._isValid = true;
+    this.invalid = false;
     this._formFieldData.isValid = true;
     this._formFieldData.validity.valueMissing = false;
     this._formFieldData.validity.outOfRange = false;
@@ -852,12 +872,18 @@ export class DiaDatePicker extends LitElement {
     return html`
       <div class="controls">
         <fieldset class="main-input">
-          <legend
-            id="main_label"
-            class="main-input-label"
-            @click="${this.handleLabelClick}"
-          >
-            ${this.label}
+          <legend id="main_label">
+            <div
+              class="main-input-label"
+              part="label"
+              @click="${this.handleLabelClick}"
+            >
+              ${this.label}
+            </div>
+            ${!this.showHelpTextBelow && this.helpText
+              ? this.helpTextTemplate()
+              : null}
+            ${!this.showErrorBelow ? this.errorMessageTemplate() : null}
           </legend>
           <div
             class="main-input-controls"
@@ -865,7 +891,7 @@ export class DiaDatePicker extends LitElement {
             part="main-input"
             aria-labelledby="main_label"
             aria-required="${this.required}"
-            aria-invalid="${!this._isValid}"
+            aria-invalid="${this.invalid}"
             aria-errormessage="error_message"
             aria-disabled="${this.disabled}"
           >
@@ -888,16 +914,33 @@ export class DiaDatePicker extends LitElement {
               <slot name="calendar-icon"> ${icon('calendar')} </slot>
             </button>
           </div>
-          ${this.errorMessageTemplate()}
+          ${this.showHelpTextBelow && this.helpText
+            ? this.helpTextTemplate()
+            : null}
+          ${this.showErrorBelow ? this.errorMessageTemplate() : null}
         </fieldset>
+      </div>
+    `;
+  }
+
+  private helpTextTemplate() {
+    return html`
+      <div id="help_text" class="help-text" part="help-text">
+        ${this.helpText}
       </div>
     `;
   }
 
   private errorMessageTemplate() {
     return html`
-      <div id="error_message" class="error-message" aria-live="assertive">
-        ${icon('warning')} ${this._errorMessage}
+      <div
+        id="error_message"
+        class="error-message"
+        aria-live="assertive"
+        part="error-message"
+      >
+        ${this.invalid ? icon('warning') : null}
+        ${this.invalid ? this.customErrorMessage || this._errorMessage : null}
       </div>
     `;
   }

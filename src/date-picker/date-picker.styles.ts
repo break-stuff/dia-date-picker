@@ -112,7 +112,6 @@ export const styles = css`
   }
 
   .error-message {
-    visibility: hidden;
     margin-top: 0.25rem;
     color: var(--error-color);
     font-size: 0.9rem;
@@ -122,10 +121,6 @@ export const styles = css`
 
   .error-message .icon {
     font-size: 1.25rem;
-  }
-
-  [aria-invalid='true'] ~ .error-message {
-    visibility: visible;
   }
 
   [aria-invalid='true'] {

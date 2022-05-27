@@ -7,9 +7,12 @@ export default {
   args: {
     value: '',
     label: 'Select Date',
+    ['help-text']: '',
+    ['custom-error-message']: '',
     required: false,
     disabled: false,
     readonly: false,
+    invalid: false,
     lang: 'en-US',
     ['min-date']: '',
     ['max-date']: '',
@@ -23,6 +26,8 @@ export default {
     ['focus-date']: '',
     ['show-week-numbers']: false,
     ['first-day-of-week']: 0,
+    ['show-error-below']: false,
+    ['show-help-text-below']: false,
     ['--border-color']: '#c5d1da',
     ['--border-radius']: '0.25rem',
     ['--disabled-color']: '#acbdca',
@@ -54,9 +59,12 @@ const DefaultTemplate = (args: any) => {
     <dia-date-picker
       value="${args.value}"
       label="${args.label}"
+      help-text="${args['help-text']}"
+      custom-error-message="${args['custom-error-message']}"
       ?required="${args.required}"
       ?readonly="${args.readonly}"
       ?disabled="${args.disabled}"
+      ?invalid="${args.invalid}"
       lang="${args.lang}"
       min-date="${args['min-date']}"
       max-date="${args['max-date']}"
@@ -70,6 +78,8 @@ const DefaultTemplate = (args: any) => {
       focus-date="${args['focus-date']}"
       ?show-week-numbers="${args['show-week-numbers']}"
       first-day-of-week="${args['first-day-of-week']}"
+      ?show-error-below="${args['show-error-below']}"
+      ?show-help-text-below="${args['show-help-text-below']}"
     ></dia-date-picker>
     <!-- <span>some random inline content</span>
         <div>some random block content</div> -->
