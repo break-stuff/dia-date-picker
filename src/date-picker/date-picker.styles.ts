@@ -15,6 +15,12 @@ export const styles = css`
     cursor: pointer;
   }
 
+  .help-text {
+    color: var(--alt-day-color);
+    font-size: 0.875rem;
+    font-style: italic;
+  }
+
   .controls {
     display: inline-flex;
     justify-content: flex-start;
