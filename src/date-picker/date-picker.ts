@@ -86,7 +86,7 @@ export class DiaDatePicker extends LitElement {
   label?: string;
 
   /** content to provide additional context to the input */
-  @property({ type: String })
+  @property({ attribute: 'help-text', type: String })
   helpText?: string;
 
   /** name used to identify the input */
@@ -172,7 +172,7 @@ export class DiaDatePicker extends LitElement {
   /** custom error message when the `invalid` attribute is set to "true" */
   @property({ attribute: 'custom-error-message', type: String })
   customErrorMessage?: string;
-  
+
   /** displays error message below input */
   @property({ attribute: 'show-error-below', type: Boolean })
   showErrorBelow?: boolean;
