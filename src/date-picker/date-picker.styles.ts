@@ -15,6 +15,10 @@ export const styles = css`
     cursor: pointer;
   }
 
+  .required-indicator {
+    color: var(--error-color);
+  }
+
   .help-text {
     color: var(--alt-day-color);
     font-size: 0.875rem;

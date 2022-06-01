@@ -181,6 +181,10 @@ export class DiaDatePicker extends LitElement {
   @property({ attribute: 'show-help-text-below', type: Boolean })
   showHelpTextBelow?: boolean;
 
+  /** hide asterisk (*) as a required input indicator */
+  @property({ attribute: 'hide-required-indicator', type: Boolean })
+  hideRequiredIndicator?: boolean;
+
   @state()
   private _formFieldData: FormFieldData = this.getInitialFormFieldData();
 
@@ -873,13 +877,20 @@ export class DiaDatePicker extends LitElement {
       <div class="controls">
         <fieldset class="main-input">
           <legend id="main_label">
-            <div
+            <span
               class="main-input-label"
               part="label"
               @click="${this.handleLabelClick}"
             >
               ${this.label}
-            </div>
+              ${this.required && !this.hideRequiredIndicator
+                ? html`
+                    <span class="required-indicator" aria-hidden="true">
+                      *
+                    </span>
+                  `
+                : ''}
+            </span>
             ${!this.showHelpTextBelow && this.helpText
               ? this.helpTextTemplate()
               : null}
@@ -894,6 +905,7 @@ export class DiaDatePicker extends LitElement {
             aria-invalid="${this.invalid}"
             aria-errormessage="error_message"
             aria-disabled="${this.disabled}"
+            aria-describedby="main_label help_text error_message"
           >
             ${this.inputTemplates(dateFormat[0], 0)}
             <span aria-hidden="true" part="delimiter">${dateFormat[1]}</span>
@@ -925,9 +937,9 @@ export class DiaDatePicker extends LitElement {
 
   private helpTextTemplate() {
     return html`
-      <div id="help_text" class="help-text" part="help-text">
+      <span id="help_text" class="help-text" part="help-text">
         ${this.helpText}
-      </div>
+      </span>
     `;
   }
 
