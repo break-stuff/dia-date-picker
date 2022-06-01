@@ -28,6 +28,7 @@ export default {
     ['first-day-of-week']: 0,
     ['show-error-below']: false,
     ['show-help-text-below']: false,
+    ['hide-required-indicator']: false,
     ['--border-color']: '#c5d1da',
     ['--border-radius']: '0.25rem',
     ['--disabled-color']: '#acbdca',
@@ -80,6 +81,7 @@ const DefaultTemplate = (args: any) => {
       first-day-of-week="${args['first-day-of-week']}"
       ?show-error-below="${args['show-error-below']}"
       ?show-help-text-below="${args['show-help-text-below']}"
+      ?hide-required-indicator="${args['hide-required-indicator']}"
     ></dia-date-picker>
     <!-- <span>some random inline content</span>
         <div>some random block content</div> -->
