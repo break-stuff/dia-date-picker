@@ -17,7 +17,7 @@ import {
   getDaysInMonth,
 } from '../utils/dateUtils';
 import icon from '../utils/icons';
-import { keys } from "../utils/domUtils";
+import { keys } from '../utils/domUtils';
 import { watch } from '../utils/watchDecorator';
 
 import { styles } from './calendar.styles';
@@ -145,10 +145,25 @@ export class DiaCalendar extends LitElement {
   @query('#year_selector')
   private $yearSelector?: HTMLInputElement;
 
+  /**
+   *
+   * WATCHERS
+   *
+   */
   @watch('value', { waitUntilFirstUpdate: true })
   handleValueChange() {
     this.setSelectedDate();
     this.requestUpdate();
+  }
+
+  /**
+   *
+   * PUBLIC METHODS
+   *
+   */
+
+  get valueAsDate() {
+    return this.value ? new Date(formatDateString(this.value)) : undefined;
   }
 
   /**
@@ -415,7 +430,11 @@ export class DiaCalendar extends LitElement {
   }
 
   private handleDayKeyDown(e: KeyboardEvent) {
-    if (e.key === keys.ArrowDown || e.key === keys.ArrowUp || e.key === keys.Escape) {
+    if (
+      e.key === keys.ArrowDown ||
+      e.key === keys.ArrowUp ||
+      e.key === keys.Escape
+    ) {
       e.preventDefault();
     }
 
@@ -628,7 +647,11 @@ export class DiaCalendar extends LitElement {
         @click="${() => this.pickDate(day)}"
         @keyup="${(e: KeyboardEvent) => this.handleDayKeyUp(day, e)}"
       >
-        <span class="day-label" aria-label="${getFullDate(day, this.getLocale())}" part="day-label">
+        <span
+          class="day-label"
+          aria-label="${getFullDate(day, this.getLocale())}"
+          part="day-label"
+        >
           ${day.getDate()}
         </span>
         <slot name="${getShortIsoDate(day)}"></slot>

@@ -175,8 +175,8 @@ export const styles = css`
     outline: none;
   }
 
-    /* BOTTOM CONTROLS */
-    .bottom-controls {
+  /* BOTTOM CONTROLS */
+  .bottom-controls {
     display: flex;
     justify-content: space-between;
   }
