@@ -144,7 +144,7 @@ export const styles = css`
     border-radius: 0.25rem;
     padding: 1rem;
     position: absolute;
-    margin-top: -0.75rem;
+    margin-top: 0.5rem;
     visibility: hidden;
     opacity: 0;
     border: solid 1px var(--border-color);
