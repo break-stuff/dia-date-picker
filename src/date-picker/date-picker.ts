@@ -213,6 +213,9 @@ export class DiaDatePicker extends LitElement {
   private _selectedYear: number = this._curDate.getFullYear();
 
   @state()
+  private _pressedKeys: string[] = [];
+
+  @state()
   private $dropDownFocusableElements?: HTMLElement[];
 
   @state()
@@ -577,6 +580,10 @@ export class DiaDatePicker extends LitElement {
     }, 100);
   }
 
+  private clearKey() {
+    this._pressedKeys.pop();
+  }
+
   /**
    *
    * EVENT HANDLERS
@@ -657,6 +664,7 @@ export class DiaDatePicker extends LitElement {
   }
 
   private handleInputKeyDown(e: KeyboardEvent) {
+    this._pressedKeys.push(e.key);
     if (e.key === keys.Space) {
       e.preventDefault();
       return false;
@@ -683,6 +691,11 @@ export class DiaDatePicker extends LitElement {
   }
 
   private handleYearKeyUp(e: KeyboardEvent, index: number) {
+    this.clearKey();
+    if(this._pressedKeys.length) {
+      return;
+    }
+
     switch (e.key) {
       case keys.ArrowLeft:
         this.goToPrevInput(index);
@@ -735,6 +748,11 @@ export class DiaDatePicker extends LitElement {
   }
 
   private handleMonthKeyUp(e: KeyboardEvent, index: number) {
+    this.clearKey();
+    if(this._pressedKeys.length) {
+      return;
+    }
+    
     switch (e.key) {
       case keys.Shift:
       case keys.Tab:
@@ -758,6 +776,11 @@ export class DiaDatePicker extends LitElement {
   }
 
   private handleDayKeyUp(e: KeyboardEvent, index: number) {
+    this.clearKey();
+    if(this._pressedKeys.length) {
+      return;
+    }
+    
     switch (e.key) {
       case keys.Shift:
       case keys.Tab:
