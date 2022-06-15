@@ -14,5 +14,9 @@ export const parameters = {
   },
   options: {
     enableShortcuts: false,
-  }
+  },
+  async viteFinal(config, options) {
+    // Add your configuration here
+    return config;
+  },
 }
