@@ -14,7 +14,7 @@ npm run build
 cd src/.vuepress/dist
 
 # if you are deploying to a custom domain
-# echo 'www.example.com' > CNAME
+echo 'dia-date-picker.com' > CNAME
 
 git init
 git checkout -b main
