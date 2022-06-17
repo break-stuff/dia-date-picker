@@ -294,7 +294,7 @@ export class DiaDatePicker extends LitElement {
 
   public hide(): void {
     this._expanded = false;
-    setTimeout(() => this.$firstInput?.focus());
+    setTimeout(() => this.$firstInput?.focus(), 100);
     this.value = getShortIsoDate(this._selectedDate as Date);
   }
 
