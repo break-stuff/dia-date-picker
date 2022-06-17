@@ -19,7 +19,6 @@ import {
 import icon from '../utils/icons';
 import { keys } from '../utils/domUtils';
 import { watch } from '../utils/watchDecorator';
-
 import { styles } from './calendar.styles';
 
 /**
@@ -47,7 +46,6 @@ import { styles } from './calendar.styles';
  * @csspart alt-month - Controls styles of days of previous and next month
  * @csspart day-today - Controls styles of current day
  * @csspart selected - Controls styles of selected day
- * @csspart day-label - Controls styles of day number label
  *
  * @event {CustomEvent} dia-focus - emits the date as short ISO string when calendar date is selected
  * @event {CustomEvent} dia-select - emits the date as short ISO string when calendar date is selected
@@ -88,10 +86,6 @@ export class DiaCalendar extends LitElement {
   /** the day of the week the calendar will start with (0-6) */
   @property({ attribute: 'first-day-of-week', type: Number })
   firstDayOfWeek?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-
-  /** label used for day input */
-  @property({ attribute: 'day-label', type: String })
-  dayLabel = 'Day';
 
   /** label used for month input */
   @property({ attribute: 'month-label', type: String })
@@ -267,7 +261,10 @@ export class DiaCalendar extends LitElement {
   }
 
   private pickDate(d: Date) {
-    if (isOutOfRange(d, this._minDate, this._maxDate)) {
+    if (
+      isOutOfRange(d, this._minDate, this._maxDate) ||
+      this.isDateDisabled(d)
+    ) {
       return;
     }
 
@@ -296,18 +293,9 @@ export class DiaCalendar extends LitElement {
       ) as HTMLElement;
 
       this.$focusableEls.splice(4, 1, $control);
-
-      this.resetDayButtons();
       $control?.setAttribute('aria-selected', 'true');
       $control?.setAttribute('tabindex', '0');
       $control?.focus();
-    });
-  }
-
-  private resetDayButtons() {
-    this.shadowRoot?.querySelectorAll('.day').forEach(x => {
-      x.setAttribute('tabindex', '-1');
-      x.setAttribute('aria-selected', 'false');
     });
   }
 
@@ -387,13 +375,7 @@ export class DiaCalendar extends LitElement {
     return new Date(year, month, nextDay);
   }
 
-  /**
-   *
-   * EVENT HANDLERS
-   *
-   */
-
-  private handleDayKeyUp(day: Date, e: KeyboardEvent) {
+  private setNextDate(day: Date, e: KeyboardEvent) {
     let newDate: Date = new Date();
 
     switch (e.key) {
@@ -410,6 +392,7 @@ export class DiaCalendar extends LitElement {
         newDate = addDaysToDate(day, 1);
         break;
       case keys.Enter:
+      case keys.Space:
         this.pickDate(day);
         return;
       case keys.Escape:
@@ -426,10 +409,13 @@ export class DiaCalendar extends LitElement {
 
     this.selectDate(newDate);
     this.updateYearSelector();
-    this.emitFocus();
+
+    if(!this.isDateDisabled(newDate)) {
+      this.emitFocus();
+    }
   }
 
-  private handleDayKeyDown(e: KeyboardEvent) {
+  private preventDayDefaultKeyDown(e: KeyboardEvent) {
     if (
       e.key === keys.ArrowDown ||
       e.key === keys.ArrowUp ||
@@ -445,6 +431,17 @@ export class DiaCalendar extends LitElement {
     ) {
       e.stopPropagation();
     }
+  }
+
+  /**
+   *
+   * EVENT HANDLERS
+   *
+   */
+
+  private handleDayKeyDown(day: Date, e: KeyboardEvent) {
+    this.preventDayDefaultKeyDown(e);
+    this.setNextDate(day, e);
   }
 
   private handleMonthChange(e: Event): void {
@@ -643,9 +640,8 @@ export class DiaCalendar extends LitElement {
         aria-current="${isToday ? 'date' : false}"
         tabindex="${isSelected ? 0 : -1}"
         aria-disabled="${this.isDateDisabled(day)}"
-        @keydown="${(e: KeyboardEvent) => this.handleDayKeyDown(e)}"
+        @keydown="${(e: KeyboardEvent) => this.handleDayKeyDown(day, e)}"
         @click="${() => this.pickDate(day)}"
-        @keyup="${(e: KeyboardEvent) => this.handleDayKeyUp(day, e)}"
       >
         <span
           class="day-label"
