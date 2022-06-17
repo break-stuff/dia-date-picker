@@ -26,6 +26,11 @@ export const styles = css`
   .month-label select {
     min-width: 6.25rem;
   }
+
+  .month-selector {
+    min-height: 30px;
+  }
+
   .month-icon {
     pointer-events: none;
     margin-left: -1rem;
