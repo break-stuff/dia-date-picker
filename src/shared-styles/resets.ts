@@ -21,7 +21,7 @@ export default css`
     line-height: 1.2;
     margin: 0;
     -webkit-appearance: none;
-    border-radius: var(--border-radius);
+    border-radius: calc(var(--border-radius) - 2px);
     border: 0;
     background-color: transparent;
     color: var(--primary-color);
