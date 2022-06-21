@@ -1,6 +1,5 @@
 {
   "name": "dia-date-picker",
-  "private": true,
   "version": "1.0.0-alpha",
   "main": "dist/dia-date-picker.umd.js",
   "module": "dist/dia-date-picker.es.js",
