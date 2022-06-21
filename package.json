@@ -102,5 +102,26 @@
       "git add"
     ]
   },
-  "customElements": "/custom-elements.json"
+  "customElements": "/custom-elements.json",
+  "author": "Burton Smith <burton@breakstuff.io>",
+  "repository": {
+      "type": "git",
+      "url": "git+https://github.com/break-stuff/dia-date-picker.git"
+  },
+  "bugs": {
+      "url": "https://github.com/break-stuff/dia-date-picker/issues"
+  },
+  "homepage": "https://dia-date-picker.com",
+  "license": "MIT",
+  "keywords": [
+      "calendar",
+      "date",
+      "date picker",
+      "date-picker",
+      "picker",
+      "web components",
+      "react",
+      "vue",
+      "angular"
+  ]
 }
