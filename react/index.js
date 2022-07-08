@@ -1,2 +1,2 @@
-export * from "../src/calendar";
-export * from '../src/date-picker'
+export * from "./DiaCalendar";
+export * from './DiaDatePicker'
