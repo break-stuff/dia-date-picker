@@ -1,14 +1,8 @@
 {
   "name": "dia-date-picker",
-  "version": "1.0.0-alpha",
+  "version": "1.0.0-alpha.4",
   "main": "dist/dia-date-picker.umd.js",
   "module": "dist/dia-date-picker.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/dia-date-picker.es.js",
-      "require": "./dist/dia-date-picker.umd.js"
-    }
-  },
   "types": "dist/index.d.ts",
   "files": [
     "dist",
