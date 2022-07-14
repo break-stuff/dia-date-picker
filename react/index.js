@@ -1,2 +1,2 @@
-export * from "./DiaCalendar";
-export * from './DiaDatePicker'
+export * from "./DiaCalendar.jsx";
+export * from "./DiaDatePicker.jsx";

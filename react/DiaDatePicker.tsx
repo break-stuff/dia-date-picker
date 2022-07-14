@@ -1,5 +1,38 @@
 import React, { useEffect, useRef } from "react";
 import "dia-date-picker/dist/index.js";
+import type { DiaDatePicker as Component } from "dia-date-picker/dist/index.js";
+
+export interface DiaDatePickerProps {
+  invalid: boolean;
+  required: boolean;
+  disabled: boolean;
+  readonly: boolean;
+  showWeekNumbers: boolean | undefined;
+  showErrorBelow: boolean | undefined;
+  showHelpTextBelow: boolean | undefined;
+  hideRequiredIndicator: boolean | undefined;
+  value: string | undefined;
+  label: string | undefined;
+  helpText: string | undefined;
+  name: string | undefined;
+  minDate: string | undefined;
+  maxDate: string | undefined;
+  focusDate: string | undefined;
+  disabledDates: string | undefined;
+  disabledWeekDays: string | undefined;
+  firstDayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6 | undefined;
+  dayLabel: string;
+  monthLabel: string;
+  yearLabel: string;
+  clearLabel: string;
+  todayLabel: string;
+  requiredErrorMessage: string;
+  rangeErrorMessage: string;
+  unavailableErrorMessage: string;
+  customErrorMessage: string | undefined;
+  onDiaInput: EventListenerOrEventListenerObject;
+  onDiaChange: EventListenerOrEventListenerObject;
+}
 
 export function DiaDatePicker({
   children,
@@ -32,8 +65,8 @@ export function DiaDatePicker({
   customErrorMessage,
   onDiaInput,
   onDiaChange,
-}) {
-  const ref = useRef(null);
+}: DiaDatePickerProps) {
+  const ref = useRef < Component > null;
   const component = ref.current;
 
   /** Event listeners - run once */

@@ -156,6 +156,7 @@ export class DiaCalendar extends LitElement {
    *
    */
 
+  // gets selected value as Date
   get valueAsDate() {
     return this.value ? new Date(formatDateString(this.value)) : undefined;
   }

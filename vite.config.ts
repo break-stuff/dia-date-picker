@@ -6,7 +6,14 @@ export default defineConfig({
   build: {
     lib: {
       entry: 'src/index.ts',
-      name: 'DatePicker'
+      name: 'DatePicker',
+      fileName: (ext) => {
+        if(ext === 'es') {
+          return;
+        }
+
+        return `dia-date-picker.${ext}.js`;
+      } 
     },
     minify: true,
     sourcemap: true,

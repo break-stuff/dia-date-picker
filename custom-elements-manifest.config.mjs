@@ -1,4 +1,5 @@
-import reactify from 'cem-plugin-reactify';
+// import reactify from 'cem-plugin-reactify';
+import reactWrapper from "./react-wrapper/index.mjs";
 
 export default {
   /** Globs to analyze */
@@ -21,14 +22,14 @@ export default {
   stencil: false,
   /** Provide custom plugins */
   plugins: [
-    reactify({
+    reactWrapper({
       /** Directory to write the React wrappers to, defaults to `legacy` */
       outdir: 'react',
 
       /** Provide an attribute mapping to avoid using JS/React reserved keywords */
       attributeMapping: {
         for: '_for',
-      },
+      }
     }),
     removeMembers(),
   ],
