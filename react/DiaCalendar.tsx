@@ -3,20 +3,20 @@ import "dia-date-picker/dist/index.js";
 import type { DiaCalendar as Component } from "dia-date-picker/dist/index.js";
 
 export interface DiaCalendarProps {
-  showWeekNumbers: boolean;
-  value: string | undefined;
-  minDate: string | undefined;
-  maxDate: string | undefined;
-  focusDate: string | undefined;
-  disabledDates: string | undefined;
-  disabledWeekDays: string | undefined;
-  firstDayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6 | undefined;
-  monthLabel: string;
-  yearLabel: string;
-  clearLabel: string;
-  todayLabel: string;
-  onDiaFocus: EventListenerOrEventListenerObject;
-  onDiaSelect: EventListenerOrEventListenerObject;
+  childrenshowWeekNumbers?: boolean;
+  value?: string | undefined;
+  minDate?: string | undefined;
+  maxDate?: string | undefined;
+  focusDate?: string | undefined;
+  disabledDates?: string | undefined;
+  disabledWeekDays?: string | undefined;
+  firstDayOfWeek?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | undefined;
+  monthLabel?: string;
+  yearLabel?: string;
+  clearLabel?: string;
+  todayLabel?: string;
+  onDiaFocus?: EventListenerOrEventListenerObject;
+  onDiaSelect?: EventListenerOrEventListenerObject;
 }
 
 export function DiaCalendar({

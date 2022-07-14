@@ -66,6 +66,7 @@ export default function reactWrapper({
 
       if (useTypeScript) {
         saveFile(outdir, 'index.d.ts', getTypeDefinitionContent(components));
+        saveFile(outdir, 'index.ts', getTypeDefinitionContent(components));
       }
     },
   };
@@ -290,11 +291,12 @@ function getJsxFileContents(
 
 function getPropsInterface(booleanAttributes, attributes, events) {
   return [
+    'children',
     ...[...(booleanAttributes || []), ...(attributes || [])].map(
-      attr => `${camelize(attr.name)}: ${attr.type.text};`
+      attr => `${camelize(attr.name)}?: ${attr.type.text};`
     ),
     ...events?.map(
-      event => `${event.reactName}: EventListenerOrEventListenerObject;`
+      event => `${event.reactName}?: EventListenerOrEventListenerObject;`
     ),
   ]?.join('');
 }
@@ -307,7 +309,7 @@ function getJsManifestContent(components) {
 
 function getTypeDefinitionContent(components) {
   return components
-    .map(component => `export * from './${component.name}.tsx';`)
+    .map(component => `export * from './${component.name}';`)
     .join('');
 }
 
