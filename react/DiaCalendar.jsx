@@ -54,7 +54,7 @@ export function DiaCalendar({
       value !== undefined &&
       component?.getAttribute("value") !== String(value)
     ) {
-      component?.setAttribute("value", value);
+      component?.setAttribute("value", String(value));
     }
   }, [value]);
 
@@ -63,7 +63,7 @@ export function DiaCalendar({
       minDate !== undefined &&
       component?.getAttribute("minDate") !== String(minDate)
     ) {
-      component?.setAttribute("minDate", minDate);
+      component?.setAttribute("minDate", String(minDate));
     }
   }, [minDate]);
 
@@ -72,7 +72,7 @@ export function DiaCalendar({
       maxDate !== undefined &&
       component?.getAttribute("maxDate") !== String(maxDate)
     ) {
-      component?.setAttribute("maxDate", maxDate);
+      component?.setAttribute("maxDate", String(maxDate));
     }
   }, [maxDate]);
 
@@ -81,7 +81,7 @@ export function DiaCalendar({
       focusDate !== undefined &&
       component?.getAttribute("focusDate") !== String(focusDate)
     ) {
-      component?.setAttribute("focusDate", focusDate);
+      component?.setAttribute("focusDate", String(focusDate));
     }
   }, [focusDate]);
 
@@ -90,7 +90,7 @@ export function DiaCalendar({
       disabledDates !== undefined &&
       component?.getAttribute("disabledDates") !== String(disabledDates)
     ) {
-      component?.setAttribute("disabledDates", disabledDates);
+      component?.setAttribute("disabledDates", String(disabledDates));
     }
   }, [disabledDates]);
 
@@ -99,7 +99,7 @@ export function DiaCalendar({
       disabledWeekDays !== undefined &&
       component?.getAttribute("disabledWeekDays") !== String(disabledWeekDays)
     ) {
-      component?.setAttribute("disabledWeekDays", disabledWeekDays);
+      component?.setAttribute("disabledWeekDays", String(disabledWeekDays));
     }
   }, [disabledWeekDays]);
 
@@ -108,7 +108,7 @@ export function DiaCalendar({
       firstDayOfWeek !== undefined &&
       component?.getAttribute("firstDayOfWeek") !== String(firstDayOfWeek)
     ) {
-      component?.setAttribute("firstDayOfWeek", firstDayOfWeek);
+      component?.setAttribute("firstDayOfWeek", String(firstDayOfWeek));
     }
   }, [firstDayOfWeek]);
 
@@ -117,7 +117,7 @@ export function DiaCalendar({
       monthLabel !== undefined &&
       component?.getAttribute("monthLabel") !== String(monthLabel)
     ) {
-      component?.setAttribute("monthLabel", monthLabel);
+      component?.setAttribute("monthLabel", String(monthLabel));
     }
   }, [monthLabel]);
 
@@ -126,7 +126,7 @@ export function DiaCalendar({
       yearLabel !== undefined &&
       component?.getAttribute("yearLabel") !== String(yearLabel)
     ) {
-      component?.setAttribute("yearLabel", yearLabel);
+      component?.setAttribute("yearLabel", String(yearLabel));
     }
   }, [yearLabel]);
 
@@ -135,7 +135,7 @@ export function DiaCalendar({
       clearLabel !== undefined &&
       component?.getAttribute("clearLabel") !== String(clearLabel)
     ) {
-      component?.setAttribute("clearLabel", clearLabel);
+      component?.setAttribute("clearLabel", String(clearLabel));
     }
   }, [clearLabel]);
 
@@ -144,7 +144,7 @@ export function DiaCalendar({
       todayLabel !== undefined &&
       component?.getAttribute("todayLabel") !== String(todayLabel)
     ) {
-      component?.setAttribute("todayLabel", todayLabel);
+      component?.setAttribute("todayLabel", String(todayLabel));
     }
   }, [todayLabel]);
 

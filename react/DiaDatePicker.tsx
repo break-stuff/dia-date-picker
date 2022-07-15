@@ -185,7 +185,7 @@ export function DiaDatePicker({
       value !== undefined &&
       component?.getAttribute("value") !== String(value)
     ) {
-      component?.setAttribute("value", value);
+      component?.setAttribute("value", String(value));
     }
   }, [value]);
 
@@ -194,7 +194,7 @@ export function DiaDatePicker({
       label !== undefined &&
       component?.getAttribute("label") !== String(label)
     ) {
-      component?.setAttribute("label", label);
+      component?.setAttribute("label", String(label));
     }
   }, [label]);
 
@@ -203,7 +203,7 @@ export function DiaDatePicker({
       helpText !== undefined &&
       component?.getAttribute("helpText") !== String(helpText)
     ) {
-      component?.setAttribute("helpText", helpText);
+      component?.setAttribute("helpText", String(helpText));
     }
   }, [helpText]);
 
@@ -212,7 +212,7 @@ export function DiaDatePicker({
       name !== undefined &&
       component?.getAttribute("name") !== String(name)
     ) {
-      component?.setAttribute("name", name);
+      component?.setAttribute("name", String(name));
     }
   }, [name]);
 
@@ -221,7 +221,7 @@ export function DiaDatePicker({
       minDate !== undefined &&
       component?.getAttribute("minDate") !== String(minDate)
     ) {
-      component?.setAttribute("minDate", minDate);
+      component?.setAttribute("minDate", String(minDate));
     }
   }, [minDate]);
 
@@ -230,7 +230,7 @@ export function DiaDatePicker({
       maxDate !== undefined &&
       component?.getAttribute("maxDate") !== String(maxDate)
     ) {
-      component?.setAttribute("maxDate", maxDate);
+      component?.setAttribute("maxDate", String(maxDate));
     }
   }, [maxDate]);
 
@@ -239,7 +239,7 @@ export function DiaDatePicker({
       focusDate !== undefined &&
       component?.getAttribute("focusDate") !== String(focusDate)
     ) {
-      component?.setAttribute("focusDate", focusDate);
+      component?.setAttribute("focusDate", String(focusDate));
     }
   }, [focusDate]);
 
@@ -248,7 +248,7 @@ export function DiaDatePicker({
       disabledDates !== undefined &&
       component?.getAttribute("disabledDates") !== String(disabledDates)
     ) {
-      component?.setAttribute("disabledDates", disabledDates);
+      component?.setAttribute("disabledDates", String(disabledDates));
     }
   }, [disabledDates]);
 
@@ -257,7 +257,7 @@ export function DiaDatePicker({
       disabledWeekDays !== undefined &&
       component?.getAttribute("disabledWeekDays") !== String(disabledWeekDays)
     ) {
-      component?.setAttribute("disabledWeekDays", disabledWeekDays);
+      component?.setAttribute("disabledWeekDays", String(disabledWeekDays));
     }
   }, [disabledWeekDays]);
 
@@ -266,7 +266,7 @@ export function DiaDatePicker({
       firstDayOfWeek !== undefined &&
       component?.getAttribute("firstDayOfWeek") !== String(firstDayOfWeek)
     ) {
-      component?.setAttribute("firstDayOfWeek", firstDayOfWeek);
+      component?.setAttribute("firstDayOfWeek", String(firstDayOfWeek));
     }
   }, [firstDayOfWeek]);
 
@@ -275,7 +275,7 @@ export function DiaDatePicker({
       dayLabel !== undefined &&
       component?.getAttribute("dayLabel") !== String(dayLabel)
     ) {
-      component?.setAttribute("dayLabel", dayLabel);
+      component?.setAttribute("dayLabel", String(dayLabel));
     }
   }, [dayLabel]);
 
@@ -284,7 +284,7 @@ export function DiaDatePicker({
       monthLabel !== undefined &&
       component?.getAttribute("monthLabel") !== String(monthLabel)
     ) {
-      component?.setAttribute("monthLabel", monthLabel);
+      component?.setAttribute("monthLabel", String(monthLabel));
     }
   }, [monthLabel]);
 
@@ -293,7 +293,7 @@ export function DiaDatePicker({
       yearLabel !== undefined &&
       component?.getAttribute("yearLabel") !== String(yearLabel)
     ) {
-      component?.setAttribute("yearLabel", yearLabel);
+      component?.setAttribute("yearLabel", String(yearLabel));
     }
   }, [yearLabel]);
 
@@ -302,7 +302,7 @@ export function DiaDatePicker({
       clearLabel !== undefined &&
       component?.getAttribute("clearLabel") !== String(clearLabel)
     ) {
-      component?.setAttribute("clearLabel", clearLabel);
+      component?.setAttribute("clearLabel", String(clearLabel));
     }
   }, [clearLabel]);
 
@@ -311,7 +311,7 @@ export function DiaDatePicker({
       todayLabel !== undefined &&
       component?.getAttribute("todayLabel") !== String(todayLabel)
     ) {
-      component?.setAttribute("todayLabel", todayLabel);
+      component?.setAttribute("todayLabel", String(todayLabel));
     }
   }, [todayLabel]);
 
@@ -321,7 +321,10 @@ export function DiaDatePicker({
       component?.getAttribute("requiredErrorMessage") !==
         String(requiredErrorMessage)
     ) {
-      component?.setAttribute("requiredErrorMessage", requiredErrorMessage);
+      component?.setAttribute(
+        "requiredErrorMessage",
+        String(requiredErrorMessage)
+      );
     }
   }, [requiredErrorMessage]);
 
@@ -330,7 +333,7 @@ export function DiaDatePicker({
       rangeErrorMessage !== undefined &&
       component?.getAttribute("rangeErrorMessage") !== String(rangeErrorMessage)
     ) {
-      component?.setAttribute("rangeErrorMessage", rangeErrorMessage);
+      component?.setAttribute("rangeErrorMessage", String(rangeErrorMessage));
     }
   }, [rangeErrorMessage]);
 
@@ -342,7 +345,7 @@ export function DiaDatePicker({
     ) {
       component?.setAttribute(
         "unavailableErrorMessage",
-        unavailableErrorMessage
+        String(unavailableErrorMessage)
       );
     }
   }, [unavailableErrorMessage]);
@@ -353,7 +356,7 @@ export function DiaDatePicker({
       component?.getAttribute("customErrorMessage") !==
         String(customErrorMessage)
     ) {
-      component?.setAttribute("customErrorMessage", customErrorMessage);
+      component?.setAttribute("customErrorMessage", String(customErrorMessage));
     }
   }, [customErrorMessage]);
 

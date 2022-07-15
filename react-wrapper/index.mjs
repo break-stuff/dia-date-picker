@@ -68,7 +68,6 @@ export default function reactWrapper({
 
       if (useTypeScript) {
         saveFile(outdir, 'index.d.ts', getManifestContent(components));
-        saveFile(outdir, 'index.ts', getManifestContent(components));
       }
     },
   };
@@ -196,7 +195,7 @@ function getAttributes(attributes) {
     }') !== String(${attr?.fieldName ?? attr.originalName})) {
                   component?.setAttribute('${
                     attr?.originalName ?? attr.fieldName
-                  }', ${attr?.fieldName ?? attr.originalName})
+                  }', String(${attr?.fieldName ?? attr.originalName}))
         }
       }, [${attr?.fieldName ?? attr.originalName}])
   `
