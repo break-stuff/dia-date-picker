@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import "dia-date-picker/dist/index.js";
+import "../dist/index.js";
 
 export function DiaCalendar({
   children,
@@ -25,13 +25,13 @@ export function DiaCalendar({
 
   useEffect(() => {
     if (onDiaFocus !== undefined) {
-      component.addEventListener("dia-focus", onDiaFocus);
+      component?.addEventListener("dia-focus", onDiaFocus);
     }
   }, []);
 
   useEffect(() => {
     if (onDiaSelect !== undefined) {
-      component.addEventListener("dia-select", onDiaSelect);
+      component?.addEventListener("dia-select", onDiaSelect);
     }
   }, []);
 
@@ -40,9 +40,9 @@ export function DiaCalendar({
   useEffect(() => {
     if (showWeekNumbers !== undefined) {
       if (showWeekNumbers) {
-        component.setAttribute("showWeekNumbers", "");
+        component?.setAttribute("showWeekNumbers", "");
       } else {
-        component.removeAttribute("showWeekNumbers");
+        component?.removeAttribute("showWeekNumbers");
       }
     }
   }, [showWeekNumbers]);
@@ -52,99 +52,99 @@ export function DiaCalendar({
   useEffect(() => {
     if (
       value !== undefined &&
-      component.getAttribute("value") !== String(value)
+      component?.getAttribute("value") !== String(value)
     ) {
-      component.setAttribute("value", value);
+      component?.setAttribute("value", value);
     }
   }, [value]);
 
   useEffect(() => {
     if (
       minDate !== undefined &&
-      component.getAttribute("minDate") !== String(minDate)
+      component?.getAttribute("minDate") !== String(minDate)
     ) {
-      component.setAttribute("minDate", minDate);
+      component?.setAttribute("minDate", minDate);
     }
   }, [minDate]);
 
   useEffect(() => {
     if (
       maxDate !== undefined &&
-      component.getAttribute("maxDate") !== String(maxDate)
+      component?.getAttribute("maxDate") !== String(maxDate)
     ) {
-      component.setAttribute("maxDate", maxDate);
+      component?.setAttribute("maxDate", maxDate);
     }
   }, [maxDate]);
 
   useEffect(() => {
     if (
       focusDate !== undefined &&
-      component.getAttribute("focusDate") !== String(focusDate)
+      component?.getAttribute("focusDate") !== String(focusDate)
     ) {
-      component.setAttribute("focusDate", focusDate);
+      component?.setAttribute("focusDate", focusDate);
     }
   }, [focusDate]);
 
   useEffect(() => {
     if (
       disabledDates !== undefined &&
-      component.getAttribute("disabledDates") !== String(disabledDates)
+      component?.getAttribute("disabledDates") !== String(disabledDates)
     ) {
-      component.setAttribute("disabledDates", disabledDates);
+      component?.setAttribute("disabledDates", disabledDates);
     }
   }, [disabledDates]);
 
   useEffect(() => {
     if (
       disabledWeekDays !== undefined &&
-      component.getAttribute("disabledWeekDays") !== String(disabledWeekDays)
+      component?.getAttribute("disabledWeekDays") !== String(disabledWeekDays)
     ) {
-      component.setAttribute("disabledWeekDays", disabledWeekDays);
+      component?.setAttribute("disabledWeekDays", disabledWeekDays);
     }
   }, [disabledWeekDays]);
 
   useEffect(() => {
     if (
       firstDayOfWeek !== undefined &&
-      component.getAttribute("firstDayOfWeek") !== String(firstDayOfWeek)
+      component?.getAttribute("firstDayOfWeek") !== String(firstDayOfWeek)
     ) {
-      component.setAttribute("firstDayOfWeek", firstDayOfWeek);
+      component?.setAttribute("firstDayOfWeek", firstDayOfWeek);
     }
   }, [firstDayOfWeek]);
 
   useEffect(() => {
     if (
       monthLabel !== undefined &&
-      component.getAttribute("monthLabel") !== String(monthLabel)
+      component?.getAttribute("monthLabel") !== String(monthLabel)
     ) {
-      component.setAttribute("monthLabel", monthLabel);
+      component?.setAttribute("monthLabel", monthLabel);
     }
   }, [monthLabel]);
 
   useEffect(() => {
     if (
       yearLabel !== undefined &&
-      component.getAttribute("yearLabel") !== String(yearLabel)
+      component?.getAttribute("yearLabel") !== String(yearLabel)
     ) {
-      component.setAttribute("yearLabel", yearLabel);
+      component?.setAttribute("yearLabel", yearLabel);
     }
   }, [yearLabel]);
 
   useEffect(() => {
     if (
       clearLabel !== undefined &&
-      component.getAttribute("clearLabel") !== String(clearLabel)
+      component?.getAttribute("clearLabel") !== String(clearLabel)
     ) {
-      component.setAttribute("clearLabel", clearLabel);
+      component?.setAttribute("clearLabel", clearLabel);
     }
   }, [clearLabel]);
 
   useEffect(() => {
     if (
       todayLabel !== undefined &&
-      component.getAttribute("todayLabel") !== String(todayLabel)
+      component?.getAttribute("todayLabel") !== String(todayLabel)
     ) {
-      component.setAttribute("todayLabel", todayLabel);
+      component?.setAttribute("todayLabel", todayLabel);
     }
   }, [todayLabel]);
 

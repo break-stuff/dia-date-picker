@@ -1,9 +1,22 @@
 import React, { useEffect, useRef } from "react";
-import "dia-date-picker/dist/index.js";
-import type { DiaDatePicker as Component } from "dia-date-picker/dist/index.js";
+import "../dist/index.js";
+import type { DiaDatePicker as Component } from "../dist/index.js";
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface IntrinsicElements {
+      "dia-date-picker": React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement>,
+        HTMLElement
+      >;
+    }
+  }
+}
 
 export interface DiaDatePickerProps {
-  childreninvalid?: boolean;
+  children?: any;
+  invalid?: boolean;
   required?: boolean;
   disabled?: boolean;
   readonly?: boolean;
@@ -66,20 +79,20 @@ export function DiaDatePicker({
   onDiaInput,
   onDiaChange,
 }: DiaDatePickerProps) {
-  const ref = useRef < Component > null;
-  const component = ref.current;
+  const ref = useRef<Component>(null);
+  const component = ref.current as Component;
 
   /** Event listeners - run once */
 
   useEffect(() => {
     if (onDiaInput !== undefined) {
-      component.addEventListener("dia-input", onDiaInput);
+      component?.addEventListener("dia-input", onDiaInput);
     }
   }, []);
 
   useEffect(() => {
     if (onDiaChange !== undefined) {
-      component.addEventListener("dia-change", onDiaChange);
+      component?.addEventListener("dia-change", onDiaChange);
     }
   }, []);
 
@@ -88,9 +101,9 @@ export function DiaDatePicker({
   useEffect(() => {
     if (invalid !== undefined) {
       if (invalid) {
-        component.setAttribute("invalid", "");
+        component?.setAttribute("invalid", "");
       } else {
-        component.removeAttribute("invalid");
+        component?.removeAttribute("invalid");
       }
     }
   }, [invalid]);
@@ -98,9 +111,9 @@ export function DiaDatePicker({
   useEffect(() => {
     if (required !== undefined) {
       if (required) {
-        component.setAttribute("required", "");
+        component?.setAttribute("required", "");
       } else {
-        component.removeAttribute("required");
+        component?.removeAttribute("required");
       }
     }
   }, [required]);
@@ -108,9 +121,9 @@ export function DiaDatePicker({
   useEffect(() => {
     if (disabled !== undefined) {
       if (disabled) {
-        component.setAttribute("disabled", "");
+        component?.setAttribute("disabled", "");
       } else {
-        component.removeAttribute("disabled");
+        component?.removeAttribute("disabled");
       }
     }
   }, [disabled]);
@@ -118,9 +131,9 @@ export function DiaDatePicker({
   useEffect(() => {
     if (readonly !== undefined) {
       if (readonly) {
-        component.setAttribute("readonly", "");
+        component?.setAttribute("readonly", "");
       } else {
-        component.removeAttribute("readonly");
+        component?.removeAttribute("readonly");
       }
     }
   }, [readonly]);
@@ -128,9 +141,9 @@ export function DiaDatePicker({
   useEffect(() => {
     if (showWeekNumbers !== undefined) {
       if (showWeekNumbers) {
-        component.setAttribute("showWeekNumbers", "");
+        component?.setAttribute("showWeekNumbers", "");
       } else {
-        component.removeAttribute("showWeekNumbers");
+        component?.removeAttribute("showWeekNumbers");
       }
     }
   }, [showWeekNumbers]);
@@ -138,9 +151,9 @@ export function DiaDatePicker({
   useEffect(() => {
     if (showErrorBelow !== undefined) {
       if (showErrorBelow) {
-        component.setAttribute("showErrorBelow", "");
+        component?.setAttribute("showErrorBelow", "");
       } else {
-        component.removeAttribute("showErrorBelow");
+        component?.removeAttribute("showErrorBelow");
       }
     }
   }, [showErrorBelow]);
@@ -148,9 +161,9 @@ export function DiaDatePicker({
   useEffect(() => {
     if (showHelpTextBelow !== undefined) {
       if (showHelpTextBelow) {
-        component.setAttribute("showHelpTextBelow", "");
+        component?.setAttribute("showHelpTextBelow", "");
       } else {
-        component.removeAttribute("showHelpTextBelow");
+        component?.removeAttribute("showHelpTextBelow");
       }
     }
   }, [showHelpTextBelow]);
@@ -158,9 +171,9 @@ export function DiaDatePicker({
   useEffect(() => {
     if (hideRequiredIndicator !== undefined) {
       if (hideRequiredIndicator) {
-        component.setAttribute("hideRequiredIndicator", "");
+        component?.setAttribute("hideRequiredIndicator", "");
       } else {
-        component.removeAttribute("hideRequiredIndicator");
+        component?.removeAttribute("hideRequiredIndicator");
       }
     }
   }, [hideRequiredIndicator]);
@@ -170,161 +183,164 @@ export function DiaDatePicker({
   useEffect(() => {
     if (
       value !== undefined &&
-      component.getAttribute("value") !== String(value)
+      component?.getAttribute("value") !== String(value)
     ) {
-      component.setAttribute("value", value);
+      component?.setAttribute("value", value);
     }
   }, [value]);
 
   useEffect(() => {
     if (
       label !== undefined &&
-      component.getAttribute("label") !== String(label)
+      component?.getAttribute("label") !== String(label)
     ) {
-      component.setAttribute("label", label);
+      component?.setAttribute("label", label);
     }
   }, [label]);
 
   useEffect(() => {
     if (
       helpText !== undefined &&
-      component.getAttribute("helpText") !== String(helpText)
+      component?.getAttribute("helpText") !== String(helpText)
     ) {
-      component.setAttribute("helpText", helpText);
+      component?.setAttribute("helpText", helpText);
     }
   }, [helpText]);
 
   useEffect(() => {
-    if (name !== undefined && component.getAttribute("name") !== String(name)) {
-      component.setAttribute("name", name);
+    if (
+      name !== undefined &&
+      component?.getAttribute("name") !== String(name)
+    ) {
+      component?.setAttribute("name", name);
     }
   }, [name]);
 
   useEffect(() => {
     if (
       minDate !== undefined &&
-      component.getAttribute("minDate") !== String(minDate)
+      component?.getAttribute("minDate") !== String(minDate)
     ) {
-      component.setAttribute("minDate", minDate);
+      component?.setAttribute("minDate", minDate);
     }
   }, [minDate]);
 
   useEffect(() => {
     if (
       maxDate !== undefined &&
-      component.getAttribute("maxDate") !== String(maxDate)
+      component?.getAttribute("maxDate") !== String(maxDate)
     ) {
-      component.setAttribute("maxDate", maxDate);
+      component?.setAttribute("maxDate", maxDate);
     }
   }, [maxDate]);
 
   useEffect(() => {
     if (
       focusDate !== undefined &&
-      component.getAttribute("focusDate") !== String(focusDate)
+      component?.getAttribute("focusDate") !== String(focusDate)
     ) {
-      component.setAttribute("focusDate", focusDate);
+      component?.setAttribute("focusDate", focusDate);
     }
   }, [focusDate]);
 
   useEffect(() => {
     if (
       disabledDates !== undefined &&
-      component.getAttribute("disabledDates") !== String(disabledDates)
+      component?.getAttribute("disabledDates") !== String(disabledDates)
     ) {
-      component.setAttribute("disabledDates", disabledDates);
+      component?.setAttribute("disabledDates", disabledDates);
     }
   }, [disabledDates]);
 
   useEffect(() => {
     if (
       disabledWeekDays !== undefined &&
-      component.getAttribute("disabledWeekDays") !== String(disabledWeekDays)
+      component?.getAttribute("disabledWeekDays") !== String(disabledWeekDays)
     ) {
-      component.setAttribute("disabledWeekDays", disabledWeekDays);
+      component?.setAttribute("disabledWeekDays", disabledWeekDays);
     }
   }, [disabledWeekDays]);
 
   useEffect(() => {
     if (
       firstDayOfWeek !== undefined &&
-      component.getAttribute("firstDayOfWeek") !== String(firstDayOfWeek)
+      component?.getAttribute("firstDayOfWeek") !== String(firstDayOfWeek)
     ) {
-      component.setAttribute("firstDayOfWeek", firstDayOfWeek);
+      component?.setAttribute("firstDayOfWeek", firstDayOfWeek);
     }
   }, [firstDayOfWeek]);
 
   useEffect(() => {
     if (
       dayLabel !== undefined &&
-      component.getAttribute("dayLabel") !== String(dayLabel)
+      component?.getAttribute("dayLabel") !== String(dayLabel)
     ) {
-      component.setAttribute("dayLabel", dayLabel);
+      component?.setAttribute("dayLabel", dayLabel);
     }
   }, [dayLabel]);
 
   useEffect(() => {
     if (
       monthLabel !== undefined &&
-      component.getAttribute("monthLabel") !== String(monthLabel)
+      component?.getAttribute("monthLabel") !== String(monthLabel)
     ) {
-      component.setAttribute("monthLabel", monthLabel);
+      component?.setAttribute("monthLabel", monthLabel);
     }
   }, [monthLabel]);
 
   useEffect(() => {
     if (
       yearLabel !== undefined &&
-      component.getAttribute("yearLabel") !== String(yearLabel)
+      component?.getAttribute("yearLabel") !== String(yearLabel)
     ) {
-      component.setAttribute("yearLabel", yearLabel);
+      component?.setAttribute("yearLabel", yearLabel);
     }
   }, [yearLabel]);
 
   useEffect(() => {
     if (
       clearLabel !== undefined &&
-      component.getAttribute("clearLabel") !== String(clearLabel)
+      component?.getAttribute("clearLabel") !== String(clearLabel)
     ) {
-      component.setAttribute("clearLabel", clearLabel);
+      component?.setAttribute("clearLabel", clearLabel);
     }
   }, [clearLabel]);
 
   useEffect(() => {
     if (
       todayLabel !== undefined &&
-      component.getAttribute("todayLabel") !== String(todayLabel)
+      component?.getAttribute("todayLabel") !== String(todayLabel)
     ) {
-      component.setAttribute("todayLabel", todayLabel);
+      component?.setAttribute("todayLabel", todayLabel);
     }
   }, [todayLabel]);
 
   useEffect(() => {
     if (
       requiredErrorMessage !== undefined &&
-      component.getAttribute("requiredErrorMessage") !==
+      component?.getAttribute("requiredErrorMessage") !==
         String(requiredErrorMessage)
     ) {
-      component.setAttribute("requiredErrorMessage", requiredErrorMessage);
+      component?.setAttribute("requiredErrorMessage", requiredErrorMessage);
     }
   }, [requiredErrorMessage]);
 
   useEffect(() => {
     if (
       rangeErrorMessage !== undefined &&
-      component.getAttribute("rangeErrorMessage") !== String(rangeErrorMessage)
+      component?.getAttribute("rangeErrorMessage") !== String(rangeErrorMessage)
     ) {
-      component.setAttribute("rangeErrorMessage", rangeErrorMessage);
+      component?.setAttribute("rangeErrorMessage", rangeErrorMessage);
     }
   }, [rangeErrorMessage]);
 
   useEffect(() => {
     if (
       unavailableErrorMessage !== undefined &&
-      component.getAttribute("unavailableErrorMessage") !==
+      component?.getAttribute("unavailableErrorMessage") !==
         String(unavailableErrorMessage)
     ) {
-      component.setAttribute(
+      component?.setAttribute(
         "unavailableErrorMessage",
         unavailableErrorMessage
       );
@@ -334,10 +350,10 @@ export function DiaDatePicker({
   useEffect(() => {
     if (
       customErrorMessage !== undefined &&
-      component.getAttribute("customErrorMessage") !==
+      component?.getAttribute("customErrorMessage") !==
         String(customErrorMessage)
     ) {
-      component.setAttribute("customErrorMessage", customErrorMessage);
+      component?.setAttribute("customErrorMessage", customErrorMessage);
     }
   }, [customErrorMessage]);
 

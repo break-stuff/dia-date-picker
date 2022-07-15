@@ -44,7 +44,8 @@ export default function reactWrapper({
           component,
           events,
           booleanAttributes,
-          attributes
+          attributes,
+          outdir
         );
 
         saveFile(outdir, `${component.name}.jsx`, result);
@@ -55,6 +56,7 @@ export default function reactWrapper({
             events,
             booleanAttributes,
             attributes,
+            outdir,
             true
           );
 
@@ -62,11 +64,11 @@ export default function reactWrapper({
         }
       });
 
-      saveFile(outdir, 'index.js', getJsManifestContent(components));
+      saveFile(outdir, 'index.js', getManifestContent(components));
 
       if (useTypeScript) {
-        saveFile(outdir, 'index.d.ts', getTypeDefinitionContent(components));
-        saveFile(outdir, 'index.ts', getTypeDefinitionContent(components));
+        saveFile(outdir, 'index.d.ts', getManifestContent(components));
+        saveFile(outdir, 'index.ts', getManifestContent(components));
       }
     },
   };
@@ -220,9 +222,10 @@ function getJsxFileContents(
   events,
   booleanAttributes,
   attributes,
+  outdir,
   useTypeScript
 ) {
-  const modulePath = getModulePath();
+  const modulePath = getModulePath(outdir);
   const params = getParams(booleanAttributes, attributes, events);
   const eventTemplates = getEvents(events);
   const booleanAttrTemplates = getBooleanAttributes(booleanAttributes);
@@ -245,6 +248,12 @@ function getJsxFileContents(
 
     ${
       useTypeScript
+        ? getCustomElementDeclaration(component)
+        : ''
+    }
+
+    ${
+      useTypeScript
         ? `export interface ${component.name}Props { ${getPropsInterface(
             booleanAttributes,
             attributes,
@@ -256,8 +265,8 @@ function getJsxFileContents(
     export function ${component.name}({children${params ? ',' : ''} ${params}}${
     useTypeScript ? `: ${component.name}Props` : ''
   }) {
-      ${useEffect ? useTypeScript ? `const ref = useRef<Component>(null);` : `const ref = useRef(null);` : ''}
-      ${useEffect ? `const component = ref.current;` : ''}
+      ${useEffect ? `const ref = useRef${useTypeScript ? '<Component>' : ''}(null);`: ''}
+      ${useEffect ? `const component = ref.current${useTypeScript ? ' as Component' : ''};` : ''}
 
       ${has(eventTemplates) ? '/** Event listeners - run once */' : ''}
       ${eventTemplates?.join('') || ''}
@@ -301,20 +310,28 @@ function getPropsInterface(booleanAttributes, attributes, events) {
   ]?.join('');
 }
 
-function getJsManifestContent(components) {
-  return components
-    .map(component => `export * from './${component.name}.jsx';`)
-    .join('');
+function getCustomElementDeclaration(component) {
+  return `
+    declare global {
+      // eslint-disable-next-line @typescript-eslint/no-namespace
+      namespace JSX {
+          interface IntrinsicElements {
+              '${component.tagName}': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+          }
+      }
+    }
+  `;
 }
 
-function getTypeDefinitionContent(components) {
+function getManifestContent(components) {
   return components
     .map(component => `export * from './${component.name}';`)
     .join('');
 }
 
-function getModulePath() {
-  return path.join(packageJson.name, packageJson.module);
+function getModulePath(outdir) {
+  const directories = outdir.split('/');
+  return path.join(directories.map(_ => '../').join(''), packageJson.module);
 }
 
 function saveFile(outdir, fileName, contents) {
