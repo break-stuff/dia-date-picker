@@ -160,7 +160,7 @@ function getEvents(eventNames) {
     event => `
       useEffect(() => {
         if(${event.reactName} !== undefined) {
-          component.addEventListener('${event.name}', ${event.reactName});
+          component?.addEventListener('${event.name}', ${event.reactName});
         }
       }, [])
     `
@@ -173,9 +173,9 @@ function getBooleanAttributes(booleanAttributes) {
       useEffect(() => {
         if(${attr?.fieldName ?? attr.originalName} !== undefined) {
           if(${attr?.fieldName ?? attr.originalName}) {
-            component.setAttribute('${attr.fieldName}', '');
+            component?.setAttribute('${attr.fieldName}', '');
           } else {
-            component.removeAttribute('${attr.fieldName}');
+            component?.removeAttribute('${attr.fieldName}');
           }
         }
       }, [${attr?.fieldName ?? attr.name}])
@@ -189,10 +189,10 @@ function getAttributes(attributes) {
       useEffect(() => {
         if(${
           attr?.fieldName ?? attr.originalName
-        } !== undefined && component.getAttribute('${
+        } !== undefined && component?.getAttribute('${
       attr?.originalName ?? attr.fieldName
     }') !== String(${attr?.fieldName ?? attr.originalName})) {
-                  component.setAttribute('${
+                  component?.setAttribute('${
                     attr?.originalName ?? attr.fieldName
                   }', ${attr?.fieldName ?? attr.originalName})
         }
@@ -207,8 +207,8 @@ function getProps(component) {
   return fields?.map(
     member => `
       useEffect(() => {
-        if(${member.name} !== undefined && component.${member.name} !== ${member.name}) {
-          component.${member.name} = ${member.name};
+        if(${member.name} !== undefined && component?.${member.name} !== ${member.name}) {
+          component?.${member.name} = ${member.name};
         }
       }, [${member.name}])
   `
@@ -291,7 +291,7 @@ function getJsxFileContents(
 
 function getPropsInterface(booleanAttributes, attributes, events) {
   return [
-    'children',
+    'children?: any;',
     ...[...(booleanAttributes || []), ...(attributes || [])].map(
       attr => `${camelize(attr.name)}?: ${attr.type.text};`
     ),
@@ -320,6 +320,6 @@ function getModulePath() {
 function saveFile(outdir, fileName, contents) {
   fs.writeFileSync(
     path.join(outdir, fileName),
-    prettier.format(contents, { parser: 'babel' })
+    prettier.format(contents, { parser: 'typescript' })
   );
 }
