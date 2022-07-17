@@ -6,7 +6,10 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
-      "dia-calendar": any;
+      "dia-calendar": React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement>,
+        HTMLElement
+      >;
     }
   }
 }
@@ -27,6 +30,14 @@ export interface DiaCalendarProps {
   todayLabel?: string;
   onDiaFocus?: EventListenerOrEventListenerObject;
   onDiaSelect?: EventListenerOrEventListenerObject;
+}
+
+// extends React's HTMLAttributes
+declare module "react" {
+  interface HTMLAttributes<T>
+    extends AriaAttributes,
+      DOMAttributes<T>,
+      DiaCalendarProps {}
 }
 
 export function DiaCalendar({

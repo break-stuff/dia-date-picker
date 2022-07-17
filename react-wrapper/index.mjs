@@ -245,11 +245,7 @@ function getJsxFileContents(
         : ''
     }
 
-    ${
-      useTypeScript
-        ? getCustomElementDeclaration(component)
-        : ''
-    }
+    ${useTypeScript ? getCustomElementDeclaration(component.tagName) : ''}
 
     ${
       useTypeScript
@@ -261,11 +257,27 @@ function getJsxFileContents(
         : ''
     }
 
+    ${
+      useTypeScript
+        ? getReactAttributeExtensions(component.name)
+        : ''
+    }
+
     export function ${component.name}({children${params ? ',' : ''} ${params}}${
     useTypeScript ? `: ${component.name}Props` : ''
   }) {
-      ${useEffect ? `const ref = useRef${useTypeScript ? '<Component>' : ''}(null);`: ''}
-      ${useEffect ? `const component = ref.current${useTypeScript ? ' as Component' : ''};` : ''}
+      ${
+        useEffect
+          ? `const ref = useRef${useTypeScript ? '<Component>' : ''}(null);`
+          : ''
+      }
+      ${
+        useEffect
+          ? `const component = ref.current${
+              useTypeScript ? ' as Component' : ''
+            };`
+          : ''
+      }
 
       ${has(eventTemplates) ? '/** Event listeners - run once */' : ''}
       ${eventTemplates?.join('') || ''}
@@ -289,9 +301,12 @@ function getJsxFileContents(
       ${propTemplates?.join('') || ''}
 
       return (
-        <${component.tagName} ${useEffect ? 'ref={ref}' : ''} ${[...booleanAttributes, ...attributes]
-          .map(attr => `${attr?.name}={${attr?.fieldName}}`)
-          .join(' ')}>
+        <${component.tagName} ${useEffect ? 'ref={ref}' : ''} ${[
+    ...booleanAttributes,
+    ...attributes,
+  ]
+    .map(attr => `${attr?.name}={${attr?.fieldName}}`)
+    .join(' ')}>
           {children}
         </${component.tagName}>
       )
@@ -311,16 +326,25 @@ function getPropsInterface(booleanAttributes, attributes, events) {
   ]?.join('');
 }
 
-function getCustomElementDeclaration(component) {
+function getCustomElementDeclaration(tagName) {
   return `
     declare global {
       // eslint-disable-next-line @typescript-eslint/no-namespace
       namespace JSX {
           interface IntrinsicElements {
-              '${component.tagName}': any;
+              '${tagName}': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
           }
       }
     }
+  `;
+}
+
+function getReactAttributeExtensions(name) {
+  return `
+    // extends React's HTMLAttributes
+    declare module 'react' {
+      interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T>, ${name}Props { }
+    }  
   `;
 }
 

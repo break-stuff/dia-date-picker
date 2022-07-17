@@ -6,7 +6,10 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
-      "dia-date-picker": any;
+      "dia-date-picker": React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement>,
+        HTMLElement
+      >;
     }
   }
 }
@@ -42,6 +45,14 @@ export interface DiaDatePickerProps {
   customErrorMessage?: string | undefined;
   onDiaInput?: EventListenerOrEventListenerObject;
   onDiaChange?: EventListenerOrEventListenerObject;
+}
+
+// extends React's HTMLAttributes
+declare module "react" {
+  interface HTMLAttributes<T>
+    extends AriaAttributes,
+      DOMAttributes<T>,
+      DiaDatePickerProps {}
 }
 
 export function DiaDatePicker({
