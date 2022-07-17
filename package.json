@@ -2,12 +2,14 @@
   "name": "dia-date-picker",
   "version": "1.0.0-alpha.12",
   "main": "dist/dia-date-picker.umd.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "module": "index.js",
+  "types": "index.d.ts",
   "files": [
     "dist",
     "react",
-    "custom-elements.json"
+    "custom-elements.json",
+    "index.js",
+    "index.d.ts"
   ],
   "scripts": {
     "clean": "rimraf dist",

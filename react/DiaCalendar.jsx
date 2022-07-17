@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import "../dist/index.js";
+import "../index.js";
 
 export function DiaCalendar({
   children,

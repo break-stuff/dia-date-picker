@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import "../dist/index.js";
-import type { DiaDatePicker as Component } from "../dist/index.js";
+import "../index.js";
+import type { DiaDatePicker as Component } from "../index.js";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
