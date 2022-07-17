@@ -289,7 +289,9 @@ function getJsxFileContents(
       ${propTemplates?.join('') || ''}
 
       return (
-        <${component.tagName} ${useEffect ? 'ref={ref}' : ''}>
+        <${component.tagName} ${useEffect ? 'ref={ref}' : ''} ${[...booleanAttributes, ...attributes]
+          .map(attr => `${attr?.name}={${attr?.fieldName}}`)
+          .join(' ')}>
           {children}
         </${component.tagName}>
       )
@@ -315,7 +317,7 @@ function getCustomElementDeclaration(component) {
       // eslint-disable-next-line @typescript-eslint/no-namespace
       namespace JSX {
           interface IntrinsicElements {
-              '${component.tagName}': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+              '${component.tagName}': any;
           }
       }
     }

@@ -6,10 +6,7 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
-      "dia-date-picker": React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      >;
+      "dia-date-picker": any;
     }
   }
 }
@@ -360,5 +357,38 @@ export function DiaDatePicker({
     }
   }, [customErrorMessage]);
 
-  return <dia-date-picker ref={ref}>{children}</dia-date-picker>;
+  return (
+    <dia-date-picker
+      ref={ref}
+      invalid={invalid}
+      required={required}
+      disabled={disabled}
+      readonly={readonly}
+      show-week-numbers={showWeekNumbers}
+      show-error-below={showErrorBelow}
+      show-help-text-below={showHelpTextBelow}
+      hide-required-indicator={hideRequiredIndicator}
+      value={value}
+      label={label}
+      help-text={helpText}
+      name={name}
+      min-date={minDate}
+      max-date={maxDate}
+      focus-date={focusDate}
+      disabled-dates={disabledDates}
+      disabled-week-days={disabledWeekDays}
+      first-day-of-week={firstDayOfWeek}
+      day-label={dayLabel}
+      month-label={monthLabel}
+      year-label={yearLabel}
+      clear-label={clearLabel}
+      today-label={todayLabel}
+      required-error-message={requiredErrorMessage}
+      range-error-message={rangeErrorMessage}
+      unavailable-error-message={unavailableErrorMessage}
+      custom-error-message={customErrorMessage}
+    >
+      {children}
+    </dia-date-picker>
+  );
 }

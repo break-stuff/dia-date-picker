@@ -148,5 +148,23 @@ export function DiaCalendar({
     }
   }, [todayLabel]);
 
-  return <dia-calendar ref={ref}>{children}</dia-calendar>;
+  return (
+    <dia-calendar
+      ref={ref}
+      show-week-numbers={showWeekNumbers}
+      value={value}
+      min-date={minDate}
+      max-date={maxDate}
+      focus-date={focusDate}
+      disabled-dates={disabledDates}
+      disabled-week-days={disabledWeekDays}
+      first-day-of-week={firstDayOfWeek}
+      month-label={monthLabel}
+      year-label={yearLabel}
+      clear-label={clearLabel}
+      today-label={todayLabel}
+    >
+      {children}
+    </dia-calendar>
+  );
 }
