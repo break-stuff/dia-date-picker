@@ -1,44 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import "../index.js";
-import type { DiaCalendar as Component } from "../index.js";
-
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace JSX {
-    interface IntrinsicElements {
-      "dia-calendar": React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      >;
-    }
-  }
-}
-
-export interface DiaCalendarProps {
-  children?: any;
-  showWeekNumbers?: boolean;
-  value?: string | undefined;
-  minDate?: string | undefined;
-  maxDate?: string | undefined;
-  focusDate?: string | undefined;
-  disabledDates?: string | undefined;
-  disabledWeekDays?: string | undefined;
-  firstDayOfWeek?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | undefined;
-  monthLabel?: string;
-  yearLabel?: string;
-  clearLabel?: string;
-  todayLabel?: string;
-  onDiaFocus?: EventListenerOrEventListenerObject;
-  onDiaSelect?: EventListenerOrEventListenerObject;
-}
-
-// extends React's HTMLAttributes
-declare module "react" {
-  interface HTMLAttributes<T>
-    extends AriaAttributes,
-      DOMAttributes<T>,
-      DiaCalendarProps {}
-}
 
 export function DiaCalendar({
   children,
@@ -56,9 +17,9 @@ export function DiaCalendar({
   todayLabel,
   onDiaFocus,
   onDiaSelect,
-}: DiaCalendarProps) {
-  const ref = useRef<Component>(null);
-  const component = ref.current as Component;
+}) {
+  const ref = useRef(null);
+  const component = ref.current;
 
   /** Event listeners - run once */
 
@@ -187,23 +148,23 @@ export function DiaCalendar({
     }
   }, [todayLabel]);
 
-  return (
-    <dia-calendar
-      ref={ref}
-      show-week-numbers={showWeekNumbers}
-      value={value}
-      min-date={minDate}
-      max-date={maxDate}
-      focus-date={focusDate}
-      disabled-dates={disabledDates}
-      disabled-week-days={disabledWeekDays}
-      first-day-of-week={firstDayOfWeek}
-      month-label={monthLabel}
-      year-label={yearLabel}
-      clear-label={clearLabel}
-      today-label={todayLabel}
-    >
-      {children}
-    </dia-calendar>
+  return React.createElement(
+    "dia-calendar",
+    {
+      ref: ref,
+      "show-week-numbers": showWeekNumbers,
+      value: value,
+      "min-date": minDate,
+      "max-date": maxDate,
+      "focus-date": focusDate,
+      "disabled-dates": disabledDates,
+      "disabled-week-days": disabledWeekDays,
+      "first-day-of-week": firstDayOfWeek,
+      "month-label": monthLabel,
+      "year-label": yearLabel,
+      "clear-label": clearLabel,
+      "today-label": todayLabel,
+    },
+    children
   );
 }

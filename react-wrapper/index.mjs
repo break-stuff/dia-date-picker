@@ -48,19 +48,18 @@ export default function reactWrapper({
           outdir
         );
 
-        saveFile(outdir, `${component.name}.jsx`, result);
+        saveFile(outdir, `${component.name}.js`, result);
 
         if (useTypeScript) {
-          const result = getJsxFileContents(
+          const result = getTypeDefinitionFileContents(
             component,
             events,
             booleanAttributes,
             attributes,
-            outdir,
-            true
+            outdir
           );
 
-          saveFile(outdir, `${component.name}.tsx`, result);
+          saveFile(outdir, `${component.name}.d.ts`, result);
         }
       });
 
@@ -221,8 +220,7 @@ function getJsxFileContents(
   events,
   booleanAttributes,
   attributes,
-  outdir,
-  useTypeScript
+  outdir
 ) {
   const modulePath = getModulePath(outdir);
   const params = getParams(booleanAttributes, attributes, events);
@@ -239,43 +237,16 @@ function getJsxFileContents(
   return `
     import React${useEffect ? ', {useEffect, useRef}' : ''} from "react";
     import '${modulePath}';
-    ${
-      useTypeScript
-        ? `import type { ${component.name} as Component } from "${modulePath}";`
-        : ''
-    }
 
-    ${useTypeScript ? getCustomElementDeclaration(component.tagName) : ''}
-
-    ${
-      useTypeScript
-        ? `export interface ${component.name}Props { ${getPropsInterface(
-            booleanAttributes,
-            attributes,
-            events
-          )} }`
-        : ''
-    }
-
-    ${
-      useTypeScript
-        ? getReactAttributeExtensions(component.name)
-        : ''
-    }
-
-    export function ${component.name}({children${params ? ',' : ''} ${params}}${
-    useTypeScript ? `: ${component.name}Props` : ''
-  }) {
+    export function ${component.name}({children${params ? ',' : ''} ${params}}) {
       ${
         useEffect
-          ? `const ref = useRef${useTypeScript ? '<Component>' : ''}(null);`
+          ? `const ref = useRef(null);`
           : ''
       }
       ${
         useEffect
-          ? `const component = ref.current${
-              useTypeScript ? ' as Component' : ''
-            };`
+          ? `const component = ref.current;`
           : ''
       }
 
@@ -300,17 +271,49 @@ function getJsxFileContents(
       }
       ${propTemplates?.join('') || ''}
 
-      return (
-        <${component.tagName} ${useEffect ? 'ref={ref}' : ''} ${[
-    ...booleanAttributes,
-    ...attributes,
-  ]
-    .map(attr => `${attr?.name}={${attr?.fieldName}}`)
-    .join(' ')}>
-          {children}
-        </${component.tagName}>
-      )
+      return React.createElement(
+        "${component.tagName}",
+        { 
+          ${useEffect ? '"ref": ref,' : ''} 
+          ${[
+            ...booleanAttributes,
+            ...attributes,
+          ]
+          .map(attr => `"${attr?.name}": ${attr?.fieldName}`)
+          .join(', ')}
+        },
+        children
+      );
     }
+  `;
+}
+
+function getTypeDefinitionFileContents(
+  component,
+  events,
+  booleanAttributes,
+  attributes,
+  outdir
+) {
+  const modulePath = getModulePath(outdir);
+  const params = getParams(booleanAttributes, attributes, events);
+
+  return `
+    import React from "react";
+    import '${modulePath}';
+   
+    ${getCustomElementDeclaration(component.tagName)}
+
+    export interface ${component.name}Props { 
+      ${getPropsInterface(booleanAttributes, attributes, events)} 
+    }
+
+    declare module "react" {
+      interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T>, ${component.name}Props {
+      }
+    }
+
+    export declare function ${component.name}({children${params ? ',' : ''} ${params}}: ${component.name}Props): JSX.Element;
   `;
 }
 
@@ -329,22 +332,12 @@ function getPropsInterface(booleanAttributes, attributes, events) {
 function getCustomElementDeclaration(tagName) {
   return `
     declare global {
-      // eslint-disable-next-line @typescript-eslint/no-namespace
       namespace JSX {
-          interface IntrinsicElements {
-              '${tagName}': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-          }
+        interface IntrinsicElements {
+            '${tagName}': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+        }
       }
     }
-  `;
-}
-
-function getReactAttributeExtensions(name) {
-  return `
-    // extends React's HTMLAttributes
-    declare module 'react' {
-      interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T>, ${name}Props { }
-    }  
   `;
 }
 

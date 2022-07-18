@@ -31,7 +31,11 @@
     "**/*.test.*",
     "**/*.tests.*",
     "**/__mocks__/*",
-    "**/__tests__/*"
+    "**/__tests__/*",
+    "src/*/*.styles.ts",
+    "utils",
+    "shared-styles"
+
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
