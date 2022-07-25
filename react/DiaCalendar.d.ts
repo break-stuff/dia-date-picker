@@ -1,5 +1,5 @@
 import React from "react";
-import "../index.js";
+import "react";
 
 declare global {
   namespace JSX {

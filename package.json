@@ -1,6 +1,6 @@
 {
   "name": "dia-date-picker",
-  "version": "1.0.0-alpha.14",
+  "version": "1.0.0-alpha.15",
   "main": "dist/dia-date-picker.umd.js",
   "module": "index.js",
   "types": "index.d.ts",
@@ -56,7 +56,7 @@
     "@web/test-runner-playwright": "^0.8.8",
     "autoprefixer": "^10.4.3",
     "babel-loader": "^8.2.3",
-    "cem-plugin-reactify": "^0.0.2",
+    "cem-plugin-react-wrapper": "^1.0.0-beta.1",
     "cssnano": "^5.1.4",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
@@ -100,23 +100,23 @@
   "customElements": "/custom-elements.json",
   "author": "Burton Smith <burton@breakstuff.io>",
   "repository": {
-      "type": "git",
-      "url": "git+https://github.com/break-stuff/dia-date-picker.git"
+    "type": "git",
+    "url": "git+https://github.com/break-stuff/dia-date-picker.git"
   },
   "bugs": {
-      "url": "https://github.com/break-stuff/dia-date-picker/issues"
+    "url": "https://github.com/break-stuff/dia-date-picker/issues"
   },
   "homepage": "https://dia-date-picker.com",
   "license": "MIT",
   "keywords": [
-      "calendar",
-      "date",
-      "date picker",
-      "date-picker",
-      "picker",
-      "web components",
-      "react",
-      "vue",
-      "angular"
+    "calendar",
+    "date",
+    "date picker",
+    "date-picker",
+    "picker",
+    "web components",
+    "react",
+    "vue",
+    "angular"
   ]
 }

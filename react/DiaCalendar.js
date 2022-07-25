@@ -151,9 +151,9 @@ export function DiaCalendar({
   return React.createElement(
     "dia-calendar",
     {
-      ref: ref,
+      ref,
       "show-week-numbers": showWeekNumbers,
-      value: value,
+      value,
       "min-date": minDate,
       "max-date": maxDate,
       "focus-date": focusDate,
