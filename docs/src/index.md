@@ -15,8 +15,33 @@ sidebar: true
 # footer: Made with ❤️ by @stuffbreaker
 ---
 
-<img :src="$withBase('/calendar.png')" alt="calendar graphic">
-
 # Dia Calendar and Date Picker Components
 
 These components are designed from the ground up with accessibility and usability in mind. They are built using standards-based web components, so you can use them in any of your projects regardless of the framework or non-framework you are using.
+
+## Installation
+
+```bash
+npm install dia-date-picker
+
+# or
+
+yarn add dia-date-picker
+```
+
+```js
+import "dia-date-picker";
+```
+
+### CDN
+
+```html
+<script type="module" src="https://unpkg.com/dia-date-picker"></script>
+```
+
+## Usage
+
+
+```html
+<dia-date-picker label="My Date picker"></dia-date-picker>
+```
