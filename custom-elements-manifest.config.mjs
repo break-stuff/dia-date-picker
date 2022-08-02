@@ -21,9 +21,7 @@ export default {
   stencil: false,
   /** Provide custom plugins */
   plugins: [
-    reactWrapper({
-      typescript: true
-    }),
+    reactWrapper(),
     removeMembers(),
   ],
 
