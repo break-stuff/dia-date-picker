@@ -1,6 +1,6 @@
 # Dia Date Picker
 
-Dia Date Picker is a light weight framework agnostic date picker and calendar component. It is designed from the ground up to be accessibility (a11y), internationalization (i18n), and theming in mind.
+Dia Date Picker is a lightweight framework agnostic date picker and calendar component. It is designed from the ground up with accessibility (a11y), internationalization (i18n), and theming in mind.
 
 ## Installation
 
