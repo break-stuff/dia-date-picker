@@ -287,17 +287,16 @@ export class DiaCalendar extends LitElement {
     this._selectedYear = date.getFullYear();
   }
 
-  private setFocusableDate(date: Date) {
-    setTimeout(() => {
-      const $control = this.shadowRoot?.querySelector(
-        `[id="${getShortIsoDate(date)}"]`
-      ) as HTMLElement;
+  private async setFocusableDate(date: Date) {
+    await this.updateComplete;
+    const $control = this.shadowRoot?.querySelector(
+      `[id="${getShortIsoDate(date)}"]`
+    ) as HTMLElement;
 
-      this.$focusableEls.splice(4, 1, $control);
-      $control?.setAttribute('aria-selected', 'true');
-      $control?.setAttribute('tabindex', '0');
-      $control?.focus();
-    });
+    this.$focusableEls.splice(4, 1, $control);
+    $control?.setAttribute('aria-selected', 'true');
+    $control?.setAttribute('tabindex', '0');
+    $control?.focus();
   }
 
   private getLocale(): string {
@@ -411,7 +410,7 @@ export class DiaCalendar extends LitElement {
     this.selectDate(newDate);
     this.updateYearSelector();
 
-    if(!this.isDateDisabled(newDate)) {
+    if (!this.isDateDisabled(newDate)) {
       this.emitFocus();
     }
   }
