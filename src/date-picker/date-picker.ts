@@ -268,13 +268,13 @@ export class DiaDatePicker extends LitElement {
    *
    */
 
-  protected firstUpdated(): void {
+  protected firstUpdated() {
     this.handleComponentBlur();
     this.initInputValues();
     setTimeout(() => this.setCalendarElementVariables());
   }
 
-  protected async performUpdate() {
+  protected performUpdate() {
     // update selected values when value changes
     this._selectedDate = this.getSelectedDate();
     setTimeout(() => this.updateInputValues());
@@ -287,14 +287,15 @@ export class DiaDatePicker extends LitElement {
    *
    */
 
-  public show(): void {
+  public show() {
     this._expanded = true;
     this.setDayFocus();
   }
 
-  public hide(): void {
+  public async hide() {
     this._expanded = false;
-    setTimeout(() => this.$firstInput?.focus(), 100);
+    await this.updateComplete;
+    this.$firstInput?.focus();
     this.value = getShortIsoDate(this._selectedDate as Date);
   }
 
@@ -468,11 +469,11 @@ export class DiaDatePicker extends LitElement {
     this.setYearInput('');
   }
 
-  private toggleCalendar() {
+  private async toggleCalendar() {
     if (!this._expanded) {
       this.show();
     } else {
-      this.hide();
+      await this.hide();
     }
   }
 
@@ -568,16 +569,16 @@ export class DiaDatePicker extends LitElement {
     );
   }
 
-  private selectDate(date: Date) {
+  private async selectDate(date: Date) {
     this.setSelectedValues(date);
     this.setInputValues();
 
-    setTimeout(() => {
-      this.hide();
-      this.validateInput();
-      this.emitInput();
-      this.emitChange();
-    }, 100);
+    await this.updateComplete;
+
+    this.hide();
+    this.validateInput();
+    this.emitInput();
+    this.emitChange();
   }
 
   private clearKey() {
@@ -605,8 +606,8 @@ export class DiaDatePicker extends LitElement {
     });
   }
 
-  private handleInputControlClick() {
-    this.toggleCalendar();
+  private async handleInputControlClick() {
+    await this.toggleCalendar();
   }
 
   private handleDropdownKeyDown(e: KeyboardEvent): void {
@@ -692,7 +693,7 @@ export class DiaDatePicker extends LitElement {
 
   private handleYearKeyUp(e: KeyboardEvent, index: number) {
     this.clearKey();
-    if(this._pressedKeys.length) {
+    if (this._pressedKeys.length) {
       return;
     }
 
@@ -749,10 +750,10 @@ export class DiaDatePicker extends LitElement {
 
   private handleMonthKeyUp(e: KeyboardEvent, index: number) {
     this.clearKey();
-    if(this._pressedKeys.length) {
+    if (this._pressedKeys.length) {
       return;
     }
-    
+
     switch (e.key) {
       case keys.Shift:
       case keys.Tab:
@@ -777,10 +778,10 @@ export class DiaDatePicker extends LitElement {
 
   private handleDayKeyUp(e: KeyboardEvent, index: number) {
     this.clearKey();
-    if(this._pressedKeys.length) {
+    if (this._pressedKeys.length) {
       return;
     }
-    
+
     switch (e.key) {
       case keys.Shift:
       case keys.Tab:
@@ -843,7 +844,7 @@ export class DiaDatePicker extends LitElement {
     }
   }
 
-  private handleDateFocused(e: any) {
+  private async handleDateFocused(e: any) {
     this.setFormFieldData(e.detail);
     if (!this._formFieldData.value) {
       return;
@@ -851,32 +852,32 @@ export class DiaDatePicker extends LitElement {
 
     this.setSelectedValues(this._formFieldData.valueAsDate as Date);
     this.setInputValues();
-    setTimeout(() => {
-      this.validateInput();
-      this.emitInput();
-    });
+
+    await this.updateComplete;
+    this.validateInput();
+    this.emitInput();
   }
 
-  private handleDateSelected(e: any) {
+  private async handleDateSelected(e: any) {
     this.setFormFieldData(e.detail);
-    this.selectDate(this._formFieldData.valueAsDate as Date);
+    await this.selectDate(this._formFieldData.valueAsDate as Date);
   }
 
   private handleDateInputFocus() {
     this._isFocused = true;
   }
 
-  private handleDateInputBlur() {
-    setTimeout(() => {
-      this._isFocused = this === document.activeElement;
-      if (!this._isFocused) {
-        this.validate();
-      }
-    });
+  private async handleDateInputBlur() {
+    await this.updateComplete;
+
+    this._isFocused = this === document.activeElement;
+    if (!this._isFocused) {
+      this.validate();
+    }
   }
 
-  private handleTodayClick(): void {
-    this.selectDate(new Date());
+  private async handleTodayClick() {
+    await this.selectDate(new Date());
   }
 
   private handleClearClick(): void {
