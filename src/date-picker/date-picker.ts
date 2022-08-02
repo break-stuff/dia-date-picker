@@ -882,6 +882,7 @@ export class DiaDatePicker extends LitElement {
   private handleClearClick(): void {
     this.resetInputValues();
     this.hide();
+    this.emitInput();
   }
 
   /**
